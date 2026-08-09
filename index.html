@@ -180,32 +180,61 @@
   .demo-dot.active { background: var(--primary); width: 20px; border-radius: 4px; }
   .demo-note { text-align: center; color: var(--ink-muted); font-size: 12px; margin-top: 10px; }
 
-  /* Scroll-driven growth story */
-  .story { position: relative; height: 400vh; }
-  .story-sticky {
-    position: sticky; top: 0; height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
+  /* Autoplaying growth-timelapse animation, starts once scrolled into view */
+  .story {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    min-height: 80vh; padding: 40px 24px; text-align: center; overflow: hidden;
   }
-  .story-stage {
+  .story-visual {
+    width: 220px; height: 220px;
+    opacity: 0;
+    animation: storyVisualFade 8s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .story.playing .story-visual { animation-play-state: running; }
+  .story-visual svg { width: 100%; height: 100%; overflow: visible; }
+  @keyframes storyVisualFade {
+    0%, 3% { opacity: 0; }
+    7%, 90% { opacity: 1; }
+    97%, 100% { opacity: 0; }
+  }
+  .story-stem {
+    stroke: var(--primary); stroke-width: 5; fill: none; stroke-linecap: round;
+    stroke-dasharray: 150; stroke-dashoffset: 150;
+    animation: storyGrowStem 8s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .story.playing .story-stem { animation-play-state: running; }
+  @keyframes storyGrowStem {
+    0%, 7% { stroke-dashoffset: 150; }
+    30%, 100% { stroke-dashoffset: 0; }
+  }
+  .story-leaf, .story-flower { transform-box: fill-box; transform-origin: center; opacity: 0; transform: scale(0); animation-duration: 8s; animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-play-state: paused; }
+  .story.playing .story-leaf, .story.playing .story-flower { animation-play-state: running; }
+  .story-leaf-1 { animation-name: storyPop1; }
+  .story-leaf-2 { animation-name: storyPop2; }
+  .story-flower { animation-name: storyPop3; }
+  @keyframes storyPop1 { 0%, 18% { opacity: 0; transform: scale(0); } 28%, 100% { opacity: 1; transform: scale(1); } }
+  @keyframes storyPop2 { 0%, 38% { opacity: 0; transform: scale(0); } 48%, 100% { opacity: 1; transform: scale(1); } }
+  @keyframes storyPop3 { 0%, 62% { opacity: 0; transform: scale(0); } 74%, 100% { opacity: 1; transform: scale(1); } }
+  .story-captions { position: relative; height: 64px; max-width: 420px; }
+  .story-caption {
     position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
-    padding: 0 24px; text-align: center;
-    opacity: 0; filter: blur(18px); transform: scale(0.92);
-    transition: opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease;
-    pointer-events: none;
+    font-size: 22px; font-weight: 700; line-height: 1.3; margin: 0;
+    opacity: 0;
+    animation-duration: 8s; animation-iteration-count: infinite; animation-timing-function: ease-in-out;
+    animation-play-state: paused;
   }
-  .story-stage.active { opacity: 1; filter: blur(0); transform: scale(1); pointer-events: auto; }
-  .story-plant { width: 150px; height: 150px; }
-  .story-plant svg { width: 100%; height: 100%; }
-  .story-caption { font-size: 24px; font-weight: 700; max-width: 380px; line-height: 1.3; margin: 0; }
-  .story-caption span { display: block; font-size: 15px; font-weight: 400; color: var(--ink-muted); margin-top: 8px; }
-  .story-progress {
-    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px;
-  }
-  .story-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s ease; }
-  .story-dot.active { background: var(--primary); width: 24px; border-radius: 5px; }
+  .story.playing .story-caption { animation-play-state: running; }
+  .story-caption span { display: block; font-size: 14px; font-weight: 400; color: var(--ink-muted); margin-top: 6px; }
+  .story-caption-1 { animation-name: storyCap1; }
+  .story-caption-2 { animation-name: storyCap2; }
+  .story-caption-3 { animation-name: storyCap3; }
+  .story-caption-4 { animation-name: storyCap4; }
+  @keyframes storyCap1 { 0%, 3% { opacity: 0; } 7%, 20% { opacity: 1; } 27%, 100% { opacity: 0; } }
+  @keyframes storyCap2 { 0%, 27% { opacity: 0; } 32%, 45% { opacity: 1; } 52%, 100% { opacity: 0; } }
+  @keyframes storyCap3 { 0%, 52% { opacity: 0; } 57%, 68% { opacity: 1; } 74%, 100% { opacity: 0; } }
+  @keyframes storyCap4 { 0%, 74% { opacity: 0; } 78%, 90% { opacity: 1; } 97%, 100% { opacity: 0; } }
 
   /* Scroll-reveal (blur-to-focus) for section content */
   .reveal {
@@ -258,65 +287,33 @@
 </div>
 
 <section class="story" id="story">
-  <div class="story-sticky">
-
-    <div class="story-stage active">
-      <div class="story-plant">
-        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="80" cy="128" rx="58" ry="13" fill="var(--border)"/>
-          <path d="M80 128c0-16 12-24 12-38s-12-20-12-20-12 6-12 20 12 22 12 38z" fill="var(--primary)"/>
-        </svg>
-      </div>
-      <p class="story-caption">Every plant starts with a question.<span>What is this? Is it healthy?</span></p>
-    </div>
-
-    <div class="story-stage">
-      <div class="story-plant">
-        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="80" cy="138" rx="58" ry="12" fill="var(--border)"/>
-          <path d="M80 138V92" stroke="var(--primary)" stroke-width="5" stroke-linecap="round"/>
-          <path d="M80 100c-20-8-25-24-15-35 15 9 18 25 15 35z" fill="var(--primary)"/>
-          <path d="M80 100c20-8 25-24 15-35-15 9-18 25-15 35z" fill="var(--primary)"/>
-        </svg>
-      </div>
-      <p class="story-caption">Snap a photo.<span>Get an instant AI diagnosis.</span></p>
-    </div>
-
-    <div class="story-stage">
-      <div class="story-plant">
-        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="80" cy="143" rx="58" ry="12" fill="var(--border)"/>
-          <path d="M80 143V50" stroke="var(--primary)" stroke-width="5" stroke-linecap="round"/>
-          <path d="M80 108c-28-9-35-32-19-46 20 11 24 32 19 46z" fill="var(--primary)"/>
-          <path d="M80 108c28-9 35-32 19-46-20 11-24 32-19 46z" fill="var(--primary)"/>
-          <path d="M80 72c-20-7-25-25-13-37 15 9 18 26 13 37z" fill="var(--primary)"/>
-          <path d="M80 72c20-7 25-25 13-37-15 9-18 26-13 37z" fill="var(--primary)"/>
-        </svg>
-      </div>
-      <p class="story-caption">Get a care plan built just for it.<span>Watering, light, and remedies — tailored to your plant.</span></p>
-    </div>
-
-    <div class="story-stage">
-      <div class="story-plant">
-        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="80" cy="143" rx="58" ry="12" fill="var(--border)"/>
-          <path d="M80 143V45" stroke="var(--primary)" stroke-width="5" stroke-linecap="round"/>
-          <path d="M80 110c-26-9-32-30-18-44 19 10 22 30 18 44z" fill="var(--primary)"/>
-          <path d="M80 110c26-9 32-30 18-44-19 10-22 30-18 44z" fill="var(--primary)"/>
-          <g>
-            <circle cx="80" cy="28" r="10" fill="var(--flower)"/>
-            <circle cx="62" cy="38" r="9" fill="var(--flower)"/>
-            <circle cx="98" cy="38" r="9" fill="var(--flower)"/>
-            <circle cx="68" cy="16" r="9" fill="var(--flower)"/>
-            <circle cx="92" cy="16" r="9" fill="var(--flower)"/>
-            <circle cx="80" cy="26" r="7" fill="var(--primary-dark)"/>
-          </g>
-        </svg>
-      </div>
-      <p class="story-caption">Watch it thrive.<span>We'll remind you exactly when it needs you.</span></p>
-    </div>
-
-    <div class="story-progress"></div>
+  <div class="story-visual">
+    <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="110" cy="185" rx="70" ry="14" fill="var(--border)"/>
+      <path class="story-stem" d="M110 185V55"/>
+      <g class="story-leaf story-leaf-1">
+        <path d="M110 150c-24-9-30-28-17-41 18 10 21 28 17 41z" fill="var(--primary)"/>
+        <path d="M110 150c24-9 30-28 17-41-18 10-21 28-17 41z" fill="var(--primary)"/>
+      </g>
+      <g class="story-leaf story-leaf-2">
+        <path d="M110 105c-22-8-27-26-15-38 17 9 19 26 15 38z" fill="var(--primary)"/>
+        <path d="M110 105c22-8 27-26 15-38-17 9-19 26-15 38z" fill="var(--primary)"/>
+      </g>
+      <g class="story-flower">
+        <circle cx="110" cy="42" r="11" fill="var(--flower)"/>
+        <circle cx="90" cy="53" r="10" fill="var(--flower)"/>
+        <circle cx="130" cy="53" r="10" fill="var(--flower)"/>
+        <circle cx="97" cy="28" r="10" fill="var(--flower)"/>
+        <circle cx="123" cy="28" r="10" fill="var(--flower)"/>
+        <circle cx="110" cy="40" r="8" fill="var(--primary-dark)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="story-captions">
+    <p class="story-caption story-caption-1">Every plant starts with a question.<span>What is this? Is it healthy?</span></p>
+    <p class="story-caption story-caption-2">Snap a photo.<span>Get an instant AI diagnosis.</span></p>
+    <p class="story-caption story-caption-3">Get a care plan built just for it.<span>Watering, light, and remedies — tailored to your plant.</span></p>
+    <p class="story-caption story-caption-4">Watch it thrive.<span>We'll remind you exactly when it needs you.</span></p>
   </div>
 </section>
 
@@ -521,41 +518,25 @@
 </script>
 
 <script>
-  // Scroll-scrubbed growth story: blur-to-focus reveal synced to scroll position.
+  // Autoplaying growth-timelapse: starts looping once the section scrolls into view.
   (function () {
     var story = document.querySelector('.story');
     if (!story) return;
-    var stages = document.querySelectorAll('.story-stage');
-    var progressWrap = document.querySelector('.story-progress');
-    var dots = [];
-    stages.forEach(function (_, i) {
-      var d = document.createElement('span');
-      d.className = 'story-dot' + (i === 0 ? ' active' : '');
-      progressWrap.appendChild(d);
-      dots.push(d);
-    });
 
-    var activeIndex = 0;
-    function setActive(i) {
-      if (i === activeIndex) return;
-      stages[activeIndex].classList.remove('active');
-      dots[activeIndex].classList.remove('active');
-      activeIndex = i;
-      stages[activeIndex].classList.add('active');
-      dots[activeIndex].classList.add('active');
+    if (!('IntersectionObserver' in window)) {
+      story.classList.add('playing');
+      return;
     }
-
-    function onScroll() {
-      var rect = story.getBoundingClientRect();
-      var total = rect.height - window.innerHeight;
-      var scrolled = Math.min(Math.max(-rect.top, 0), total);
-      var progress = total > 0 ? scrolled / total : 0;
-      var idx = Math.min(stages.length - 1, Math.floor(progress * stages.length));
-      setActive(idx);
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          story.classList.add('playing');
+        } else {
+          story.classList.remove('playing');
+        }
+      });
+    }, { threshold: 0.4 });
+    io.observe(story);
   })();
 </script>
 

@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plant Doctor — Support</title>
+<title>Plant Doctor — AI Plant Care & Farm Advisor</title>
+<meta name="description" content="AI-powered plant health scans, care reminders, planting space planning, and farm advisory — in your language.">
 <style>
   :root {
     --primary: #2e7d32;
     --primary-dark: #1b5e20;
+    --primary-soft: #e6f4ea;
     --bg: #f7faf7;
     --surface: #ffffff;
     --ink: #1a1f1a;
@@ -16,6 +18,7 @@
   }
   @media (prefers-color-scheme: dark) {
     :root {
+      --primary-soft: #17281a;
       --bg: #10140f;
       --surface: #181f17;
       --ink: #eef4ee;
@@ -24,6 +27,7 @@
     }
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -31,58 +35,203 @@
     color: var(--ink);
     line-height: 1.6;
   }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 48px 24px 80px; }
-  .logo {
-    width: 56px; height: 56px; border-radius: 16px;
-    background: var(--primary);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 20px;
+  a { color: var(--primary); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
   }
-  h1 { font-size: 28px; margin: 0 0 8px; }
-  .subtitle { color: var(--ink-muted); margin: 0 0 40px; font-size: 16px; }
-  .card {
+  .nav-inner {
+    max-width: 1040px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 700; font-size: 17px; }
+  .brand .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 17px; }
+  nav.links { display: flex; gap: 24px; font-size: 14px; font-weight: 600; }
+  nav.links a { color: var(--ink-muted); text-decoration: none; }
+  nav.links a:hover { color: var(--primary); }
+
+  .hero { padding: 72px 0 56px; text-align: center; }
+  .hero h1 { font-size: 40px; margin: 0 0 16px; letter-spacing: -0.5px; }
+  .hero p.lead { color: var(--ink-muted); font-size: 18px; max-width: 560px; margin: 0 auto 32px; }
+  .badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); background: var(--surface);
+    padding: 10px 18px; border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--ink-muted);
+  }
+
+  section { padding: 56px 0; }
+  section.alt { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  h2.section-title { font-size: 28px; text-align: center; margin: 0 0 8px; }
+  p.section-sub { text-align: center; color: var(--ink-muted); max-width: 520px; margin: 0 auto 40px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .feature {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 24px;
-    margin-bottom: 16px;
   }
-  .card h2 { font-size: 17px; margin: 0 0 8px; }
-  .card p { color: var(--ink-muted); margin: 0 0 12px; font-size: 15px; }
-  a.btn {
-    display: inline-block;
-    background: var(--primary);
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 14px;
+  section.alt .feature { background: var(--bg); }
+  .feature .icon { font-size: 26px; margin-bottom: 12px; }
+  .feature h3 { font-size: 16px; margin: 0 0 8px; }
+  .feature p { font-size: 14px; color: var(--ink-muted); margin: 0; }
+
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 720px; margin: 0 auto; }
+  .plan { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .plan.pro { border-color: var(--primary); position: relative; }
+  .plan .tag { color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .plan h3 { font-size: 24px; margin: 8px 0 4px; }
+  .plan .price-note { color: var(--ink-muted); font-size: 14px; margin-bottom: 16px; }
+  .plan ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .plan li { font-size: 14px; color: var(--ink-muted); padding-left: 22px; position: relative; }
+  .plan li::before { content: "✓"; color: var(--primary); position: absolute; left: 0; font-weight: 700; }
+
+  .cta-card {
+    background: var(--primary); color: #fff; border-radius: 20px;
+    padding: 48px 32px; text-align: center;
   }
-  a.btn:hover { background: var(--primary-dark); }
-  a.link { color: var(--primary); font-weight: 600; }
-  footer { margin-top: 48px; color: var(--ink-muted); font-size: 13px; }
+  .cta-card h2 { margin: 0 0 12px; font-size: 26px; }
+  .cta-card p { opacity: 0.9; margin: 0 0 24px; }
+  .cta-card a.btn {
+    display: inline-block; background: #fff; color: var(--primary-dark);
+    text-decoration: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px;
+  }
+
+  footer { padding: 40px 0; border-top: 1px solid var(--border); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-links { display: flex; gap: 20px; font-size: 14px; }
+  .footer-links a { color: var(--ink-muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--primary); }
+  .copyright { color: var(--ink-muted); font-size: 13px; }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="logo">🌿</div>
-    <h1>Plant Doctor</h1>
-    <p class="subtitle">AI-powered plant care, farm planning, and garden advice.</p>
 
-    <div class="card">
-      <h2>Need help?</h2>
-      <p>For support, feedback, or account/data requests, email us and we'll get back to you as soon as we can.</p>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="mark">🌿</span> Plant Doctor</a>
+    <nav class="links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="#contact">Support</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+  <section class="hero">
+    <h1>AI plant care, farm planning, and garden advice — in one app.</h1>
+    <p class="lead">Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.</p>
+    <div class="badges">
+      <span class="badge">📱 Coming soon on iOS</span>
+      <span class="badge">🤖 Coming soon on Android</span>
+    </div>
+  </section>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2 class="section-title">Everything your plants need</h2>
+    <p class="section-sub">One app for identification, health, care scheduling, and expert advice — powered by AI.</p>
+    <div class="grid">
+      <div class="feature">
+        <div class="icon">📷</div>
+        <h3>Instant plant health scans</h3>
+        <p>Snap a photo and get plant identification, health status, pest/disease detection, and step-by-step remedies — in your own language.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">💧</div>
+        <h3>Smart care reminders</h3>
+        <p>Personalized watering and sunlight reminders based on your specific plant's needs, plus follow-up check-ins if it was unwell.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🌱</div>
+        <h3>Planting space planner</h3>
+        <p>Photograph a balcony, yard, or empty space and get a tailored shopping list of plants and decor — with an AI-generated preview of how it could look.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🚜</div>
+        <h3>Farm Advisor</h3>
+        <p>Get a full productivity plan for any crop: feasible variety options, fertilizer and irrigation schedules, spacing guidance, and climate context for your region.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">💬</div>
+        <h3>Ask a plant expert, anytime</h3>
+        <p>Chat with an AI plant expert about any of your plants or farm plans — by text, voice, or photo.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🌍</div>
+        <h3>Local tips, your language</h3>
+        <p>Daily farming and gardening tips tailored to your location, refreshed automatically. Switch languages any time, even after a scan.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔔</div>
+        <h3>Never miss a warning sign</h3>
+        <p>Proactive notifications for watering, sunlight, health follow-ups, and farm pest risks — scheduled right on your device.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🪴</div>
+        <h3>Real vs. artificial detection</h3>
+        <p>Plant Doctor tells real plants apart from artificial ones, so you don't get watering reminders for a plastic fern.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="pricing">
+  <div class="wrap">
+    <h2 class="section-title">Simple, fair pricing</h2>
+    <p class="section-sub">Start free. Upgrade whenever you need more.</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <span class="tag">Free</span>
+        <h3>$0</h3>
+        <p class="price-note">Forever</p>
+        <ul>
+          <li>Up to 5 saved plant scans</li>
+          <li>Care reminders & health follow-ups</li>
+          <li>Local tips & chat with the AI</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <span class="tag">Pro</span>
+        <h3>Regional pricing</h3>
+        <p class="price-note">Billed monthly · ₹399/month in India, local equivalent elsewhere</p>
+        <ul>
+          <li>Unlimited plant scans</li>
+          <li>Farm Advisor for large-area crops</li>
+          <li>Customer portal for nurseries & farms</li>
+          <li>Priority AI response quality</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" id="contact">
+  <section>
+    <div class="cta-card">
+      <h2>Questions, feedback, or need help?</h2>
+      <p>We usually reply within a day or two.</p>
       <a class="btn" href="mailto:mishra.ankit.nit1@gmail.com?subject=Plant%20Doctor%20support">Email Support</a>
     </div>
+  </section>
+</div>
 
-    <div class="card">
-      <h2>Privacy Policy</h2>
-      <p>Read how Plant Doctor collects, uses, and protects your information.</p>
-      <a class="link" href="./privacy.html">View Privacy Policy →</a>
+<footer>
+  <div class="wrap footer-inner">
+    <span class="copyright">&copy; 2026 Plant Doctor. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="mailto:mishra.ankit.nit1@gmail.com">Contact</a>
     </div>
-
-    <footer>&copy; 2026 Plant Doctor. All rights reserved.</footer>
   </div>
+</footer>
+
 </body>
 </html>

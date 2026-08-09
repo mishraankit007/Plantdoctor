@@ -70,6 +70,6 @@ git push
 
 **4. Once live**, update these to use the new domain instead of the `github.io` URL:
 - `legal/store-listing.md` and `content.ts` in the main `plant-doctor` app repo (support/privacy URLs)
-- The `mishra.ankit.nit1@gmail.com` placeholder in `index.html` and `privacy.html` here — swap for a real `@plantdoctor.app` inbox once you've set up email for the domain (e.g. via Google Workspace, or your registrar's free email forwarding)
+- The `support@plantdoctor.com` placeholder in `index.html` and `privacy.html` here — swap for a real inbox at whatever domain you actually register, once you've set up email for it (e.g. via Google Workspace, or your registrar's free email forwarding)
 
 Ping me with the domain once you've bought it and I'll do steps 1 and 4 for you — steps 2 and 3 (registrar DNS + GitHub's domain-verification UI) need to happen in accounts only you can access.

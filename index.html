@@ -107,6 +107,76 @@
   .footer-links a { color: var(--ink-muted); text-decoration: none; }
   .footer-links a:hover { color: var(--primary); }
   .copyright { color: var(--ink-muted); font-size: 13px; }
+
+  /* Store download badges */
+  .store-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+  .store-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 12px; padding: 10px 18px;
+    cursor: not-allowed; opacity: 0.55;
+    font-family: inherit;
+  }
+  .store-btn svg { width: 22px; height: 22px; flex-shrink: 0; fill: var(--bg); }
+  .store-btn span { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
+  .store-btn small { font-size: 10px; }
+  .store-btn strong { font-size: 15px; font-weight: 700; }
+  .store-note { text-align: center; color: var(--ink-muted); font-size: 13px; margin: 0 0 8px; }
+
+  /* 3D phone demo */
+  .demo-stage { perspective: 1600px; display: flex; justify-content: center; padding: 20px 0 12px; }
+  .phone {
+    width: 240px; height: 500px;
+    background: #0b0f0b;
+    border-radius: 38px;
+    padding: 10px;
+    box-shadow: 0 40px 70px -20px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04);
+    transform-style: preserve-3d;
+    animation: phoneFloat 7s ease-in-out infinite;
+  }
+  @keyframes phoneFloat {
+    0%, 100% { transform: rotateY(-16deg) rotateX(5deg) translateY(0); }
+    50% { transform: rotateY(-8deg) rotateX(2deg) translateY(-10px); }
+  }
+  .phone-screen {
+    position: relative;
+    width: 100%; height: 100%;
+    background: var(--bg);
+    border-radius: 28px;
+    overflow: hidden;
+  }
+  .phone-notch {
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 18px; background: #0b0f0b; border-radius: 10px; z-index: 5;
+  }
+  .screen-slide {
+    position: absolute; inset: 0;
+    padding: 40px 16px 16px;
+    opacity: 0; transform: translateX(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .screen-slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+  .mock-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px;
+  }
+  .mock-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-muted); font-weight: 700; margin-bottom: 6px; }
+  .mock-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .mock-line { font-size: 11px; color: var(--ink-muted); }
+  .mock-badge {
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px;
+    background: var(--primary-soft); color: var(--primary); margin-bottom: 6px;
+  }
+  .mock-photo { width: 100%; height: 70px; border-radius: 10px; background: linear-gradient(135deg, var(--primary-soft), var(--border)); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 8px; }
+  .mock-chat-bubble { max-width: 80%; padding: 7px 10px; border-radius: 12px; font-size: 11px; }
+  .mock-chat-bubble.user { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 3px; }
+  .mock-chat-bubble.ai { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); color: var(--ink); border-bottom-left-radius: 3px; }
+  .demo-caption { text-align: center; font-size: 13px; font-weight: 600; color: var(--ink-muted); margin-top: 4px; }
+  .demo-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+  .demo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); border: none; padding: 0; cursor: pointer; }
+  .demo-dot.active { background: var(--primary); width: 20px; border-radius: 4px; }
+  .demo-note { text-align: center; color: var(--ink-muted); font-size: 12px; margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -115,6 +185,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top"><span class="mark">🌿</span> Plant Doctor</a>
     <nav class="links">
+      <a href="#demo">Demo</a>
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="./privacy.html">Privacy</a>
@@ -127,12 +198,85 @@
   <section class="hero">
     <h1>AI plant care, farm planning, and garden advice — in one app.</h1>
     <p class="lead">Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.</p>
-    <div class="badges">
-      <span class="badge">📱 Coming soon on iOS</span>
-      <span class="badge">🤖 Coming soon on Android</span>
+    <div class="store-buttons">
+      <button type="button" class="store-btn" disabled title="Launching soon">
+        <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 37 59 127.6 107.2 126.1 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-83 102.6-120.1-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27-32.1 24.5-61.4 23.7-71.9-23.8 1.4-51.3 16.4-67 34.9-17.3 19.8-27.5 44.3-25.3 71.4 25.9 2 49.5-11.4 68.6-34.4z"/></svg>
+        <span><small>Download on the</small><strong>App Store</strong></span>
+      </button>
+      <button type="button" class="store-btn" disabled title="Launching soon">
+        <svg viewBox="0 0 512 512"><path d="M48 59.7v392.6c0 5.2 5.7 8.4 10.2 5.8l361.2-196.3c4.5-2.5 4.5-9.1 0-11.6L58.2 53.9c-4.5-2.6-10.2.6-10.2 5.8z"/></svg>
+        <span><small>GET IT ON</small><strong>Google Play</strong></span>
+      </button>
     </div>
+    <p class="store-note">Launching soon — links go live once both apps are approved.</p>
   </section>
 </div>
+
+<section id="demo">
+  <div class="wrap">
+    <h2 class="section-title">See it in action</h2>
+    <p class="section-sub">An illustrative look at scanning a plant, planning a crop, and chatting with the AI.</p>
+    <div class="demo-stage">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+
+          <div class="screen-slide active">
+            <span class="mock-label">Plant scan</span>
+            <div class="mock-photo">🌿</div>
+            <div class="mock-card">
+              <span class="mock-badge">Healthy</span>
+              <div class="mock-title">Monstera Deliciosa</div>
+              <div class="mock-line">Water in ~4 days · Bright indirect light</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-title">Care tip</div>
+              <div class="mock-line">Wipe leaves monthly to keep pores clear for better light absorption.</div>
+            </div>
+          </div>
+
+          <div class="screen-slide">
+            <span class="mock-label">Farm Advisor</span>
+            <div class="mock-card">
+              <span class="mock-badge">Wheat · Punjab</span>
+              <div class="mock-title">Productivity plan</div>
+              <div class="mock-line">Irrigation, fertilizer & spacing auto-filled from your location.</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-title">HD-3086</div>
+              <div class="mock-line">110 days to maturity · High yield in loamy soil</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-title">Sonalika</div>
+              <div class="mock-line">100 days to maturity · Drought tolerant</div>
+            </div>
+          </div>
+
+          <div class="screen-slide">
+            <span class="mock-label">Ask the expert</span>
+            <div class="mock-chat-bubble user">Why are the leaf tips turning brown?</div>
+            <div class="mock-chat-bubble ai">Likely low humidity or mineral buildup from tap water — try filtered water and a pebble tray.</div>
+            <div class="mock-chat-bubble user">Got it, thank you!</div>
+          </div>
+
+          <div class="screen-slide">
+            <span class="mock-label">Explore</span>
+            <div class="mock-card">
+              <div class="mock-title">Today's tips for Bengaluru</div>
+              <div class="mock-line">🌦️ Light monsoon showers expected — hold off outdoor watering.</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-line">🌱 Good week to transplant seedlings before the next dry spell.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="demo-dots"></div>
+    <p class="demo-note">Illustrative mockups of real app features — not live screenshots.</p>
+  </div>
+</section>
 
 <section id="features">
   <div class="wrap">
@@ -201,7 +345,7 @@
       <div class="plan pro">
         <span class="tag">Pro</span>
         <h3>Regional pricing</h3>
-        <p class="price-note">Billed monthly · ₹399/month in India, local equivalent elsewhere</p>
+        <p class="price-note">Billed monthly · ₹249/month in India, $10/month elsewhere</p>
         <ul>
           <li>Unlimited plant scans</li>
           <li>Farm Advisor for large-area crops</li>
@@ -218,7 +362,7 @@
     <div class="cta-card">
       <h2>Questions, feedback, or need help?</h2>
       <p>We usually reply within a day or two.</p>
-      <a class="btn" href="mailto:mishra.ankit.nit1@gmail.com?subject=Plant%20Doctor%20support">Email Support</a>
+      <a class="btn" href="mailto:support@plantdoctor.com?subject=Plant%20Doctor%20support">Email Support</a>
     </div>
   </section>
 </div>
@@ -228,10 +372,45 @@
     <span class="copyright">&copy; 2026 Plant Doctor. All rights reserved.</span>
     <div class="footer-links">
       <a href="./privacy.html">Privacy Policy</a>
-      <a href="mailto:mishra.ankit.nit1@gmail.com">Contact</a>
+      <a href="mailto:support@plantdoctor.com">Contact</a>
     </div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var slides = document.querySelectorAll('.screen-slide');
+    var dotsWrap = document.querySelector('.demo-dots');
+    if (!slides.length || !dotsWrap) return;
+
+    var dots = [];
+    slides.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'demo-dot' + (i === 0 ? ' active' : '');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Show slide ' + (i + 1));
+      dot.addEventListener('click', function () { show(i); resetTimer(); });
+      dotsWrap.appendChild(dot);
+      dots.push(dot);
+    });
+
+    var current = 0;
+    var timer;
+
+    function show(i) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = i;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function next() { show((current + 1) % slides.length); }
+    function resetTimer() { clearInterval(timer); timer = setInterval(next, 3200); }
+
+    resetTimer();
+  })();
+</script>
 
 </body>
 </html>

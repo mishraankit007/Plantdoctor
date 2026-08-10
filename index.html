@@ -33,7 +33,7 @@
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Devanagari", "Noto Sans Bengali", "Noto Sans Telugu", Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--ink);
     line-height: 1.6;
@@ -48,13 +48,22 @@
   }
   .nav-inner {
     max-width: 1040px; margin: 0 auto; padding: 14px 24px;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
-  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 700; font-size: 17px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 700; font-size: 17px; flex-shrink: 0; }
   .brand .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 17px; }
-  nav.links { display: flex; gap: 24px; font-size: 14px; font-weight: 600; }
+  nav.links { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 600; flex-wrap: wrap; }
   nav.links a { color: var(--ink-muted); text-decoration: none; }
   nav.links a:hover { color: var(--primary); }
+  .lang-select {
+    appearance: none; -webkit-appearance: none;
+    background: var(--surface); color: var(--ink);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 26px 6px 10px; font-size: 13px; font-weight: 600; font-family: inherit;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235a655a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 8px center;
+  }
 
   .hero { padding: 72px 0 56px; text-align: center; }
   .hero h1 { font-size: 40px; margin: 0 0 16px; letter-spacing: -0.5px; }
@@ -235,7 +244,8 @@
     animation-play-state: paused;
   }
   .story.playing .story-caption { animation-play-state: running; }
-  .story-caption span { display: block; font-size: 15px; font-weight: 400; color: var(--ink-muted); margin-top: 8px; line-height: 1.4; }
+  .story-caption .cap-title { display: block; }
+  .story-caption .cap-sub { display: block; font-size: 15px; font-weight: 400; color: var(--ink-muted); margin-top: 8px; line-height: 1.4; }
   .story-caption-1 { animation-name: storyCap1; }
   .story-caption-2 { animation-name: storyCap2; }
   .story-caption-3 { animation-name: storyCap3; }
@@ -267,31 +277,47 @@
   <div class="nav-inner">
     <a class="brand" href="#top"><span class="mark">🌿</span> Plant Doctor</a>
     <nav class="links">
-      <a href="#story">Story</a>
-      <a href="#demo">Demo</a>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="./privacy.html">Privacy</a>
-      <a href="#contact">Support</a>
+      <a href="#story" data-i18n="navStory">Story</a>
+      <a href="#demo" data-i18n="navDemo">Demo</a>
+      <a href="#features" data-i18n="navFeatures">Features</a>
+      <a href="#pricing" data-i18n="navPricing">Pricing</a>
+      <a href="./privacy.html" data-i18n="navPrivacy">Privacy</a>
+      <a href="#contact" data-i18n="navSupport">Support</a>
+      <select class="lang-select" id="langSelect" aria-label="Language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="bn">বাংলা</option>
+        <option value="te">తెలుగు</option>
+        <option value="ta">தமிழ்</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
+        <option value="kn">ಕನ್ನಡ</option>
+        <option value="ml">മലയാളം</option>
+        <option value="pa">ਪੰਜਾਬੀ</option>
+        <option value="ur">اردو</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="pt">Português</option>
+      </select>
     </nav>
   </div>
 </header>
 
 <div class="wrap" id="top">
   <section class="hero">
-    <h1>AI plant care, farm planning, and garden advice — in one app.</h1>
-    <p class="lead">Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.</p>
+    <h1 data-i18n="heroTitle">AI plant care, farm planning, and garden advice — in one app.</h1>
+    <p class="lead" data-i18n="heroLead">Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.</p>
     <div class="store-buttons">
       <button type="button" class="store-btn" disabled title="Launching soon">
         <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 37 59 127.6 107.2 126.1 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-83 102.6-120.1-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27-32.1 24.5-61.4 23.7-71.9-23.8 1.4-51.3 16.4-67 34.9-17.3 19.8-27.5 44.3-25.3 71.4 25.9 2 49.5-11.4 68.6-34.4z"/></svg>
-        <span><small>Download on the</small><strong>App Store</strong></span>
+        <span><small data-i18n="storeAppleSmall">Download on the</small><strong>App Store</strong></span>
       </button>
       <button type="button" class="store-btn" disabled title="Launching soon">
         <svg viewBox="0 0 512 512"><path d="M48 59.7v392.6c0 5.2 5.7 8.4 10.2 5.8l361.2-196.3c4.5-2.5 4.5-9.1 0-11.6L58.2 53.9c-4.5-2.6-10.2.6-10.2 5.8z"/></svg>
-        <span><small>GET IT ON</small><strong>Google Play</strong></span>
+        <span><small data-i18n="storeGoogleSmall">GET IT ON</small><strong>Google Play</strong></span>
       </button>
     </div>
-    <p class="store-note">Launching soon — links go live once both apps are approved.</p>
+    <p class="store-note" data-i18n="storeNote">Launching soon — links go live once both apps are approved.</p>
   </section>
 </div>
 
@@ -319,68 +345,68 @@
     </svg>
   </div>
   <div class="story-captions">
-    <p class="story-caption story-caption-1">Every plant starts with a question.<span>What is this? Is it healthy?</span></p>
-    <p class="story-caption story-caption-2">Snap a photo.<span>Get an instant AI diagnosis.</span></p>
-    <p class="story-caption story-caption-3">Get a care plan built just for it.<span>Watering, light, and remedies — tailored to your plant.</span></p>
-    <p class="story-caption story-caption-4">Watch it thrive.<span>We'll remind you exactly when it needs you.</span></p>
+    <p class="story-caption story-caption-1"><span class="cap-title" data-i18n="story1Title">Every plant starts with a question.</span><span class="cap-sub" data-i18n="story1Sub">What is this? Is it healthy?</span></p>
+    <p class="story-caption story-caption-2"><span class="cap-title" data-i18n="story2Title">Snap a photo.</span><span class="cap-sub" data-i18n="story2Sub">Get an instant AI diagnosis.</span></p>
+    <p class="story-caption story-caption-3"><span class="cap-title" data-i18n="story3Title">Get a care plan built just for it.</span><span class="cap-sub" data-i18n="story3Sub">Watering, light, and remedies — tailored to your plant.</span></p>
+    <p class="story-caption story-caption-4"><span class="cap-title" data-i18n="story4Title">Watch it thrive.</span><span class="cap-sub" data-i18n="story4Sub">We'll remind you exactly when it needs you.</span></p>
   </div>
 </section>
 
 <section id="demo">
   <div class="wrap">
-    <h2 class="section-title">See it in action</h2>
-    <p class="section-sub">An illustrative look at scanning a plant, planning a crop, and chatting with the AI.</p>
+    <h2 class="section-title" data-i18n="demoTitle">See it in action</h2>
+    <p class="section-sub" data-i18n="demoSub">An illustrative look at scanning a plant, planning a crop, and chatting with the AI.</p>
     <div class="demo-stage reveal">
       <div class="phone">
         <div class="phone-screen">
           <div class="phone-notch"></div>
 
           <div class="screen-slide active">
-            <span class="mock-label">Plant scan</span>
+            <span class="mock-label" data-i18n="d1Label">Plant scan</span>
             <div class="mock-photo">🌿</div>
             <div class="mock-card">
-              <span class="mock-badge">Healthy</span>
+              <span class="mock-badge" data-i18n="d1Badge">Healthy</span>
               <div class="mock-title">Monstera Deliciosa</div>
-              <div class="mock-line">Water in ~4 days · Bright indirect light</div>
+              <div class="mock-line" data-i18n="d1Line">Water in ~4 days · Bright indirect light</div>
             </div>
             <div class="mock-card">
-              <div class="mock-title">Care tip</div>
-              <div class="mock-line">Wipe leaves monthly to keep pores clear for better light absorption.</div>
+              <div class="mock-title" data-i18n="d1TipTitle">Care tip</div>
+              <div class="mock-line" data-i18n="d1TipLine">Wipe leaves monthly to keep pores clear for better light absorption.</div>
             </div>
           </div>
 
           <div class="screen-slide">
-            <span class="mock-label">Farm Advisor</span>
+            <span class="mock-label" data-i18n="d2Label">Farm Advisor</span>
             <div class="mock-card">
-              <span class="mock-badge">Wheat · Punjab</span>
-              <div class="mock-title">Productivity plan</div>
-              <div class="mock-line">Irrigation, fertilizer & spacing auto-filled from your location.</div>
+              <span class="mock-badge" data-i18n="d2Badge">Wheat · Punjab</span>
+              <div class="mock-title" data-i18n="d2Title">Productivity plan</div>
+              <div class="mock-line" data-i18n="d2Line">Irrigation, fertilizer & spacing auto-filled from your location.</div>
             </div>
             <div class="mock-card">
               <div class="mock-title">HD-3086</div>
-              <div class="mock-line">110 days to maturity · High yield in loamy soil</div>
+              <div class="mock-line" data-i18n="d2C2Line">110 days to maturity · High yield in loamy soil</div>
             </div>
             <div class="mock-card">
               <div class="mock-title">Sonalika</div>
-              <div class="mock-line">100 days to maturity · Drought tolerant</div>
+              <div class="mock-line" data-i18n="d2C3Line">100 days to maturity · Drought tolerant</div>
             </div>
           </div>
 
           <div class="screen-slide">
-            <span class="mock-label">Ask the expert</span>
-            <div class="mock-chat-bubble user">Why are the leaf tips turning brown?</div>
-            <div class="mock-chat-bubble ai">Likely low humidity or mineral buildup from tap water — try filtered water and a pebble tray.</div>
-            <div class="mock-chat-bubble user">Got it, thank you!</div>
+            <span class="mock-label" data-i18n="d3Label">Ask the expert</span>
+            <div class="mock-chat-bubble user" data-i18n="d3Q1">Why are the leaf tips turning brown?</div>
+            <div class="mock-chat-bubble ai" data-i18n="d3A1">Likely low humidity or mineral buildup from tap water — try filtered water and a pebble tray.</div>
+            <div class="mock-chat-bubble user" data-i18n="d3Q2">Got it, thank you!</div>
           </div>
 
           <div class="screen-slide">
-            <span class="mock-label">Explore</span>
+            <span class="mock-label" data-i18n="d4Label">Explore</span>
             <div class="mock-card">
-              <div class="mock-title">Today's tips for Bengaluru</div>
-              <div class="mock-line">🌦️ Light monsoon showers expected — hold off outdoor watering.</div>
+              <div class="mock-title" data-i18n="d4Title">Today's tips for Bengaluru</div>
+              <div class="mock-line" data-i18n="d4Line1">🌦️ Light monsoon showers expected — hold off outdoor watering.</div>
             </div>
             <div class="mock-card">
-              <div class="mock-line">🌱 Good week to transplant seedlings before the next dry spell.</div>
+              <div class="mock-line" data-i18n="d4Line2">🌱 Good week to transplant seedlings before the next dry spell.</div>
             </div>
           </div>
 
@@ -388,54 +414,54 @@
       </div>
     </div>
     <div class="demo-dots"></div>
-    <p class="demo-note">Illustrative mockups of real app features — not live screenshots.</p>
+    <p class="demo-note" data-i18n="demoNote">Illustrative mockups of real app features — not live screenshots.</p>
   </div>
 </section>
 
 <section id="features">
   <div class="wrap">
-    <h2 class="section-title">Everything your plants need</h2>
-    <p class="section-sub">One app for identification, health, care scheduling, and expert advice — powered by AI.</p>
+    <h2 class="section-title" data-i18n="featuresTitle">Everything your plants need</h2>
+    <p class="section-sub" data-i18n="featuresSub">One app for identification, health, care scheduling, and expert advice — powered by AI.</p>
     <div class="grid">
       <div class="feature reveal">
         <div class="icon">📷</div>
-        <h3>Instant plant health scans</h3>
-        <p>Snap a photo and get plant identification, health status, pest/disease detection, and step-by-step remedies — in your own language.</p>
+        <h3 data-i18n="f1Title">Instant plant health scans</h3>
+        <p data-i18n="f1Desc">Snap a photo and get plant identification, health status, pest/disease detection, and step-by-step remedies — in your own language.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">💧</div>
-        <h3>Smart care reminders</h3>
-        <p>Personalized watering and sunlight reminders based on your specific plant's needs, plus follow-up check-ins if it was unwell.</p>
+        <h3 data-i18n="f2Title">Smart care reminders</h3>
+        <p data-i18n="f2Desc">Personalized watering and sunlight reminders based on your specific plant's needs, plus follow-up check-ins if it was unwell.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">🌱</div>
-        <h3>Planting space planner</h3>
-        <p>Photograph a balcony, yard, or empty space and get a tailored shopping list of plants and decor — with an AI-generated preview of how it could look.</p>
+        <h3 data-i18n="f3Title">Planting space planner</h3>
+        <p data-i18n="f3Desc">Photograph a balcony, yard, or empty space and get a tailored shopping list of plants and decor — with an AI-generated preview of how it could look.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">🚜</div>
-        <h3>Farm Advisor</h3>
-        <p>Get a full productivity plan for any crop: feasible variety options, fertilizer and irrigation schedules, spacing guidance, and climate context for your region.</p>
+        <h3 data-i18n="f4Title">Farm Advisor</h3>
+        <p data-i18n="f4Desc">Get a full productivity plan for any crop: feasible variety options, fertilizer and irrigation schedules, spacing guidance, and climate context for your region.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">💬</div>
-        <h3>Ask a plant expert, anytime</h3>
-        <p>Chat with an AI plant expert about any of your plants or farm plans — by text, voice, or photo.</p>
+        <h3 data-i18n="f5Title">Ask a plant expert, anytime</h3>
+        <p data-i18n="f5Desc">Chat with an AI plant expert about any of your plants or farm plans — by text, voice, or photo.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">🌍</div>
-        <h3>Local tips, your language</h3>
-        <p>Daily farming and gardening tips tailored to your location, refreshed automatically. Switch languages any time, even after a scan.</p>
+        <h3 data-i18n="f6Title">Local tips, your language</h3>
+        <p data-i18n="f6Desc">Daily farming and gardening tips tailored to your location, refreshed automatically. Switch languages any time, even after a scan.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">🔔</div>
-        <h3>Never miss a warning sign</h3>
-        <p>Proactive notifications for watering, sunlight, health follow-ups, and farm pest risks — scheduled right on your device.</p>
+        <h3 data-i18n="f7Title">Never miss a warning sign</h3>
+        <p data-i18n="f7Desc">Proactive notifications for watering, sunlight, health follow-ups, and farm pest risks — scheduled right on your device.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">🪴</div>
-        <h3>Real vs. artificial detection</h3>
-        <p>Plant Doctor tells real plants apart from artificial ones, so you don't get watering reminders for a plastic fern.</p>
+        <h3 data-i18n="f8Title">Real vs. artificial detection</h3>
+        <p data-i18n="f8Desc">Plant Doctor tells real plants apart from artificial ones, so you don't get watering reminders for a plastic fern.</p>
       </div>
     </div>
   </div>
@@ -443,28 +469,28 @@
 
 <section class="alt" id="pricing">
   <div class="wrap">
-    <h2 class="section-title">Simple, fair pricing</h2>
-    <p class="section-sub">Start free. Upgrade whenever you need more.</p>
+    <h2 class="section-title" data-i18n="pricingTitle">Simple, fair pricing</h2>
+    <p class="section-sub" data-i18n="pricingSub">Start free. Upgrade whenever you need more.</p>
     <div class="pricing-grid">
       <div class="plan reveal">
-        <span class="tag">Free</span>
-        <h3>$0</h3>
-        <p class="price-note">Forever</p>
+        <span class="tag" data-i18n="freeTag">Free</span>
+        <h3 data-i18n="freePrice">$0</h3>
+        <p class="price-note" data-i18n="freeNote">Forever</p>
         <ul>
-          <li>Up to 5 saved plant scans</li>
-          <li>Care reminders & health follow-ups</li>
-          <li>Local tips & chat with the AI</li>
+          <li data-i18n="freeLi1">Up to 5 saved plant scans</li>
+          <li data-i18n="freeLi2">Care reminders & health follow-ups</li>
+          <li data-i18n="freeLi3">Local tips & chat with the AI</li>
         </ul>
       </div>
       <div class="plan pro reveal">
-        <span class="tag">Pro</span>
-        <h3>Regional pricing</h3>
-        <p class="price-note">Billed monthly · ₹249/month in India, $10/month elsewhere</p>
+        <span class="tag" data-i18n="proTag">Pro</span>
+        <h3 data-i18n="proPrice">Regional pricing</h3>
+        <p class="price-note" data-i18n="proNote">Billed monthly · ₹249/month in India, $10/month elsewhere</p>
         <ul>
-          <li>Unlimited plant scans</li>
-          <li>Farm Advisor for large-area crops</li>
-          <li>Customer portal for nurseries & farms</li>
-          <li>Priority AI response quality</li>
+          <li data-i18n="proLi1">Unlimited plant scans</li>
+          <li data-i18n="proLi2">Farm Advisor for large-area crops</li>
+          <li data-i18n="proLi3">Customer portal for nurseries & farms</li>
+          <li data-i18n="proLi4">Priority AI response quality</li>
         </ul>
       </div>
     </div>
@@ -474,19 +500,19 @@
 <div class="wrap" id="contact">
   <section>
     <div class="cta-card reveal">
-      <h2>Questions, feedback, or need help?</h2>
-      <p>We usually reply within a day or two.</p>
-      <a class="btn" href="mailto:support@plantdoctor.com?subject=Plant%20Doctor%20support">Email Support</a>
+      <h2 data-i18n="contactTitle">Questions, feedback, or need help?</h2>
+      <p data-i18n="contactSub">We usually reply within a day or two.</p>
+      <a class="btn" href="mailto:support@plantdoctor.com?subject=Plant%20Doctor%20support" data-i18n="contactBtn">Email Support</a>
     </div>
   </section>
 </div>
 
 <footer>
   <div class="wrap footer-inner">
-    <span class="copyright">&copy; 2026 Plant Doctor. All rights reserved.</span>
+    <span class="copyright" data-i18n="footerCopyright">© 2026 Plant Doctor. All rights reserved.</span>
     <div class="footer-links">
-      <a href="./privacy.html">Privacy Policy</a>
-      <a href="mailto:support@plantdoctor.com">Contact</a>
+      <a href="./privacy.html" data-i18n="footerPrivacy">Privacy Policy</a>
+      <a href="mailto:support@plantdoctor.com" data-i18n="footerContact">Contact</a>
     </div>
   </div>
 </footer>
@@ -567,6 +593,599 @@
       });
     }, { threshold: 0.15 });
     els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+<script>
+  // Multi-language support: swaps all [data-i18n] text content client-side, no page reload.
+  (function () {
+    var translations = {
+      en: {
+        navStory: "Story", navDemo: "Demo", navFeatures: "Features", navPricing: "Pricing", navPrivacy: "Privacy", navSupport: "Support",
+        heroTitle: "AI plant care, farm planning, and garden advice — in one app.",
+        heroLead: "Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.",
+        storeAppleSmall: "Download on the", storeGoogleSmall: "GET IT ON",
+        storeNote: "Launching soon — links go live once both apps are approved.",
+        story1Title: "Every plant starts with a question.", story1Sub: "What is this? Is it healthy?",
+        story2Title: "Snap a photo.", story2Sub: "Get an instant AI diagnosis.",
+        story3Title: "Get a care plan built just for it.", story3Sub: "Watering, light, and remedies — tailored to your plant.",
+        story4Title: "Watch it thrive.", story4Sub: "We'll remind you exactly when it needs you.",
+        demoTitle: "See it in action", demoSub: "An illustrative look at scanning a plant, planning a crop, and chatting with the AI.",
+        d1Label: "Plant scan", d1Badge: "Healthy", d1Line: "Water in ~4 days · Bright indirect light",
+        d1TipTitle: "Care tip", d1TipLine: "Wipe leaves monthly to keep pores clear for better light absorption.",
+        d2Label: "Farm Advisor", d2Badge: "Wheat · Punjab", d2Title: "Productivity plan",
+        d2Line: "Irrigation, fertilizer & spacing auto-filled from your location.",
+        d2C2Line: "110 days to maturity · High yield in loamy soil", d2C3Line: "100 days to maturity · Drought tolerant",
+        d3Label: "Ask the expert", d3Q1: "Why are the leaf tips turning brown?",
+        d3A1: "Likely low humidity or mineral buildup from tap water — try filtered water and a pebble tray.", d3Q2: "Got it, thank you!",
+        d4Label: "Explore", d4Title: "Today's tips for Bengaluru",
+        d4Line1: "🌦️ Light monsoon showers expected — hold off outdoor watering.",
+        d4Line2: "🌱 Good week to transplant seedlings before the next dry spell.",
+        demoNote: "Illustrative mockups of real app features — not live screenshots.",
+        featuresTitle: "Everything your plants need",
+        featuresSub: "One app for identification, health, care scheduling, and expert advice — powered by AI.",
+        f1Title: "Instant plant health scans", f1Desc: "Snap a photo and get plant identification, health status, pest/disease detection, and step-by-step remedies — in your own language.",
+        f2Title: "Smart care reminders", f2Desc: "Personalized watering and sunlight reminders based on your specific plant's needs, plus follow-up check-ins if it was unwell.",
+        f3Title: "Planting space planner", f3Desc: "Photograph a balcony, yard, or empty space and get a tailored shopping list of plants and decor — with an AI-generated preview of how it could look.",
+        f4Title: "Farm Advisor", f4Desc: "Get a full productivity plan for any crop: feasible variety options, fertilizer and irrigation schedules, spacing guidance, and climate context for your region.",
+        f5Title: "Ask a plant expert, anytime", f5Desc: "Chat with an AI plant expert about any of your plants or farm plans — by text, voice, or photo.",
+        f6Title: "Local tips, your language", f6Desc: "Daily farming and gardening tips tailored to your location, refreshed automatically. Switch languages any time, even after a scan.",
+        f7Title: "Never miss a warning sign", f7Desc: "Proactive notifications for watering, sunlight, health follow-ups, and farm pest risks — scheduled right on your device.",
+        f8Title: "Real vs. artificial detection", f8Desc: "Plant Doctor tells real plants apart from artificial ones, so you don't get watering reminders for a plastic fern.",
+        pricingTitle: "Simple, fair pricing", pricingSub: "Start free. Upgrade whenever you need more.",
+        freeTag: "Free", freePrice: "$0", freeNote: "Forever",
+        freeLi1: "Up to 5 saved plant scans", freeLi2: "Care reminders & health follow-ups", freeLi3: "Local tips & chat with the AI",
+        proTag: "Pro", proPrice: "Regional pricing", proNote: "Billed monthly · ₹249/month in India, $10/month elsewhere",
+        proLi1: "Unlimited plant scans", proLi2: "Farm Advisor for large-area crops", proLi3: "Customer portal for nurseries & farms", proLi4: "Priority AI response quality",
+        contactTitle: "Questions, feedback, or need help?", contactSub: "We usually reply within a day or two.", contactBtn: "Email Support",
+        footerCopyright: "© 2026 Plant Doctor. All rights reserved.", footerPrivacy: "Privacy Policy", footerContact: "Contact"
+      },
+      fr: {
+        navStory: "Histoire", navDemo: "Démo", navFeatures: "Fonctionnalités", navPricing: "Tarifs", navPrivacy: "Confidentialité", navSupport: "Support",
+        heroTitle: "Soin des plantes par IA, planification agricole et conseils de jardinage — dans une seule appli.",
+        heroLead: "Prenez une photo et obtenez un diagnostic de santé instantané, des rappels d'entretien personnalisés et des réponses d'experts — pour plantes d'intérieur, jardins et fermes entières.",
+        storeAppleSmall: "Télécharger sur l'", storeGoogleSmall: "DISPONIBLE SUR",
+        storeNote: "Bientôt disponible — les liens seront actifs une fois les deux applis approuvées.",
+        story1Title: "Chaque plante commence par une question.", story1Sub: "Qu'est-ce que c'est ? Est-elle en bonne santé ?",
+        story2Title: "Prenez une photo.", story2Sub: "Obtenez un diagnostic IA instantané.",
+        story3Title: "Obtenez un plan d'entretien conçu pour elle.", story3Sub: "Arrosage, lumière et remèdes — adaptés à votre plante.",
+        story4Title: "Regardez-la s'épanouir.", story4Sub: "Nous vous rappellerons exactement quand elle a besoin de vous.",
+        demoTitle: "Voyez-le en action", demoSub: "Un aperçu illustratif du scan d'une plante, de la planification d'une culture et d'une discussion avec l'IA.",
+        d1Label: "Scan de plante", d1Badge: "En bonne santé", d1Line: "Arroser dans ~4 jours · Lumière indirecte vive",
+        d1TipTitle: "Conseil d'entretien", d1TipLine: "Essuyez les feuilles chaque mois pour garder les pores dégagés et améliorer l'absorption de lumière.",
+        d2Label: "Conseiller Agricole", d2Badge: "Blé · Punjab", d2Title: "Plan de productivité",
+        d2Line: "Irrigation, engrais et espacement pré-remplis selon votre localisation.",
+        d2C2Line: "110 jours à maturité · Rendement élevé en sol limoneux", d2C3Line: "100 jours à maturité · Résistante à la sécheresse",
+        d3Label: "Demander à l'expert", d3Q1: "Pourquoi les pointes des feuilles brunissent-elles ?",
+        d3A1: "Probablement un manque d'humidité ou une accumulation de minéraux due à l'eau du robinet — essayez de l'eau filtrée et un plateau de galets.", d3Q2: "Compris, merci !",
+        d4Label: "Explorer", d4Title: "Conseils du jour pour Bengaluru",
+        d4Line1: "🌦️ Légères pluies de mousson attendues — évitez l'arrosage extérieur.",
+        d4Line2: "🌱 Bonne semaine pour repiquer les semis avant la prochaine période sèche.",
+        demoNote: "Maquettes illustratives des fonctionnalités réelles de l'appli — pas des captures d'écran réelles.",
+        featuresTitle: "Tout ce dont vos plantes ont besoin",
+        featuresSub: "Une seule appli pour l'identification, la santé, la planification de l'entretien et les conseils d'experts — propulsée par l'IA.",
+        f1Title: "Scans de santé des plantes instantanés", f1Desc: "Prenez une photo et obtenez l'identification de la plante, son état de santé, la détection de parasites/maladies et des remèdes étape par étape — dans votre propre langue.",
+        f2Title: "Rappels d'entretien intelligents", f2Desc: "Rappels d'arrosage et d'ensoleillement personnalisés selon les besoins spécifiques de votre plante, plus des suivis si elle n'allait pas bien.",
+        f3Title: "Planificateur d'espace de plantation", f3Desc: "Photographiez un balcon, un jardin ou un espace vide et obtenez une liste d'achats personnalisée de plantes et de décoration — avec un aperçu généré par IA de l'apparence finale.",
+        f4Title: "Conseiller Agricole", f4Desc: "Obtenez un plan de productivité complet pour toute culture : options de variétés viables, calendriers d'engrais et d'irrigation, conseils d'espacement et contexte climatique de votre région.",
+        f5Title: "Demandez à un expert des plantes, à tout moment", f5Desc: "Discutez avec un expert IA des plantes à propos de n'importe laquelle de vos plantes ou de vos plans agricoles — par texte, voix ou photo.",
+        f6Title: "Conseils locaux, dans votre langue", f6Desc: "Conseils quotidiens de jardinage et d'agriculture adaptés à votre localisation, actualisés automatiquement. Changez de langue à tout moment, même après un scan.",
+        f7Title: "Ne manquez jamais un signal d'alerte", f7Desc: "Notifications proactives pour l'arrosage, l'ensoleillement, les suivis de santé et les risques de parasites agricoles — programmées directement sur votre appareil.",
+        f8Title: "Détection réel vs. artificiel", f8Desc: "Plant Doctor distingue les vraies plantes des artificielles, pour éviter de recevoir des rappels d'arrosage pour une fougère en plastique.",
+        pricingTitle: "Tarification simple et équitable", pricingSub: "Commencez gratuitement. Passez à un forfait supérieur quand vous en avez besoin.",
+        freeTag: "Gratuit", freePrice: "0 $", freeNote: "Pour toujours",
+        freeLi1: "Jusqu'à 5 scans de plantes enregistrés", freeLi2: "Rappels d'entretien et suivis de santé", freeLi3: "Conseils locaux et discussion avec l'IA",
+        proTag: "Pro", proPrice: "Tarification régionale", proNote: "Facturé mensuellement · ₹249/mois en Inde, 10 $/mois ailleurs",
+        proLi1: "Scans de plantes illimités", proLi2: "Conseiller Agricole pour les cultures à grande échelle", proLi3: "Portail client pour pépinières et fermes", proLi4: "Qualité de réponse IA prioritaire",
+        contactTitle: "Des questions, des retours, ou besoin d'aide ?", contactSub: "Nous répondons généralement sous un à deux jours.", contactBtn: "Contacter le support",
+        footerCopyright: "© 2026 Plant Doctor. Tous droits réservés.", footerPrivacy: "Politique de confidentialité", footerContact: "Contact"
+      },
+      hi: {
+        navStory: "कहानी", navDemo: "डेमो", navFeatures: "विशेषताएं", navPricing: "मूल्य", navPrivacy: "गोपनीयता", navSupport: "सहायता",
+        heroTitle: "AI पौधों की देखभाल, खेती की योजना, और बागवानी सलाह — एक ही ऐप में।",
+        heroLead: "एक फोटो खींचें और तुरंत स्वास्थ्य निदान, व्यक्तिगत देखभाल अनुस्मारक, और विशेषज्ञ जवाब पाएं — घरेलू पौधों, बगीचों और बड़े खेतों के लिए।",
+        storeAppleSmall: "डाउनलोड करें", storeGoogleSmall: "अभी पाएं",
+        storeNote: "जल्द ही लॉन्च हो रहा है — दोनों ऐप्स स्वीकृत होते ही लिंक सक्रिय होंगे।",
+        story1Title: "हर पौधे की शुरुआत एक सवाल से होती है।", story1Sub: "यह क्या है? क्या यह स्वस्थ है?",
+        story2Title: "एक फोटो खींचें।", story2Sub: "तुरंत AI निदान पाएं।",
+        story3Title: "इसके लिए बनाई गई देखभाल योजना पाएं।", story3Sub: "पानी, रोशनी, और उपचार — आपके पौधे के अनुसार तैयार।",
+        story4Title: "इसे फलते-फूलते देखें।", story4Sub: "जब भी इसे आपकी ज़रूरत होगी, हम आपको याद दिलाएंगे।",
+        demoTitle: "इसे काम करते देखें", demoSub: "पौधे को स्कैन करने, फसल की योजना बनाने, और AI से बात करने की एक झलक।",
+        d1Label: "पौधा स्कैन", d1Badge: "स्वस्थ", d1Line: "~4 दिनों में पानी दें · तेज़ अप्रत्यक्ष रोशनी",
+        d1TipTitle: "देखभाल सुझाव", d1TipLine: "बेहतर रोशनी अवशोषण के लिए हर महीने पत्तियों को पोंछें।",
+        d2Label: "फार्म एडवाइज़र", d2Badge: "गेहूं · पंजाब", d2Title: "उत्पादकता योजना",
+        d2Line: "आपके स्थान के अनुसार सिंचाई, उर्वरक और दूरी अपने आप भरी गई।",
+        d2C2Line: "110 दिनों में पकता है · दोमट मिट्टी में उच्च उपज", d2C3Line: "100 दिनों में पकता है · सूखा सहनशील",
+        d3Label: "विशेषज्ञ से पूछें", d3Q1: "पत्तियों के सिरे भूरे क्यों हो रहे हैं?",
+        d3A1: "शायद कम नमी या नल के पानी से खनिज जमाव — फ़िल्टर किया पानी और कंकड़ की ट्रे आज़माएं।", d3Q2: "समझ गया, धन्यवाद!",
+        d4Label: "खोजें", d4Title: "बेंगलुरु के लिए आज के सुझाव",
+        d4Line1: "🌦️ हल्की मानसूनी बारिश की संभावना — बाहर पानी देना टालें।",
+        d4Line2: "🌱 अगली सूखी अवधि से पहले पौध रोपने का अच्छा सप्ताह।",
+        demoNote: "ऐप की वास्तविक विशेषताओं के उदाहरण — असली स्क्रीनशॉट नहीं।",
+        featuresTitle: "आपके पौधों की हर ज़रूरत",
+        featuresSub: "पहचान, स्वास्थ्य, देखभाल शेड्यूल और विशेषज्ञ सलाह के लिए एक ऐप — AI द्वारा संचालित।",
+        f1Title: "तुरंत पौधे स्वास्थ्य स्कैन", f1Desc: "एक फोटो खींचें और पौधे की पहचान, स्वास्थ्य स्थिति, कीट/रोग पहचान, और चरण-दर-चरण उपचार पाएं — अपनी ही भाषा में।",
+        f2Title: "स्मार्ट देखभाल अनुस्मारक", f2Desc: "आपके पौधे की विशेष ज़रूरतों के अनुसार व्यक्तिगत पानी और धूप अनुस्मारक, साथ ही अस्वस्थ होने पर फॉलो-अप जांच।",
+        f3Title: "रोपण स्थान योजनाकार", f3Desc: "बालकनी, आंगन, या खाली जगह की फोटो लें और पौधों व सजावट की एक तैयार खरीदारी सूची पाएं — साथ ही AI-जनित झलक कि यह कैसा दिखेगा।",
+        f4Title: "फार्म एडवाइज़र", f4Desc: "किसी भी फसल के लिए पूरी उत्पादकता योजना पाएं: संभावित किस्म विकल्प, उर्वरक व सिंचाई कार्यक्रम, दूरी मार्गदर्शन, और आपके क्षेत्र की जलवायु जानकारी।",
+        f5Title: "कभी भी पौधा विशेषज्ञ से पूछें", f5Desc: "अपने किसी भी पौधे या खेती योजना के बारे में AI पौधा विशेषज्ञ से चैट करें — टेक्स्ट, आवाज़, या फोटो द्वारा।",
+        f6Title: "स्थानीय सुझाव, आपकी भाषा में", f6Desc: "आपके स्थान के अनुसार दैनिक खेती और बागवानी सुझाव, अपने आप अपडेट होते हैं। किसी भी समय भाषा बदलें, स्कैन के बाद भी।",
+        f7Title: "कोई चेतावनी संकेत न चूकें", f7Desc: "पानी, धूप, स्वास्थ्य फॉलो-अप, और खेत के कीट जोखिमों के लिए सक्रिय सूचनाएं — सीधे आपके डिवाइस पर शेड्यूल की गई।",
+        f8Title: "असली बनाम नकली पहचान", f8Desc: "Plant Doctor असली पौधों को नकली से अलग बताता है, ताकि आपको प्लास्टिक के फर्न के लिए पानी देने के अनुस्मारक न मिलें।",
+        pricingTitle: "सरल, निष्पक्ष मूल्य निर्धारण", pricingSub: "मुफ़्त में शुरू करें। जब भी ज़रूरत हो, अपग्रेड करें।",
+        freeTag: "मुफ़्त", freePrice: "$0", freeNote: "हमेशा के लिए",
+        freeLi1: "5 तक सहेजे गए पौधा स्कैन", freeLi2: "देखभाल अनुस्मारक और स्वास्थ्य फॉलो-अप", freeLi3: "स्थानीय सुझाव और AI से चैट",
+        proTag: "प्रो", proPrice: "क्षेत्रीय मूल्य निर्धारण", proNote: "मासिक बिल · भारत में ₹249/माह, अन्यत्र $10/माह",
+        proLi1: "असीमित पौधा स्कैन", proLi2: "बड़े क्षेत्र की फसलों के लिए फार्म एडवाइज़र", proLi3: "नर्सरी और फार्म के लिए ग्राहक पोर्टल", proLi4: "प्राथमिकता वाली AI प्रतिक्रिया गुणवत्ता",
+        contactTitle: "सवाल, प्रतिक्रिया, या मदद चाहिए?", contactSub: "हम आमतौर पर एक-दो दिन में जवाब देते हैं।", contactBtn: "सहायता को ईमेल करें",
+        footerCopyright: "© 2026 Plant Doctor. सर्वाधिकार सुरक्षित।", footerPrivacy: "गोपनीयता नीति", footerContact: "संपर्क करें"
+      },
+      bn: {
+        navStory: "গল্প", navDemo: "ডেমো", navFeatures: "বৈশিষ্ট্য", navPricing: "মূল্য", navPrivacy: "গোপনীয়তা", navSupport: "সহায়তা",
+        heroTitle: "AI উদ্ভিদ পরিচর্যা, কৃষি পরিকল্পনা এবং বাগান পরামর্শ — একটি অ্যাপে।",
+        heroLead: "একটি ছবি তুলুন এবং তাৎক্ষণিক স্বাস্থ্য নির্ণয়, ব্যক্তিগতকৃত পরিচর্যার অনুস্মারক, এবং বিশেষজ্ঞ উত্তর পান — গৃহস্থ গাছপালা, বাগান এবং বড় খামারের জন্য।",
+        storeAppleSmall: "ডাউনলোড করুন", storeGoogleSmall: "পেয়ে যান",
+        storeNote: "শীঘ্রই আসছে — উভয় অ্যাপ অনুমোদিত হলে লিঙ্ক সক্রিয় হবে।",
+        story1Title: "প্রতিটি গাছ একটি প্রশ্ন দিয়ে শুরু হয়।", story1Sub: "এটি কী? এটি কি সুস্থ?",
+        story2Title: "একটি ছবি তুলুন।", story2Sub: "তাৎক্ষণিক AI নির্ণয় পান।",
+        story3Title: "এর জন্য তৈরি একটি পরিচর্যা পরিকল্পনা পান।", story3Sub: "জল, আলো, এবং প্রতিকার — আপনার গাছের জন্য উপযুক্ত।",
+        story4Title: "এটিকে বেড়ে উঠতে দেখুন।", story4Sub: "যখনই এর আপনাকে প্রয়োজন হবে, আমরা মনে করিয়ে দেব।",
+        demoTitle: "এটি কাজ করতে দেখুন", demoSub: "একটি গাছ স্ক্যান করা, ফসলের পরিকল্পনা করা এবং AI-এর সাথে কথা বলার একটি উদাহরণ।",
+        d1Label: "গাছ স্ক্যান", d1Badge: "সুস্থ", d1Line: "~৪ দিনে জল দিন · উজ্জ্বল পরোক্ষ আলো",
+        d1TipTitle: "পরিচর্যার পরামর্শ", d1TipLine: "আরও ভাল আলো শোষণের জন্য প্রতি মাসে পাতা মুছুন।",
+        d2Label: "ফার্ম অ্যাডভাইজার", d2Badge: "গম · পাঞ্জাব", d2Title: "উৎপাদনশীলতার পরিকল্পনা",
+        d2Line: "আপনার অবস্থান অনুযায়ী সেচ, সার এবং দূরত্ব স্বয়ংক্রিয়ভাবে পূরণ।",
+        d2C2Line: "১১০ দিনে পরিপক্ব · দোআঁশ মাটিতে উচ্চ ফলন", d2C3Line: "১০০ দিনে পরিপক্ব · খরা সহনশীল",
+        d3Label: "বিশেষজ্ঞকে জিজ্ঞাসা করুন", d3Q1: "পাতার ডগা বাদামী হয়ে যাচ্ছে কেন?",
+        d3A1: "সম্ভবত কম আর্দ্রতা বা কলের জলে খনিজ জমা — ফিল্টার করা জল এবং পাথরের ট্রে চেষ্টা করুন।", d3Q2: "বুঝেছি, ধন্যবাদ!",
+        d4Label: "অন্বেষণ করুন", d4Title: "বেঙ্গালুরুর জন্য আজকের পরামর্শ",
+        d4Line1: "🌦️ হালকা বর্ষার বৃষ্টির সম্ভাবনা — বাইরে জল দেওয়া স্থগিত রাখুন।",
+        d4Line2: "🌱 পরবর্তী শুষ্ক সময়ের আগে চারা রোপণের ভালো সপ্তাহ।",
+        demoNote: "অ্যাপের প্রকৃত বৈশিষ্ট্যের উদাহরণমূলক নমুনা — লাইভ স্ক্রিনশট নয়।",
+        featuresTitle: "আপনার গাছের যা কিছু প্রয়োজন",
+        featuresSub: "শনাক্তকরণ, স্বাস্থ্য, পরিচর্যা সময়সূচী এবং বিশেষজ্ঞ পরামর্শের জন্য একটি অ্যাপ — AI দ্বারা চালিত।",
+        f1Title: "তাৎক্ষণিক গাছের স্বাস্থ্য স্ক্যান", f1Desc: "একটি ছবি তুলুন এবং গাছের শনাক্তকরণ, স্বাস্থ্য অবস্থা, কীটপতঙ্গ/রোগ সনাক্তকরণ, এবং ধাপে ধাপে প্রতিকার পান — আপনার নিজের ভাষায়।",
+        f2Title: "স্মার্ট পরিচর্যা অনুস্মারক", f2Desc: "আপনার গাছের নির্দিষ্ট প্রয়োজন অনুযায়ী ব্যক্তিগতকৃত জল এবং রোদের অনুস্মারক, সাথে অসুস্থ হলে ফলো-আপ চেক-ইন।",
+        f3Title: "রোপণ স্থান পরিকল্পনাকারী", f3Desc: "একটি বারান্দা, উঠান, বা খালি জায়গার ছবি তুলুন এবং গাছপালা ও সাজসজ্জার একটি তৈরি কেনাকাটার তালিকা পান — সাথে এটি কেমন দেখাবে তার AI-উৎপন্ন পূর্বরূপ।",
+        f4Title: "ফার্ম অ্যাডভাইজার", f4Desc: "যেকোনো ফসলের জন্য সম্পূর্ণ উৎপাদনশীলতার পরিকল্পনা পান: সম্ভাব্য জাতের বিকল্প, সার ও সেচের সময়সূচী, দূরত্বের নির্দেশনা, এবং আপনার অঞ্চলের জলবায়ু প্রেক্ষাপট।",
+        f5Title: "যেকোনো সময় একজন গাছ বিশেষজ্ঞকে জিজ্ঞাসা করুন", f5Desc: "আপনার যেকোনো গাছ বা কৃষি পরিকল্পনা সম্পর্কে একজন AI গাছ বিশেষজ্ঞের সাথে চ্যাট করুন — টেক্সট, ভয়েস, বা ছবির মাধ্যমে।",
+        f6Title: "স্থানীয় পরামর্শ, আপনার ভাষায়", f6Desc: "আপনার অবস্থান অনুযায়ী প্রতিদিনের কৃষি ও বাগান পরামর্শ, স্বয়ংক্রিয়ভাবে সতেজ হয়। যেকোনো সময় ভাষা পরিবর্তন করুন, স্ক্যানের পরেও।",
+        f7Title: "কখনো সতর্কতা চিহ্ন মিস করবেন না", f7Desc: "জল, রোদ, স্বাস্থ্য ফলো-আপ, এবং খামারের কীটপতঙ্গ ঝুঁকির জন্য সক্রিয় বিজ্ঞপ্তি — সরাসরি আপনার ডিভাইসে নির্ধারিত।",
+        f8Title: "আসল বনাম কৃত্রিম শনাক্তকরণ", f8Desc: "Plant Doctor আসল গাছকে কৃত্রিম গাছ থেকে আলাদা করে বলে দেয়, যাতে আপনি একটি প্লাস্টিকের ফার্নের জন্য জল দেওয়ার অনুস্মারক না পান।",
+        pricingTitle: "সহজ, ন্যায্য মূল্য", pricingSub: "বিনামূল্যে শুরু করুন। যখনই প্রয়োজন আপগ্রেড করুন।",
+        freeTag: "বিনামূল্যে", freePrice: "$0", freeNote: "চিরকালের জন্য",
+        freeLi1: "৫টি পর্যন্ত সংরক্ষিত গাছ স্ক্যান", freeLi2: "পরিচর্যা অনুস্মারক এবং স্বাস্থ্য ফলো-আপ", freeLi3: "স্থানীয় পরামর্শ এবং AI-এর সাথে চ্যাট",
+        proTag: "প্রো", proPrice: "আঞ্চলিক মূল্য", proNote: "মাসিক বিলিং · ভারতে ₹২৪৯/মাস, অন্যত্র $১০/মাস",
+        proLi1: "সীমাহীন গাছ স্ক্যান", proLi2: "বড় এলাকার ফসলের জন্য ফার্ম অ্যাডভাইজার", proLi3: "নার্সারি ও খামারের জন্য গ্রাহক পোর্টাল", proLi4: "অগ্রাধিকারমূলক AI প্রতিক্রিয়ার মান",
+        contactTitle: "প্রশ্ন, মতামত, বা সাহায্য দরকার?", contactSub: "আমরা সাধারণত এক-দুই দিনের মধ্যে উত্তর দিই।", contactBtn: "সহায়তায় ইমেইল করুন",
+        footerCopyright: "© ২০২৬ Plant Doctor। সর্বস্বত্ব সংরক্ষিত।", footerPrivacy: "গোপনীয়তা নীতি", footerContact: "যোগাযোগ"
+      },
+      te: {
+        navStory: "కథ", navDemo: "డెమో", navFeatures: "ఫీచర్లు", navPricing: "ధరలు", navPrivacy: "గోప్యత", navSupport: "మద్దతు",
+        heroTitle: "AI మొక్కల సంరక్షణ, వ్యవసాయ ప్రణాళిక, మరియు తోట సలహా — ఒకే యాప్‌లో.",
+        heroLead: "ఒక ఫోటో తీసి తక్షణ ఆరోగ్య నిర్ధారణ, వ్యక్తిగతీకరించిన సంరక్షణ రిమైండర్లు, మరియు నిపుణుల సమాధానాలు పొందండి — ఇంటి మొక్కలు, తోటలు మరియు పెద్ద వ్యవసాయ క్షేత్రాల కోసం.",
+        storeAppleSmall: "డౌన్‌లోడ్ చేయండి", storeGoogleSmall: "పొందండి",
+        storeNote: "త్వరలో వస్తుంది — రెండు యాప్‌లు ఆమోదించబడిన తర్వాత లింక్‌లు యాక్టివ్ అవుతాయి.",
+        story1Title: "ప్రతి మొక్క ఒక ప్రశ్నతో మొదలవుతుంది.", story1Sub: "ఇది ఏమిటి? ఇది ఆరోగ్యంగా ఉందా?",
+        story2Title: "ఒక ఫోటో తీయండి.", story2Sub: "తక్షణ AI నిర్ధారణ పొందండి.",
+        story3Title: "దాని కోసమే రూపొందించిన సంరక్షణ ప్రణాళికను పొందండి.", story3Sub: "నీరు, వెలుతురు, మరియు చికిత్సలు — మీ మొక్కకు అనుగుణంగా.",
+        story4Title: "అది ఏపుగా పెరగడం చూడండి.", story4Sub: "దానికి మీరు అవసరమైనప్పుడు మేము మీకు గుర్తు చేస్తాము.",
+        demoTitle: "ఇది పనిచేస్తున్నది చూడండి", demoSub: "మొక్కను స్కాన్ చేయడం, పంటను ప్రణాళిక చేయడం, మరియు AIతో చాట్ చేయడం యొక్క ఉదాహరణ.",
+        d1Label: "మొక్క స్కాన్", d1Badge: "ఆరోగ్యంగా ఉంది", d1Line: "~4 రోజుల్లో నీరు పెట్టండి · ప్రకాశవంతమైన పరోక్ష వెలుతురు",
+        d1TipTitle: "సంరక్షణ చిట్కా", d1TipLine: "మెరుగైన వెలుతురు శోషణ కోసం నెలకోసారి ఆకులను తుడవండి.",
+        d2Label: "ఫార్మ్ అడ్వైజర్", d2Badge: "గోధుమ · పంజాబ్", d2Title: "ఉత్పాదకత ప్రణాళిక",
+        d2Line: "మీ ప్రాంతం ఆధారంగా నీటిపారుదల, ఎరువులు మరియు అంతరం స్వయంచాలకంగా నింపబడ్డాయి.",
+        d2C2Line: "110 రోజుల్లో పక్వానికి వస్తుంది · ఒండ్రు నేలలో అధిక దిగుబడి", d2C3Line: "100 రోజుల్లో పక్వానికి వస్తుంది · కరువును తట్టుకుంటుంది",
+        d3Label: "నిపుణుడిని అడగండి", d3Q1: "ఆకుల చివర్లు ఎందుకు గోధుమ రంగులోకి మారుతున్నాయి?",
+        d3A1: "బహుశా తక్కువ తేమ లేదా కుళాయి నీటి వల్ల ఖనిజాలు పేరుకుపోవడం — ఫిల్టర్ చేసిన నీరు మరియు గులకరాళ్ల ట్రేని ప్రయత్నించండి.", d3Q2: "అర్థమైంది, ధన్యవాదాలు!",
+        d4Label: "అన్వేషించండి", d4Title: "బెంగళూరు కోసం నేటి చిట్కాలు",
+        d4Line1: "🌦️ తేలికపాటి రుతుపవన వర్షాలు అంచనా — బయట నీరు పెట్టడం వాయిదా వేయండి.",
+        d4Line2: "🌱 తదుపరి పొడి కాలానికి ముందు మొక్కలు నాటడానికి మంచి వారం.",
+        demoNote: "యాప్ యొక్క వాస్తవ ఫీచర్ల ఉదాహరణలు — ప్రత్యక్ష స్క్రీన్‌షాట్‌లు కావు.",
+        featuresTitle: "మీ మొక్కలకు కావలసినవన్నీ",
+        featuresSub: "గుర్తింపు, ఆరోగ్యం, సంరక్షణ షెడ్యూలింగ్, మరియు నిపుణుల సలహా కోసం ఒకే యాప్ — AI ద్వారా శక్తిమంతం.",
+        f1Title: "తక్షణ మొక్క ఆరోగ్య స్కాన్‌లు", f1Desc: "ఒక ఫోటో తీసి మొక్క గుర్తింపు, ఆరోగ్య స్థితి, పురుగులు/వ్యాధి గుర్తింపు, మరియు దశలవారీ చికిత్సలు పొందండి — మీ సొంత భాషలో.",
+        f2Title: "స్మార్ట్ సంరక్షణ రిమైండర్లు", f2Desc: "మీ మొక్క యొక్క నిర్దిష్ట అవసరాల ఆధారంగా వ్యక్తిగతీకరించిన నీరు మరియు ఎండ రిమైండర్లు, అనారోగ్యంగా ఉంటే ఫాలో-అప్ చెక్-ఇన్‌లతో పాటు.",
+        f3Title: "నాటే స్థల ప్రణాళికాకర్త", f3Desc: "బాల్కనీ, యార్డ్, లేదా ఖాళీ స్థలం ఫోటో తీసి మొక్కలు మరియు అలంకరణల అనుకూలీకరించిన కొనుగోలు జాబితా పొందండి — అది ఎలా కనిపిస్తుందో AI-రూపొందించిన ప్రివ్యూతో సహా.",
+        f4Title: "ఫార్మ్ అడ్వైజర్", f4Desc: "ఏ పంటకైనా పూర్తి ఉత్పాదకత ప్రణాళిక పొందండి: సాధ్యమయ్యే రకాల ఎంపికలు, ఎరువులు మరియు నీటిపారుదల షెడ్యూల్‌లు, అంతరం మార్గదర్శకత్వం, మరియు మీ ప్రాంత వాతావరణ సందర్భం.",
+        f5Title: "ఎప్పుడైనా మొక్కల నిపుణుడిని అడగండి", f5Desc: "మీ మొక్కలు లేదా వ్యవసాయ ప్రణాళికల గురించి AI మొక్కల నిపుణుడితో చాట్ చేయండి — టెక్స్ట్, వాయిస్, లేదా ఫోటో ద్వారా.",
+        f6Title: "స్థానిక చిట్కాలు, మీ భాషలో", f6Desc: "మీ ప్రాంతానికి అనుగుణంగా రోజువారీ వ్యవసాయ మరియు తోట చిట్కాలు, స్వయంచాలకంగా తాజాగా ఉంటాయి. స్కాన్ తర్వాత కూడా, ఎప్పుడైనా భాషలను మార్చండి.",
+        f7Title: "ఏ హెచ్చరిక సంకేతాన్ని కూడా మిస్ కావద్దు", f7Desc: "నీరు, ఎండ, ఆరోగ్య ఫాలో-అప్‌లు, మరియు వ్యవసాయ పురుగుల ప్రమాదాల కోసం క్రియాశీల నోటిఫికేషన్‌లు — నేరుగా మీ పరికరంలో షెడ్యూల్ చేయబడ్డాయి.",
+        f8Title: "నిజమైన వర్సెస్ కృత్రిమ గుర్తింపు", f8Desc: "Plant Doctor నిజమైన మొక్కలను కృత్రిమమైన వాటి నుండి వేరు చేస్తుంది, కాబట్టి మీకు ప్లాస్టిక్ ఫెర్న్ కోసం నీటి రిమైండర్లు రావు.",
+        pricingTitle: "సరళమైన, న్యాయమైన ధర", pricingSub: "ఉచితంగా ప్రారంభించండి. మీకు అవసరమైనప్పుడు అప్‌గ్రేడ్ చేయండి.",
+        freeTag: "ఉచితం", freePrice: "$0", freeNote: "ఎప్పటికీ",
+        freeLi1: "5 వరకు సేవ్ చేసిన మొక్క స్కాన్‌లు", freeLi2: "సంరక్షణ రిమైండర్లు & ఆరోగ్య ఫాలో-అప్‌లు", freeLi3: "స్థానిక చిట్కాలు & AIతో చాట్",
+        proTag: "ప్రో", proPrice: "ప్రాంతీయ ధర", proNote: "నెలవారీ బిల్లింగ్ · భారత్‌లో ₹249/నెల, ఇతర ప్రాంతాల్లో $10/నెల",
+        proLi1: "అపరిమిత మొక్క స్కాన్‌లు", proLi2: "పెద్ద విస్తీర్ణ పంటల కోసం ఫార్మ్ అడ్వైజర్", proLi3: "నర్సరీలు & ఫార్మ్‌ల కోసం కస్టమర్ పోర్టల్", proLi4: "ప్రాధాన్యత AI ప్రతిస్పందన నాణ్యత",
+        contactTitle: "ప్రశ్నలు, అభిప్రాయం, లేదా సహాయం కావాలా?", contactSub: "మేము సాధారణంగా ఒకటి-రెండు రోజుల్లో స్పందిస్తాము.", contactBtn: "మద్దతుకు ఇమెయిల్ చేయండి",
+        footerCopyright: "© 2026 Plant Doctor. అన్ని హక్కులు రిజర్వు చేయబడ్డాయి.", footerPrivacy: "గోప్యతా విధానం", footerContact: "సంప్రదించండి"
+      },
+      ta: {
+        navStory: "கதை", navDemo: "டெமோ", navFeatures: "அம்சங்கள்", navPricing: "விலை", navPrivacy: "தனியுரிமை", navSupport: "ஆதரவு",
+        heroTitle: "AI தாவர பராமரிப்பு, விவசாய திட்டமிடல், மற்றும் தோட்ட ஆலோசனை — ஒரே ஆப்பில்.",
+        heroLead: "ஒரு புகைப்படம் எடுத்து உடனடி ஆரோக்கிய கண்டறிதல், தனிப்பயனாக்கப்பட்ட பராமரிப்பு நினைவூட்டல்கள், மற்றும் நிபுணர் பதில்களைப் பெறுங்கள் — வீட்டு தாவரங்கள், தோட்டங்கள் மற்றும் பெரிய பண்ணைகளுக்கு.",
+        storeAppleSmall: "பதிவிறக்கவும்", storeGoogleSmall: "பெறவும்",
+        storeNote: "விரைவில் வருகிறது — இரு ஆப்களும் அங்கீகரிக்கப்பட்டவுடன் இணைப்புகள் செயலில் இருக்கும்.",
+        story1Title: "ஒவ்வொரு தாவரமும் ஒரு கேள்வியுடன் தொடங்குகிறது.", story1Sub: "இது என்ன? இது ஆரோக்கியமாக உள்ளதா?",
+        story2Title: "ஒரு புகைப்படம் எடுக்கவும்.", story2Sub: "உடனடி AI கண்டறிதலைப் பெறுங்கள்.",
+        story3Title: "அதற்கே உருவாக்கப்பட்ட பராமரிப்பு திட்டத்தைப் பெறுங்கள்.", story3Sub: "நீர்ப்பாசனம், ஒளி, மற்றும் தீர்வுகள் — உங்கள் தாவரத்திற்கு ஏற்றவாறு.",
+        story4Title: "அது செழிப்பதைப் பாருங்கள்.", story4Sub: "அதற்கு உங்கள் தேவை இருக்கும்போது நாங்கள் உங்களுக்கு நினைவூட்டுவோம்.",
+        demoTitle: "இது செயலில் இருப்பதைப் பாருங்கள்", demoSub: "ஒரு தாவரத்தை ஸ்கேன் செய்தல், பயிரைத் திட்டமிடுதல், மற்றும் AI உடன் அரட்டையடித்தல் பற்றிய ஒரு எடுத்துக்காட்டு.",
+        d1Label: "தாவர ஸ்கேன்", d1Badge: "ஆரோக்கியமானது", d1Line: "~4 நாட்களில் நீர் ஊற்றவும் · பிரகாசமான மறைமுக ஒளி",
+        d1TipTitle: "பராமரிப்பு குறிப்பு", d1TipLine: "சிறந்த ஒளி உறிஞ்சுதலுக்கு மாதந்தோறும் இலைகளைத் துடைக்கவும்.",
+        d2Label: "பண்ணை ஆலோசகர்", d2Badge: "கோதுமை · பஞ்சாப்", d2Title: "உற்பத்தித் திட்டம்",
+        d2Line: "உங்கள் இருப்பிடத்தின் அடிப்படையில் நீர்ப்பாசனம், உரம் & இடைவெளி தானாக நிரப்பப்பட்டது.",
+        d2C2Line: "110 நாட்களில் முதிர்ச்சி · வண்டல் மண்ணில் அதிக விளைச்சல்", d2C3Line: "100 நாட்களில் முதிர்ச்சி · வறட்சியைத் தாங்கும்",
+        d3Label: "நிபுணரிடம் கேளுங்கள்", d3Q1: "இலை நுனிகள் ஏன் பழுப்பு நிறமாக மாறுகின்றன?",
+        d3A1: "குறைந்த ஈரப்பதம் அல்லது குழாய் நீரில் இருந்து கனிம படிவு காரணமாக இருக்கலாம் — வடிகட்டிய நீர் மற்றும் கூழாங்கல் தட்டை முயற்சிக்கவும்.", d3Q2: "சரி, நன்றி!",
+        d4Label: "ஆராயுங்கள்", d4Title: "பெங்களூருக்கான இன்றைய குறிப்புகள்",
+        d4Line1: "🌦️ லேசான பருவமழை எதிர்பார்க்கப்படுகிறது — வெளிப்புற நீர்ப்பாசனத்தை தவிர்க்கவும்.",
+        d4Line2: "🌱 அடுத்த வறண்ட காலத்திற்கு முன் நாற்று நடுவதற்கு நல்ல வாரம்.",
+        demoNote: "ஆப்பின் உண்மையான அம்சங்களின் விளக்கப் படங்கள் — நேரடி ஸ்கிரீன்ஷாட்கள் அல்ல.",
+        featuresTitle: "உங்கள் தாவரங்களுக்குத் தேவையான அனைத்தும்",
+        featuresSub: "அடையாளம், ஆரோக்கியம், பராமரிப்பு அட்டவணை, மற்றும் நிபுணர் ஆலோசனைக்கான ஒரே ஆப் — AI மூலம் இயக்கப்படுகிறது.",
+        f1Title: "உடனடி தாவர ஆரோக்கிய ஸ்கேன்கள்", f1Desc: "ஒரு புகைப்படம் எடுத்து தாவர அடையாளம், ஆரோக்கிய நிலை, பூச்சி/நோய் கண்டறிதல், மற்றும் படிப்படியான தீர்வுகளைப் பெறுங்கள் — உங்கள் சொந்த மொழியில்.",
+        f2Title: "ஸ்மார்ட் பராமரிப்பு நினைவூட்டல்கள்", f2Desc: "உங்கள் தாவரத்தின் குறிப்பிட்ட தேவைகளின் அடிப்படையில் தனிப்பயனாக்கப்பட்ட நீர் மற்றும் சூரிய ஒளி நினைவூட்டல்கள், அது நலமில்லாமல் இருந்தால் பின்தொடர் சோதனைகளுடன்.",
+        f3Title: "நடவு இட திட்டமிடுபவர்", f3Desc: "பால்கனி, முற்றம், அல்லது காலி இடத்தின் புகைப்படம் எடுத்து தாவரங்கள் மற்றும் அலங்காரத்தின் தனிப்பயனாக்கப்பட்ட கொள்முதல் பட்டியலைப் பெறுங்கள் — அது எப்படி இருக்கும் என்பதற்கான AI-உருவாக்கிய முன்னோட்டத்துடன்.",
+        f4Title: "பண்ணை ஆலோசகர்", f4Desc: "எந்தப் பயிருக்கும் முழுமையான உற்பத்தித் திட்டத்தைப் பெறுங்கள்: சாத்தியமான வகை விருப்பங்கள், உரம் மற்றும் நீர்ப்பாசன அட்டவணைகள், இடைவெளி வழிகாட்டுதல், மற்றும் உங்கள் பகுதியின் காலநிலை சூழல்.",
+        f5Title: "எப்போது வேண்டுமானாலும் தாவர நிபுணரிடம் கேளுங்கள்", f5Desc: "உங்கள் தாவரங்கள் அல்லது பண்ணை திட்டங்கள் பற்றி AI தாவர நிபுணருடன் அரட்டையடியுங்கள் — உரை, குரல், அல்லது புகைப்படம் மூலம்.",
+        f6Title: "உள்ளூர் குறிப்புகள், உங்கள் மொழியில்", f6Desc: "உங்கள் இருப்பிடத்திற்கு ஏற்ப தினசரி விவசாயம் மற்றும் தோட்டக்கலை குறிப்புகள், தானாகவே புதுப்பிக்கப்படும். ஸ்கேன் செய்த பிறகும், எப்போது வேண்டுமானாலும் மொழியை மாற்றவும்.",
+        f7Title: "எந்த எச்சரிக்கை அறிகுறியையும் தவறவிடாதீர்கள்", f7Desc: "நீர்ப்பாசனம், சூரிய ஒளி, ஆரோக்கிய பின்தொடர்தல், மற்றும் பண்ணை பூச்சி அபாயங்களுக்கான செயலூக்க அறிவிப்புகள் — உங்கள் சாதனத்திலேயே திட்டமிடப்பட்டது.",
+        f8Title: "உண்மை எதிராக செயற்கை கண்டறிதல்", f8Desc: "Plant Doctor உண்மையான தாவரங்களை செயற்கையானவற்றிலிருந்து வேறுபடுத்துகிறது, எனவே பிளாஸ்டிக் ஃபெர்னுக்கு நீர்ப்பாசன நினைவூட்டல்கள் வராது.",
+        pricingTitle: "எளிமையான, நியாயமான விலை", pricingSub: "இலவசமாகத் தொடங்குங்கள். தேவைப்படும்போது மேம்படுத்தவும்.",
+        freeTag: "இலவசம்", freePrice: "$0", freeNote: "எப்போதும்",
+        freeLi1: "5 வரை சேமிக்கப்பட்ட தாவர ஸ்கேன்கள்", freeLi2: "பராமரிப்பு நினைவூட்டல்கள் & ஆரோக்கிய பின்தொடர்தல்", freeLi3: "உள்ளூர் குறிப்புகள் & AI உடன் அரட்டை",
+        proTag: "ப்ரோ", proPrice: "பிராந்திய விலை", proNote: "மாதாந்திர கட்டணம் · இந்தியாவில் ₹249/மாதம், மற்ற இடங்களில் $10/மாதம்",
+        proLi1: "வரம்பற்ற தாவர ஸ்கேன்கள்", proLi2: "பெரிய பரப்பளவு பயிர்களுக்கான பண்ணை ஆலோசகர்", proLi3: "நர்சரிகள் & பண்ணைகளுக்கான வாடிக்கையாளர் போர்ட்டல்", proLi4: "முன்னுரிமை AI பதில் தரம்",
+        contactTitle: "கேள்விகள், கருத்துக்கள், அல்லது உதவி தேவையா?", contactSub: "நாங்கள் பொதுவாக ஒன்று முதல் இரண்டு நாட்களில் பதிலளிப்போம்.", contactBtn: "ஆதரவுக்கு மின்னஞ்சல் அனுப்பவும்",
+        footerCopyright: "© 2026 Plant Doctor. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.", footerPrivacy: "தனியுரிமைக் கொள்கை", footerContact: "தொடர்பு"
+      },
+      mr: {
+        navStory: "कथा", navDemo: "डेमो", navFeatures: "वैशिष्ट्ये", navPricing: "किंमत", navPrivacy: "गोपनीयता", navSupport: "मदत",
+        heroTitle: "AI वनस्पती काळजी, शेती नियोजन, आणि बाग सल्ला — एकाच अॅपमध्ये.",
+        heroLead: "एक फोटो काढा आणि त्वरित आरोग्य निदान, वैयक्तिकृत काळजी स्मरणपत्रे, आणि तज्ञांची उत्तरे मिळवा — घरगुती रोपे, बागा आणि मोठ्या शेतांसाठी.",
+        storeAppleSmall: "डाउनलोड करा", storeGoogleSmall: "मिळवा",
+        storeNote: "लवकरच येत आहे — दोन्ही अॅप्स मंजूर झाल्यावर लिंक्स सक्रिय होतील.",
+        story1Title: "प्रत्येक रोपाची सुरुवात एका प्रश्नाने होते.", story1Sub: "हे काय आहे? हे निरोगी आहे का?",
+        story2Title: "एक फोटो काढा.", story2Sub: "त्वरित AI निदान मिळवा.",
+        story3Title: "त्यासाठी खास बनवलेली काळजी योजना मिळवा.", story3Sub: "पाणी, प्रकाश, आणि उपचार — तुमच्या रोपासाठी सानुकूलित.",
+        story4Title: "ते बहरताना पहा.", story4Sub: "त्याला तुमची गरज असेल तेव्हा आम्ही तुम्हाला आठवण करून देऊ.",
+        demoTitle: "हे कार्यरत पहा", demoSub: "रोप स्कॅन करणे, पीक नियोजन करणे, आणि AI शी गप्पा मारणे याचे एक उदाहरण.",
+        d1Label: "रोप स्कॅन", d1Badge: "निरोगी", d1Line: "~4 दिवसांत पाणी द्या · तेजस्वी अप्रत्यक्ष प्रकाश",
+        d1TipTitle: "काळजी टीप", d1TipLine: "चांगल्या प्रकाश शोषणासाठी दर महिन्याला पाने पुसा.",
+        d2Label: "फार्म अॅडव्हायझर", d2Badge: "गहू · पंजाब", d2Title: "उत्पादकता योजना",
+        d2Line: "तुमच्या स्थानानुसार सिंचन, खत आणि अंतर आपोआप भरले.",
+        d2C2Line: "110 दिवसांत परिपक्व · गाळाच्या मातीत उच्च उत्पादन", d2C3Line: "100 दिवसांत परिपक्व · दुष्काळ सहनशील",
+        d3Label: "तज्ञांना विचारा", d3Q1: "पानांच्या टोकांचा रंग तपकिरी का होत आहे?",
+        d3A1: "बहुधा कमी आर्द्रता किंवा नळाच्या पाण्यातील खनिज साचल्यामुळे — फिल्टर केलेले पाणी आणि खडे असलेली ट्रे वापरून पहा.", d3Q2: "समजले, धन्यवाद!",
+        d4Label: "एक्सप्लोर करा", d4Title: "बंगळुरूसाठी आजच्या टिप्स",
+        d4Line1: "🌦️ हलक्या मान्सून सरींची शक्यता — बाहेरचे पाणी देणे टाळा.",
+        d4Line2: "🌱 पुढील कोरड्या हंगामापूर्वी रोपे लावण्यासाठी चांगला आठवडा.",
+        demoNote: "अॅपच्या खऱ्या वैशिष्ट्यांची उदाहरणात्मक मांडणी — प्रत्यक्ष स्क्रीनशॉट नाहीत.",
+        featuresTitle: "तुमच्या रोपांना लागणारे सर्व काही",
+        featuresSub: "ओळख, आरोग्य, काळजी वेळापत्रक, आणि तज्ञ सल्ल्यासाठी एक अॅप — AI द्वारे समर्थित.",
+        f1Title: "त्वरित रोप आरोग्य स्कॅन", f1Desc: "एक फोटो काढा आणि रोपाची ओळख, आरोग्य स्थिती, कीड/रोग शोध, आणि टप्प्याटप्प्याने उपचार मिळवा — तुमच्याच भाषेत.",
+        f2Title: "स्मार्ट काळजी स्मरणपत्रे", f2Desc: "तुमच्या रोपाच्या विशिष्ट गरजांनुसार वैयक्तिकृत पाणी आणि सूर्यप्रकाश स्मरणपत्रे, तसेच ते अस्वस्थ असल्यास पाठपुरावा तपासणी.",
+        f3Title: "लागवड जागा नियोजक", f3Desc: "बाल्कनी, अंगण, किंवा रिकाम्या जागेचा फोटो घ्या आणि रोपे व सजावटीची सानुकूलित खरेदी यादी मिळवा — ती कशी दिसेल याचे AI-निर्मित पूर्वावलोकन.",
+        f4Title: "फार्म अॅडव्हायझर", f4Desc: "कोणत्याही पिकासाठी संपूर्ण उत्पादकता योजना मिळवा: व्यवहार्य वाण पर्याय, खत व सिंचन वेळापत्रके, अंतर मार्गदर्शन, आणि तुमच्या प्रदेशाचे हवामान संदर्भ.",
+        f5Title: "कधीही रोप तज्ञाला विचारा", f5Desc: "तुमच्या कोणत्याही रोपाबद्दल किंवा शेती योजनांबद्दल AI रोप तज्ञाशी गप्पा मारा — मजकूर, आवाज, किंवा फोटोद्वारे.",
+        f6Title: "स्थानिक टिप्स, तुमच्या भाषेत", f6Desc: "तुमच्या स्थानानुसार दैनंदिन शेती आणि बागकाम टिप्स, आपोआप अद्ययावत होतात. स्कॅन केल्यानंतरही, कधीही भाषा बदला.",
+        f7Title: "कोणताही इशारा चुकवू नका", f7Desc: "पाणी, सूर्यप्रकाश, आरोग्य पाठपुरावा, आणि शेती कीड धोक्यांसाठी सक्रिय सूचना — थेट तुमच्या डिव्हाइसवर वेळापत्रक केलेल्या.",
+        f8Title: "खरे विरुद्ध कृत्रिम ओळख", f8Desc: "Plant Doctor खऱ्या रोपांना कृत्रिम रोपांपासून वेगळे सांगते, त्यामुळे तुम्हाला प्लास्टिकच्या फर्नसाठी पाणी देण्याची आठवण येत नाही.",
+        pricingTitle: "सोपे, न्याय्य दर", pricingSub: "मोफत सुरू करा. गरज पडेल तेव्हा अपग्रेड करा.",
+        freeTag: "मोफत", freePrice: "$0", freeNote: "कायमचे",
+        freeLi1: "5 पर्यंत जतन केलेले रोप स्कॅन", freeLi2: "काळजी स्मरणपत्रे आणि आरोग्य पाठपुरावा", freeLi3: "स्थानिक टिप्स आणि AI शी गप्पा",
+        proTag: "प्रो", proPrice: "प्रादेशिक किंमत", proNote: "मासिक बिलिंग · भारतात ₹249/महिना, इतरत्र $10/महिना",
+        proLi1: "अमर्यादित रोप स्कॅन", proLi2: "मोठ्या क्षेत्रफळाच्या पिकांसाठी फार्म अॅडव्हायझर", proLi3: "रोपवाटिका आणि शेतांसाठी ग्राहक पोर्टल", proLi4: "प्राधान्य AI प्रतिसाद गुणवत्ता",
+        contactTitle: "प्रश्न, अभिप्राय, किंवा मदत हवी आहे?", contactSub: "आम्ही सहसा एक ते दोन दिवसांत उत्तर देतो.", contactBtn: "सपोर्टला ईमेल करा",
+        footerCopyright: "© 2026 Plant Doctor. सर्व हक्क राखीव.", footerPrivacy: "गोपनीयता धोरण", footerContact: "संपर्क"
+      },
+      gu: {
+        navStory: "વાર્તા", navDemo: "ડેમો", navFeatures: "લક્ષણો", navPricing: "કિંમત", navPrivacy: "ગોપનીયતા", navSupport: "સહાય",
+        heroTitle: "AI છોડની સંભાળ, ખેતી આયોજન, અને બગીચા સલાહ — એક જ એપમાં.",
+        heroLead: "એક ફોટો લો અને તાત્કાલિક આરોગ્ય નિદાન, વ્યક્તિગત સંભાળ રીમાઇન્ડર્સ, અને નિષ્ણાત જવાબો મેળવો — ઘરેલુ છોડ, બગીચા અને મોટા ખેતરો માટે.",
+        storeAppleSmall: "ડાઉનલોડ કરો", storeGoogleSmall: "મેળવો",
+        storeNote: "ટૂંક સમયમાં આવે છે — બંને એપ્સ મંજૂર થયા પછી લિંક્સ સક્રિય થશે.",
+        story1Title: "દરેક છોડ એક પ્રશ્નથી શરૂ થાય છે.", story1Sub: "આ શું છે? શું આ સ્વસ્થ છે?",
+        story2Title: "એક ફોટો લો.", story2Sub: "તાત્કાલિક AI નિદાન મેળવો.",
+        story3Title: "તેના માટે ખાસ બનાવેલી સંભાળ યોજના મેળવો.", story3Sub: "પાણી, પ્રકાશ, અને ઉપચાર — તમારા છોડ માટે અનુકૂળ.",
+        story4Title: "તેને ખીલતું જુઓ.", story4Sub: "જ્યારે તેને તમારી જરૂર હશે ત્યારે અમે તમને યાદ કરાવીશું.",
+        demoTitle: "તેને કાર્યરત જુઓ", demoSub: "છોડ સ્કેન કરવા, પાકનું આયોજન કરવા, અને AI સાથે વાત કરવાનું ઉદાહરણ.",
+        d1Label: "છોડ સ્કેન", d1Badge: "સ્વસ્થ", d1Line: "~4 દિવસમાં પાણી આપો · તેજસ્વી પરોક્ષ પ્રકાશ",
+        d1TipTitle: "સંભાળ ટિપ", d1TipLine: "વધુ સારા પ્રકાશ શોષણ માટે દર મહિને પાંદડા સાફ કરો.",
+        d2Label: "ફાર્મ એડવાઇઝર", d2Badge: "ઘઉં · પંજાબ", d2Title: "ઉત્પાદકતા યોજના",
+        d2Line: "તમારા સ્થાન મુજબ સિંચાઈ, ખાતર અને અંતર આપોઆપ ભરાયેલ.",
+        d2C2Line: "110 દિવસમાં પરિપક્વ · કાંપવાળી માટીમાં ઉચ્ચ ઉપજ", d2C3Line: "100 દિવસમાં પરિપક્વ · દુષ્કાળ સહનશીલ",
+        d3Label: "નિષ્ણાતને પૂછો", d3Q1: "પાંદડાની ટોચ ભૂરી કેમ થઈ રહી છે?",
+        d3A1: "કદાચ ઓછી ભેજ અથવા નળના પાણીમાંથી ખનિજ સંચય — ફિલ્ટર કરેલ પાણી અને કાંકરાની ટ્રે અજમાવો.", d3Q2: "સમજાઈ ગયું, આભાર!",
+        d4Label: "અન્વેષણ કરો", d4Title: "બેંગલુરુ માટે આજની ટિપ્સ",
+        d4Line1: "🌦️ હળવા ચોમાસાના વરસાદની અપેક્ષા — બહારનું પાણી આપવાનું ટાળો.",
+        d4Line2: "🌱 આગામી સૂકી ઋતુ પહેલા રોપા રોપવા માટે સારું અઠવાડિયું.",
+        demoNote: "એપની વાસ્તવિક સુવિધાઓના ઉદાહરણરૂપ નમૂનાઓ — લાઇવ સ્ક્રીનશોટ નથી.",
+        featuresTitle: "તમારા છોડને જોઈતું બધું",
+        featuresSub: "ઓળખ, આરોગ્ય, સંભાળ સમયપત્રક, અને નિષ્ણાત સલાહ માટે એક એપ — AI દ્વારા સંચાલિત.",
+        f1Title: "તાત્કાલિક છોડ આરોગ્ય સ્કેન", f1Desc: "એક ફોટો લો અને છોડની ઓળખ, આરોગ્ય સ્થિતિ, જીવાત/રોગ શોધ, અને પગલું-દર-પગલું ઉપચાર મેળવો — તમારી પોતાની ભાષામાં.",
+        f2Title: "સ્માર્ટ સંભાળ રીમાઇન્ડર્સ", f2Desc: "તમારા છોડની ચોક્કસ જરૂરિયાતો મુજબ વ્યક્તિગત પાણી અને સૂર્યપ્રકાશ રીમાઇન્ડર્સ, વત્તા તે અસ્વસ્થ હોય તો ફોલો-અપ ચેક-ઇન.",
+        f3Title: "વાવેતર જગ્યા આયોજક", f3Desc: "બાલ્કની, આંગણું, અથવા ખાલી જગ્યાનો ફોટો લો અને છોડ અને સજાવટની અનુકૂળ ખરીદી યાદી મેળવો — તે કેવું દેખાશે તેનું AI-જનરેટેડ પૂર્વાવલોકન સાથે.",
+        f4Title: "ફાર્મ એડવાઇઝર", f4Desc: "કોઈપણ પાક માટે સંપૂર્ણ ઉત્પાદકતા યોજના મેળવો: શક્ય જાત વિકલ્પો, ખાતર અને સિંચાઈ સમયપત્રકો, અંતર માર્ગદર્શન, અને તમારા વિસ્તારનું આબોહવા સંદર્ભ.",
+        f5Title: "કોઈપણ સમયે છોડ નિષ્ણાતને પૂછો", f5Desc: "તમારા કોઈપણ છોડ અથવા ખેતી યોજનાઓ વિશે AI છોડ નિષ્ણાત સાથે ચેટ કરો — ટેક્સ્ટ, અવાજ, અથવા ફોટો દ્વારા.",
+        f6Title: "સ્થાનિક ટિપ્સ, તમારી ભાષામાં", f6Desc: "તમારા સ્થાન મુજબ દૈનિક ખેતી અને બાગકામ ટિપ્સ, આપોઆપ તાજી થાય છે. સ્કેન પછી પણ, ગમે ત્યારે ભાષા બદલો.",
+        f7Title: "કોઈ ચેતવણી ચિહ્ન ચૂકશો નહીં", f7Desc: "પાણી, સૂર્યપ્રકાશ, આરોગ્ય ફોલો-અપ, અને ખેતર જીવાત જોખમો માટે સક્રિય સૂચનાઓ — સીધી તમારા ડિવાઇસ પર શેડ્યૂલ થયેલ.",
+        f8Title: "વાસ્તવિક વિરુદ્ધ કૃત્રિમ શોધ", f8Desc: "Plant Doctor વાસ્તવિક છોડને કૃત્રિમથી અલગ કહે છે, જેથી તમને પ્લાસ્ટિકના ફર્ન માટે પાણી આપવાના રીમાઇન્ડર્સ ન મળે.",
+        pricingTitle: "સરળ, ન્યાયી કિંમત", pricingSub: "મફતમાં શરૂ કરો. જ્યારે જરૂર પડે ત્યારે અપગ્રેડ કરો.",
+        freeTag: "મફત", freePrice: "$0", freeNote: "કાયમ માટે",
+        freeLi1: "5 સુધી સાચવેલા છોડ સ્કેન", freeLi2: "સંભાળ રીમાઇન્ડર્સ અને આરોગ્ય ફોલો-અપ", freeLi3: "સ્થાનિક ટિપ્સ અને AI સાથે ચેટ",
+        proTag: "પ્રો", proPrice: "પ્રાદેશિક કિંમત", proNote: "માસિક બિલિંગ · ભારતમાં ₹249/મહિનો, અન્યત્ર $10/મહિનો",
+        proLi1: "અમર્યાદિત છોડ સ્કેન", proLi2: "મોટા વિસ્તારના પાક માટે ફાર્મ એડવાઇઝર", proLi3: "નર્સરી અને ખેતરો માટે ગ્રાહક પોર્ટલ", proLi4: "પ્રાધાન્ય AI પ્રતિભાવ ગુણવત્તા",
+        contactTitle: "પ્રશ્નો, પ્રતિસાદ, અથવા મદદની જરૂર છે?", contactSub: "અમે સામાન્ય રીતે એક-બે દિવસમાં જવાબ આપીએ છીએ.", contactBtn: "સપોર્ટને ઇમેઇલ કરો",
+        footerCopyright: "© 2026 Plant Doctor. બધા હકો સુરક્ષિત.", footerPrivacy: "ગોપનીયતા નીતિ", footerContact: "સંપર્ક"
+      },
+      kn: {
+        navStory: "ಕಥೆ", navDemo: "ಡೆಮೊ", navFeatures: "ವೈಶಿಷ್ಟ್ಯಗಳು", navPricing: "ಬೆಲೆ", navPrivacy: "ಗೌಪ್ಯತೆ", navSupport: "ಬೆಂಬಲ",
+        heroTitle: "AI ಸಸ್ಯ ಆರೈಕೆ, ಕೃಷಿ ಯೋಜನೆ, ಮತ್ತು ತೋಟದ ಸಲಹೆ — ಒಂದೇ ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ.",
+        heroLead: "ಒಂದು ಫೋಟೋ ತೆಗೆದು ತಕ್ಷಣದ ಆರೋಗ್ಯ ರೋಗನಿರ್ಣಯ, ವೈಯಕ್ತೀಕರಿಸಿದ ಆರೈಕೆ ಜ್ಞಾಪನೆಗಳು, ಮತ್ತು ತಜ್ಞರ ಉತ್ತರಗಳನ್ನು ಪಡೆಯಿರಿ — ಮನೆ ಗಿಡಗಳು, ತೋಟಗಳು ಮತ್ತು ದೊಡ್ಡ ತೋಟಗಳಿಗಾಗಿ.",
+        storeAppleSmall: "ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ", storeGoogleSmall: "ಪಡೆಯಿರಿ",
+        storeNote: "ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತಿದೆ — ಎರಡೂ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಅನುಮೋದನೆಗೊಂಡ ನಂತರ ಲಿಂಕ್‌ಗಳು ಸಕ್ರಿಯವಾಗುತ್ತವೆ.",
+        story1Title: "ಪ್ರತಿ ಸಸ್ಯವು ಒಂದು ಪ್ರಶ್ನೆಯಿಂದ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ.", story1Sub: "ಇದು ಏನು? ಇದು ಆರೋಗ್ಯಕರವಾಗಿದೆಯೇ?",
+        story2Title: "ಒಂದು ಫೋಟೋ ತೆಗೆಯಿರಿ.", story2Sub: "ತಕ್ಷಣದ AI ರೋಗನಿರ್ಣಯವನ್ನು ಪಡೆಯಿರಿ.",
+        story3Title: "ಅದಕ್ಕಾಗಿಯೇ ರೂಪಿಸಿದ ಆರೈಕೆ ಯೋಜನೆಯನ್ನು ಪಡೆಯಿರಿ.", story3Sub: "ನೀರುಣಿಸುವಿಕೆ, ಬೆಳಕು, ಮತ್ತು ಪರಿಹಾರಗಳು — ನಿಮ್ಮ ಸಸ್ಯಕ್ಕೆ ಅನುಗುಣವಾಗಿ.",
+        story4Title: "ಅದು ಸೊಂಪಾಗಿ ಬೆಳೆಯುವುದನ್ನು ನೋಡಿ.", story4Sub: "ಅದಕ್ಕೆ ನಿಮ್ಮ ಅಗತ್ಯವಿದ್ದಾಗ ನಾವು ನಿಮಗೆ ನೆನಪಿಸುತ್ತೇವೆ.",
+        demoTitle: "ಇದು ಕಾರ್ಯನಿರ್ವಹಿಸುವುದನ್ನು ನೋಡಿ", demoSub: "ಸಸ್ಯವನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡುವುದು, ಬೆಳೆ ಯೋಜನೆ, ಮತ್ತು AI ಜೊತೆ ಚಾಟ್ ಮಾಡುವ ಉದಾಹರಣೆ.",
+        d1Label: "ಸಸ್ಯ ಸ್ಕ್ಯಾನ್", d1Badge: "ಆರೋಗ್ಯಕರ", d1Line: "~4 ದಿನಗಳಲ್ಲಿ ನೀರುಣಿಸಿ · ಪ್ರಕಾಶಮಾನವಾದ ಪರೋಕ್ಷ ಬೆಳಕು",
+        d1TipTitle: "ಆರೈಕೆ ಸಲಹೆ", d1TipLine: "ಉತ್ತಮ ಬೆಳಕಿನ ಹೀರುವಿಕೆಗಾಗಿ ತಿಂಗಳಿಗೊಮ್ಮೆ ಎಲೆಗಳನ್ನು ಒರೆಸಿ.",
+        d2Label: "ಫಾರ್ಮ್ ಅಡ್ವೈಸರ್", d2Badge: "ಗೋಧಿ · ಪಂಜಾಬ್", d2Title: "ಉತ್ಪಾದಕತೆ ಯೋಜನೆ",
+        d2Line: "ನಿಮ್ಮ ಸ್ಥಳದ ಆಧಾರದ ಮೇಲೆ ನೀರಾವರಿ, ಗೊಬ್ಬರ ಮತ್ತು ಅಂತರ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತುಂಬಿಸಲಾಗಿದೆ.",
+        d2C2Line: "110 ದಿನಗಳಲ್ಲಿ ಪಕ್ವತೆ · ಮೆಕ್ಕಲು ಮಣ್ಣಿನಲ್ಲಿ ಹೆಚ್ಚಿನ ಇಳುವರಿ", d2C3Line: "100 ದಿನಗಳಲ್ಲಿ ಪಕ್ವತೆ · ಬರ ಸಹಿಷ್ಣು",
+        d3Label: "ತಜ್ಞರನ್ನು ಕೇಳಿ", d3Q1: "ಎಲೆಗಳ ತುದಿಗಳು ಏಕೆ ಕಂದು ಬಣ್ಣಕ್ಕೆ ತಿರುಗುತ್ತಿವೆ?",
+        d3A1: "ಬಹುಶಃ ಕಡಿಮೆ ಆರ್ದ್ರತೆ ಅಥವಾ ನಲ್ಲಿ ನೀರಿನಿಂದ ಖನಿಜ ಶೇಖರಣೆ — ಫಿಲ್ಟರ್ ಮಾಡಿದ ನೀರು ಮತ್ತು ಬೆಣಚುಕಲ್ಲಿನ ಟ್ರೇ ಪ್ರಯತ್ನಿಸಿ.", d3Q2: "ಅರ್ಥವಾಯಿತು, ಧನ್ಯವಾದಗಳು!",
+        d4Label: "ಅನ್ವೇಷಿಸಿ", d4Title: "ಬೆಂಗಳೂರಿಗೆ ಇಂದಿನ ಸಲಹೆಗಳು",
+        d4Line1: "🌦️ ಲಘು ಮುಂಗಾರು ಮಳೆಯ ನಿರೀಕ್ಷೆ — ಹೊರಾಂಗಣ ನೀರುಣಿಸುವಿಕೆಯನ್ನು ತಡೆಹಿಡಿಯಿರಿ.",
+        d4Line2: "🌱 ಮುಂದಿನ ಶುಷ್ಕ ಅವಧಿಗೆ ಮೊದಲು ಸಸಿಗಳನ್ನು ನಾಟಿ ಮಾಡಲು ಉತ್ತಮ ವಾರ.",
+        demoNote: "ಅಪ್ಲಿಕೇಶನ್‌ನ ನಿಜವಾದ ವೈಶಿಷ್ಟ್ಯಗಳ ವಿವರಣಾತ್ಮಕ ಮಾದರಿಗಳು — ನೇರ ಸ್ಕ್ರೀನ್‌ಶಾಟ್‌ಗಳಲ್ಲ.",
+        featuresTitle: "ನಿಮ್ಮ ಸಸ್ಯಗಳಿಗೆ ಬೇಕಾದ ಎಲ್ಲವೂ",
+        featuresSub: "ಗುರುತಿಸುವಿಕೆ, ಆರೋಗ್ಯ, ಆರೈಕೆ ವೇಳಾಪಟ್ಟಿ, ಮತ್ತು ತಜ್ಞರ ಸಲಹೆಗಾಗಿ ಒಂದು ಅಪ್ಲಿಕೇಶನ್ — AI ನಿಂದ ಚಾಲಿತ.",
+        f1Title: "ತಕ್ಷಣದ ಸಸ್ಯ ಆರೋಗ್ಯ ಸ್ಕ್ಯಾನ್‌ಗಳು", f1Desc: "ಒಂದು ಫೋಟೋ ತೆಗೆದು ಸಸ್ಯ ಗುರುತಿಸುವಿಕೆ, ಆರೋಗ್ಯ ಸ್ಥಿತಿ, ಕೀಟ/ರೋಗ ಪತ್ತೆ, ಮತ್ತು ಹಂತ ಹಂತದ ಪರಿಹಾರಗಳನ್ನು ಪಡೆಯಿರಿ — ನಿಮ್ಮ ಸ್ವಂತ ಭಾಷೆಯಲ್ಲಿ.",
+        f2Title: "ಸ್ಮಾರ್ಟ್ ಆರೈಕೆ ಜ್ಞಾಪನೆಗಳು", f2Desc: "ನಿಮ್ಮ ಸಸ್ಯದ ನಿರ್ದಿಷ್ಟ ಅಗತ್ಯಗಳ ಆಧಾರದ ಮೇಲೆ ವೈಯಕ್ತೀಕರಿಸಿದ ನೀರುಣಿಸುವಿಕೆ ಮತ್ತು ಬಿಸಿಲಿನ ಜ್ಞಾಪನೆಗಳು, ಅದು ಅಸ್ವಸ್ಥವಾಗಿದ್ದರೆ ಅನುಸರಣಾ ತಪಾಸಣೆಗಳೊಂದಿಗೆ.",
+        f3Title: "ನೆಡುವಿಕೆ ಸ್ಥಳ ಯೋಜಕ", f3Desc: "ಬಾಲ್ಕನಿ, ಅಂಗಳ, ಅಥವಾ ಖಾಲಿ ಸ್ಥಳದ ಫೋಟೋ ತೆಗೆದು ಸಸ್ಯಗಳು ಮತ್ತು ಅಲಂಕಾರದ ಕಸ್ಟಮ್ ಶಾಪಿಂಗ್ ಪಟ್ಟಿಯನ್ನು ಪಡೆಯಿರಿ — ಅದು ಹೇಗೆ ಕಾಣುತ್ತದೆ ಎಂಬುದರ AI-ರಚಿತ ಪೂರ್ವವೀಕ್ಷಣೆಯೊಂದಿಗೆ.",
+        f4Title: "ಫಾರ್ಮ್ ಅಡ್ವೈಸರ್", f4Desc: "ಯಾವುದೇ ಬೆಳೆಗೆ ಸಂಪೂರ್ಣ ಉತ್ಪಾದಕತೆ ಯೋಜನೆಯನ್ನು ಪಡೆಯಿರಿ: ಸಾಧ್ಯವಿರುವ ತಳಿ ಆಯ್ಕೆಗಳು, ಗೊಬ್ಬರ ಮತ್ತು ನೀರಾವರಿ ವೇಳಾಪಟ್ಟಿಗಳು, ಅಂತರ ಮಾರ್ಗದರ್ಶನ, ಮತ್ತು ನಿಮ್ಮ ಪ್ರದೇಶದ ಹವಾಮಾನ ಸಂದರ್ಭ.",
+        f5Title: "ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಸಸ್ಯ ತಜ್ಞರನ್ನು ಕೇಳಿ", f5Desc: "ನಿಮ್ಮ ಯಾವುದೇ ಸಸ್ಯಗಳು ಅಥವಾ ಕೃಷಿ ಯೋಜನೆಗಳ ಬಗ್ಗೆ AI ಸಸ್ಯ ತಜ್ಞರೊಂದಿಗೆ ಚಾಟ್ ಮಾಡಿ — ಪಠ್ಯ, ಧ್ವನಿ, ಅಥವಾ ಫೋಟೋ ಮೂಲಕ.",
+        f6Title: "ಸ್ಥಳೀಯ ಸಲಹೆಗಳು, ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ", f6Desc: "ನಿಮ್ಮ ಸ್ಥಳಕ್ಕೆ ಅನುಗುಣವಾಗಿ ದೈನಂದಿನ ಕೃಷಿ ಮತ್ತು ತೋಟಗಾರಿಕೆ ಸಲಹೆಗಳು, ಸ್ವಯಂಚಾಲಿತವಾಗಿ ರಿಫ್ರೆಶ್ ಆಗುತ್ತವೆ. ಸ್ಕ್ಯಾನ್ ಮಾಡಿದ ನಂತರವೂ, ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಭಾಷೆಯನ್ನು ಬದಲಾಯಿಸಿ.",
+        f7Title: "ಯಾವುದೇ ಎಚ್ಚರಿಕೆ ಸಂಕೇತವನ್ನು ತಪ್ಪಿಸಿಕೊಳ್ಳಬೇಡಿ", f7Desc: "ನೀರುಣಿಸುವಿಕೆ, ಬಿಸಿಲು, ಆರೋಗ್ಯ ಅನುಸರಣೆ, ಮತ್ತು ಕೃಷಿ ಕೀಟ ಅಪಾಯಗಳಿಗಾಗಿ ಪೂರ್ವಭಾವಿ ಅಧಿಸೂಚನೆಗಳು — ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿಯೇ ವೇಳಾಪಟ್ಟಿ ಮಾಡಲಾಗಿದೆ.",
+        f8Title: "ನಿಜ ವಿರುದ್ಧ ಕೃತಕ ಪತ್ತೆ", f8Desc: "Plant Doctor ನಿಜವಾದ ಸಸ್ಯಗಳನ್ನು ಕೃತಕವಾದವುಗಳಿಂದ ಪ್ರತ್ಯೇಕಿಸಿ ಹೇಳುತ್ತದೆ, ಆದ್ದರಿಂದ ಪ್ಲಾಸ್ಟಿಕ್ ಜರೀಗಿಡಕ್ಕೆ ನೀರುಣಿಸುವ ಜ್ಞಾಪನೆಗಳು ನಿಮಗೆ ಬರುವುದಿಲ್ಲ.",
+        pricingTitle: "ಸರಳ, ನ್ಯಾಯಯುತ ಬೆಲೆ", pricingSub: "ಉಚಿತವಾಗಿ ಪ್ರಾರಂಭಿಸಿ. ನಿಮಗೆ ಅಗತ್ಯವಿದ್ದಾಗ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ.",
+        freeTag: "ಉಚಿತ", freePrice: "$0", freeNote: "ಶಾಶ್ವತವಾಗಿ",
+        freeLi1: "5 ರವರೆಗೆ ಉಳಿಸಿದ ಸಸ್ಯ ಸ್ಕ್ಯಾನ್‌ಗಳು", freeLi2: "ಆರೈಕೆ ಜ್ಞಾಪನೆಗಳು ಮತ್ತು ಆರೋಗ್ಯ ಅನುಸರಣೆ", freeLi3: "ಸ್ಥಳೀಯ ಸಲಹೆಗಳು ಮತ್ತು AI ಜೊತೆ ಚಾಟ್",
+        proTag: "ಪ್ರೊ", proPrice: "ಪ್ರಾದೇಶಿಕ ಬೆಲೆ", proNote: "ಮಾಸಿಕ ಬಿಲ್ಲಿಂಗ್ · ಭಾರತದಲ್ಲಿ ₹249/ತಿಂಗಳು, ಇತರೆಡೆ $10/ತಿಂಗಳು",
+        proLi1: "ಅಪರಿಮಿತ ಸಸ್ಯ ಸ್ಕ್ಯಾನ್‌ಗಳು", proLi2: "ದೊಡ್ಡ ಪ್ರದೇಶದ ಬೆಳೆಗಳಿಗೆ ಫಾರ್ಮ್ ಅಡ್ವೈಸರ್", proLi3: "ನರ್ಸರಿಗಳು ಮತ್ತು ತೋಟಗಳಿಗೆ ಗ್ರಾಹಕ ಪೋರ್ಟಲ್", proLi4: "ಆದ್ಯತೆಯ AI ಪ್ರತಿಕ್ರಿಯೆ ಗುಣಮಟ್ಟ",
+        contactTitle: "ಪ್ರಶ್ನೆಗಳು, ಪ್ರತಿಕ್ರಿಯೆ, ಅಥವಾ ಸಹಾಯ ಬೇಕೇ?", contactSub: "ನಾವು ಸಾಮಾನ್ಯವಾಗಿ ಒಂದರಿಂದ ಎರಡು ದಿನಗಳಲ್ಲಿ ಪ್ರತ್ಯುತ್ತರ ನೀಡುತ್ತೇವೆ.", contactBtn: "ಬೆಂಬಲಕ್ಕೆ ಇಮೇಲ್ ಮಾಡಿ",
+        footerCopyright: "© 2026 Plant Doctor. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.", footerPrivacy: "ಗೌಪ್ಯತಾ ನೀತಿ", footerContact: "ಸಂಪರ್ಕಿಸಿ"
+      },
+      ml: {
+        navStory: "കഥ", navDemo: "ഡെമോ", navFeatures: "സവിശേഷതകൾ", navPricing: "വില", navPrivacy: "സ്വകാര്യത", navSupport: "പിന്തുണ",
+        heroTitle: "AI സസ്യ പരിചരണം, കൃഷി ആസൂത്രണം, ഒപ്പം തോട്ടഗൃഹ ഉപദേശം — ഒരൊറ്റ ആപ്പിൽ.",
+        heroLead: "ഒരു ഫോട്ടോ എടുത്ത് തൽക്ഷണ ആരോഗ്യ നിർണയം, വ്യക്തിഗതമാക്കിയ പരിചരണ ഓർമ്മപ്പെടുത്തലുകൾ, വിദഗ്ധ ഉത്തരങ്ങൾ എന്നിവ നേടുക — വീട്ടിലെ ചെടികൾ, തോട്ടങ്ങൾ, വലിയ കൃഷിയിടങ്ങൾ എന്നിവയ്ക്ക്.",
+        storeAppleSmall: "ഡൗൺലോഡ് ചെയ്യുക", storeGoogleSmall: "നേടുക",
+        storeNote: "ഉടൻ വരുന്നു — രണ്ട് ആപ്പുകളും അംഗീകരിച്ചുകഴിഞ്ഞാൽ ലിങ്കുകൾ സജീവമാകും.",
+        story1Title: "ഓരോ ചെടിയും ഒരു ചോദ്യത്തിൽ തുടങ്ങുന്നു.", story1Sub: "ഇതെന്താണ്? ഇത് ആരോഗ്യമുള്ളതാണോ?",
+        story2Title: "ഒരു ഫോട്ടോ എടുക്കുക.", story2Sub: "തൽക്ഷണ AI നിർണയം നേടുക.",
+        story3Title: "അതിനായി പ്രത്യേകം തയ്യാറാക്കിയ പരിചരണ പദ്ധതി നേടുക.", story3Sub: "നനയ്ക്കൽ, വെളിച്ചം, പരിഹാരങ്ങൾ — നിങ്ങളുടെ ചെടിക്ക് അനുയോജ്യമായത്.",
+        story4Title: "അത് തഴച്ചുവളരുന്നത് കാണുക.", story4Sub: "അതിന് നിങ്ങളെ ആവശ്യമുള്ളപ്പോൾ ഞങ്ങൾ നിങ്ങളെ ഓർമ്മിപ്പിക്കും.",
+        demoTitle: "ഇത് പ്രവർത്തിക്കുന്നത് കാണുക", demoSub: "ഒരു ചെടി സ്കാൻ ചെയ്യുന്നതിന്റെയും, വിള ആസൂത്രണം ചെയ്യുന്നതിന്റെയും, AI-യുമായി സംസാരിക്കുന്നതിന്റെയും ഒരു ദൃഷ്ടാന്തം.",
+        d1Label: "ചെടി സ്കാൻ", d1Badge: "ആരോഗ്യമുള്ളത്", d1Line: "~4 ദിവസത്തിനുള്ളിൽ നനയ്ക്കുക · തിളക്കമുള്ള പരോക്ഷ വെളിച്ചം",
+        d1TipTitle: "പരിചരണ നുറുങ്ങ്", d1TipLine: "മെച്ചപ്പെട്ട വെളിച്ച ആഗിരണത്തിന് എല്ലാ മാസവും ഇലകൾ തുടയ്ക്കുക.",
+        d2Label: "ഫാം അഡ്വൈസർ", d2Badge: "ഗോതമ്പ് · പഞ്ചാബ്", d2Title: "ഉൽപാദനക്ഷമത പദ്ധതി",
+        d2Line: "നിങ്ങളുടെ സ്ഥലത്തിന് അനുസരിച്ച് ജലസേചനം, വളം, അകലം എന്നിവ സ്വയമേവ പൂരിപ്പിച്ചു.",
+        d2C2Line: "110 ദിവസത്തിൽ വിളവെടുപ്പ് · എക്കൽ മണ്ണിൽ ഉയർന്ന വിളവ്", d2C3Line: "100 ദിവസത്തിൽ വിളവെടുപ്പ് · വരൾച്ചയെ പ്രതിരോധിക്കും",
+        d3Label: "വിദഗ്ധനോട് ചോദിക്കുക", d3Q1: "ഇലകളുടെ അഗ്രഭാഗം എന്തുകൊണ്ട് തവിട്ട് നിറമാകുന്നു?",
+        d3A1: "ഒരുപക്ഷേ കുറഞ്ഞ ഈർപ്പം അല്ലെങ്കിൽ പൈപ്പ് വെള്ളത്തിൽ നിന്നുള്ള ധാതു അടിഞ്ഞുകൂടൽ — ഫിൽട്ടർ ചെയ്ത വെള്ളവും ചരൽ ട്രേയും പരീക്ഷിക്കുക.", d3Q2: "മനസ്സിലായി, നന്ദി!",
+        d4Label: "പര്യവേക്ഷണം ചെയ്യുക", d4Title: "ബെംഗളൂരുവിനുള്ള ഇന്നത്തെ നുറുങ്ങുകൾ",
+        d4Line1: "🌦️ ലഘു മൺസൂൺ മഴ പ്രതീക്ഷിക്കുന്നു — പുറത്ത് നനയ്ക്കുന്നത് ഒഴിവാക്കുക.",
+        d4Line2: "🌱 അടുത്ത വരണ്ട കാലയളവിന് മുമ്പ് തൈകൾ നടാൻ നല്ല ആഴ്ച.",
+        demoNote: "ആപ്പിന്റെ യഥാർത്ഥ സവിശേഷതകളുടെ ദൃഷ്ടാന്ത മാതൃകകൾ — തത്സമയ സ്ക്രീൻഷോട്ടുകൾ അല്ല.",
+        featuresTitle: "നിങ്ങളുടെ ചെടികൾക്ക് വേണ്ടതെല്ലാം",
+        featuresSub: "തിരിച്ചറിയൽ, ആരോഗ്യം, പരിചരണ ഷെഡ്യൂളിംഗ്, വിദഗ്ധ ഉപദേശം എന്നിവയ്ക്കുള്ള ഒരു ആപ്പ് — AI പ്രവർത്തിപ്പിക്കുന്നത്.",
+        f1Title: "തൽക്ഷണ ചെടി ആരോഗ്യ സ്കാനുകൾ", f1Desc: "ഒരു ഫോട്ടോ എടുത്ത് ചെടിയുടെ തിരിച്ചറിയൽ, ആരോഗ്യ നില, കീട/രോഗ കണ്ടെത്തൽ, ഘട്ടം ഘട്ടമായുള്ള പരിഹാരങ്ങൾ എന്നിവ നേടുക — നിങ്ങളുടെ സ്വന്തം ഭാഷയിൽ.",
+        f2Title: "സ്മാർട്ട് പരിചരണ ഓർമ്മപ്പെടുത്തലുകൾ", f2Desc: "നിങ്ങളുടെ ചെടിയുടെ പ്രത്യേക ആവശ്യങ്ങൾക്ക് അനുസരിച്ച് വ്യക്തിഗതമാക്കിയ നനയ്ക്കൽ, സൂര്യപ്രകാശ ഓർമ്മപ്പെടുത്തലുകൾ, അത് അസ്വസ്ഥമായാൽ തുടർ പരിശോധനകളും.",
+        f3Title: "നടീൽ സ്ഥല ആസൂത്രകൻ", f3Desc: "ബാൽക്കണി, മുറ്റം, അല്ലെങ്കിൽ ഒഴിഞ്ഞ സ്ഥലത്തിന്റെ ഫോട്ടോ എടുത്ത് ചെടികളുടെയും അലങ്കാരത്തിന്റെയും അനുയോജ്യമായ ഷോപ്പിംഗ് ലിസ്റ്റ് നേടുക — അത് എങ്ങനെ കാണപ്പെടും എന്നതിന്റെ AI-സൃഷ്ടിച്ച പ്രിവ്യൂവോടെ.",
+        f4Title: "ഫാം അഡ്വൈസർ", f4Desc: "ഏത് വിളയ്ക്കും സമ്പൂർണ്ണ ഉൽപാദനക്ഷമത പദ്ധതി നേടുക: സാധ്യമായ ഇനം ഓപ്ഷനുകൾ, വളം, ജലസേചന ഷെഡ്യൂളുകൾ, അകല മാർഗ്ഗനിർദ്ദേശം, നിങ്ങളുടെ പ്രദേശത്തിന്റെ കാലാവസ്ഥാ സന്ദർഭം.",
+        f5Title: "എപ്പോൾ വേണമെങ്കിലും ഒരു സസ്യ വിദഗ്ധനോട് ചോദിക്കുക", f5Desc: "നിങ്ങളുടെ ഏതെങ്കിലും ചെടികളെക്കുറിച്ചോ കൃഷി പദ്ധതികളെക്കുറിച്ചോ AI സസ്യ വിദഗ്ധനുമായി ചാറ്റ് ചെയ്യുക — ടെക്സ്റ്റ്, ശബ്ദം, അല്ലെങ്കിൽ ഫോട്ടോ വഴി.",
+        f6Title: "പ്രാദേശിക നുറുങ്ങുകൾ, നിങ്ങളുടെ ഭാഷയിൽ", f6Desc: "നിങ്ങളുടെ സ്ഥലത്തിന് അനുസരിച്ചുള്ള ദൈനംദിന കൃഷി, തോട്ടപരിപാലന നുറുങ്ങുകൾ, സ്വയമേവ പുതുക്കുന്നു. സ്കാൻ ചെയ്തതിന് ശേഷവും, എപ്പോൾ വേണമെങ്കിലും ഭാഷ മാറ്റുക.",
+        f7Title: "ഒരു മുന്നറിയിപ്പ് സൂചനയും നഷ്ടപ്പെടുത്തരുത്", f7Desc: "നനയ്ക്കൽ, സൂര്യപ്രകാശം, ആരോഗ്യ തുടർനടപടികൾ, കൃഷിയിലെ കീട അപകടസാധ്യതകൾ എന്നിവയ്ക്കുള്ള മുൻകൈ അറിയിപ്പുകൾ — നിങ്ങളുടെ ഉപകരണത്തിൽ തന്നെ ഷെഡ്യൂൾ ചെയ്തത്.",
+        f8Title: "യഥാർത്ഥവും കൃത്രിമവും തിരിച്ചറിയൽ", f8Desc: "Plant Doctor യഥാർത്ഥ ചെടികളെ കൃത്രിമമായവയിൽ നിന്ന് വേർതിരിച്ചറിയുന്നു, അതിനാൽ പ്ലാസ്റ്റിക് ഫേണിന് നനയ്ക്കൽ ഓർമ്മപ്പെടുത്തലുകൾ നിങ്ങൾക്ക് ലഭിക്കില്ല.",
+        pricingTitle: "ലളിതവും ന്യായവുമായ വില", pricingSub: "സൗജന്യമായി ആരംഭിക്കുക. ആവശ്യമുള്ളപ്പോൾ അപ്ഗ്രേഡ് ചെയ്യുക.",
+        freeTag: "സൗജന്യം", freePrice: "$0", freeNote: "എന്നേക്കും",
+        freeLi1: "5 വരെ സംരക്ഷിച്ച ചെടി സ്കാനുകൾ", freeLi2: "പരിചരണ ഓർമ്മപ്പെടുത്തലുകളും ആരോഗ്യ തുടർനടപടികളും", freeLi3: "പ്രാദേശിക നുറുങ്ങുകളും AI-യുമായി ചാറ്റും",
+        proTag: "പ്രോ", proPrice: "പ്രാദേശിക വില", proNote: "പ്രതിമാസ ബില്ലിംഗ് · ഇന്ത്യയിൽ ₹249/മാസം, മറ്റിടങ്ങളിൽ $10/മാസം",
+        proLi1: "പരിധിയില്ലാത്ത ചെടി സ്കാനുകൾ", proLi2: "വലിയ വിസ്തൃതിയിലുള്ള വിളകൾക്കുള്ള ഫാം അഡ്വൈസർ", proLi3: "നഴ്സറികൾക്കും ഫാമുകൾക്കുമുള്ള കസ്റ്റമർ പോർട്ടൽ", proLi4: "മുൻഗണനാ AI പ്രതികരണ നിലവാരം",
+        contactTitle: "ചോദ്യങ്ങൾ, ഫീഡ്ബാക്ക്, അല്ലെങ്കിൽ സഹായം വേണോ?", contactSub: "ഞങ്ങൾ സാധാരണയായി ഒന്നോ രണ്ടോ ദിവസത്തിനുള്ളിൽ മറുപടി നൽകും.", contactBtn: "പിന്തുണയ്ക്ക് ഇമെയിൽ ചെയ്യുക",
+        footerCopyright: "© 2026 Plant Doctor. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.", footerPrivacy: "സ്വകാര്യതാ നയം", footerContact: "ബന്ധപ്പെടുക"
+      },
+      pa: {
+        navStory: "ਕਹਾਣੀ", navDemo: "ਡੈਮੋ", navFeatures: "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ", navPricing: "ਕੀਮਤ", navPrivacy: "ਗੋਪਨੀਯਤਾ", navSupport: "ਸਹਾਇਤਾ",
+        heroTitle: "AI ਪੌਦਿਆਂ ਦੀ ਦੇਖਭਾਲ, ਖੇਤੀ ਯੋਜਨਾਬੰਦੀ, ਅਤੇ ਬਾਗਬਾਨੀ ਸਲਾਹ — ਇੱਕੋ ਐਪ ਵਿੱਚ.",
+        heroLead: "ਇੱਕ ਫੋਟੋ ਖਿੱਚੋ ਅਤੇ ਤੁਰੰਤ ਸਿਹਤ ਨਿਦਾਨ, ਵਿਅਕਤੀਗਤ ਦੇਖਭਾਲ ਰੀਮਾਈਂਡਰ, ਅਤੇ ਮਾਹਿਰ ਜਵਾਬ ਪ੍ਰਾਪਤ ਕਰੋ — ਘਰੇਲੂ ਪੌਦਿਆਂ, ਬਾਗਾਂ ਅਤੇ ਵੱਡੇ ਖੇਤਾਂ ਲਈ.",
+        storeAppleSmall: "ਡਾਊਨਲੋਡ ਕਰੋ", storeGoogleSmall: "ਪ੍ਰਾਪਤ ਕਰੋ",
+        storeNote: "ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ — ਦੋਵੇਂ ਐਪਾਂ ਮਨਜ਼ੂਰ ਹੋਣ ਤੇ ਲਿੰਕ ਸਰਗਰਮ ਹੋ ਜਾਣਗੇ.",
+        story1Title: "ਹਰ ਪੌਦਾ ਇੱਕ ਸਵਾਲ ਨਾਲ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ.", story1Sub: "ਇਹ ਕੀ ਹੈ? ਕੀ ਇਹ ਸਿਹਤਮੰਦ ਹੈ?",
+        story2Title: "ਇੱਕ ਫੋਟੋ ਖਿੱਚੋ.", story2Sub: "ਤੁਰੰਤ AI ਨਿਦਾਨ ਪ੍ਰਾਪਤ ਕਰੋ.",
+        story3Title: "ਇਸ ਲਈ ਬਣਾਈ ਗਈ ਦੇਖਭਾਲ ਯੋਜਨਾ ਪ੍ਰਾਪਤ ਕਰੋ.", story3Sub: "ਪਾਣੀ, ਰੌਸ਼ਨੀ, ਅਤੇ ਇਲਾਜ — ਤੁਹਾਡੇ ਪੌਦੇ ਲਈ ਅਨੁਕੂਲ.",
+        story4Title: "ਇਸਨੂੰ ਵਧਦੇ-ਫੁੱਲਦੇ ਦੇਖੋ.", story4Sub: "ਜਦੋਂ ਵੀ ਇਸਨੂੰ ਤੁਹਾਡੀ ਲੋੜ ਹੋਵੇਗੀ, ਅਸੀਂ ਤੁਹਾਨੂੰ ਯਾਦ ਦਿਵਾਵਾਂਗੇ.",
+        demoTitle: "ਇਸਨੂੰ ਕੰਮ ਕਰਦੇ ਦੇਖੋ", demoSub: "ਪੌਦੇ ਨੂੰ ਸਕੈਨ ਕਰਨ, ਫਸਲ ਦੀ ਯੋਜਨਾ ਬਣਾਉਣ, ਅਤੇ AI ਨਾਲ ਗੱਲਬਾਤ ਕਰਨ ਦੀ ਇੱਕ ਉਦਾਹਰਣ.",
+        d1Label: "ਪੌਦਾ ਸਕੈਨ", d1Badge: "ਸਿਹਤਮੰਦ", d1Line: "~4 ਦਿਨਾਂ ਵਿੱਚ ਪਾਣੀ ਦਿਓ · ਚਮਕਦਾਰ ਅਸਿੱਧੀ ਰੌਸ਼ਨੀ",
+        d1TipTitle: "ਦੇਖਭਾਲ ਸੁਝਾਅ", d1TipLine: "ਬਿਹਤਰ ਰੌਸ਼ਨੀ ਸੋਖਣ ਲਈ ਹਰ ਮਹੀਨੇ ਪੱਤੇ ਪੂੰਝੋ.",
+        d2Label: "ਫਾਰਮ ਐਡਵਾਈਜ਼ਰ", d2Badge: "ਕਣਕ · ਪੰਜਾਬ", d2Title: "ਉਤਪਾਦਕਤਾ ਯੋਜਨਾ",
+        d2Line: "ਤੁਹਾਡੇ ਸਥਾਨ ਅਨੁਸਾਰ ਸਿੰਚਾਈ, ਖਾਦ ਅਤੇ ਦੂਰੀ ਆਪਣੇ ਆਪ ਭਰੀ ਗਈ.",
+        d2C2Line: "110 ਦਿਨਾਂ ਵਿੱਚ ਪੱਕਦੀ ਹੈ · ਦੋਮਟ ਮਿੱਟੀ ਵਿੱਚ ਵੱਧ ਝਾੜ", d2C3Line: "100 ਦਿਨਾਂ ਵਿੱਚ ਪੱਕਦੀ ਹੈ · ਸੋਕਾ ਸਹਿਣਸ਼ੀਲ",
+        d3Label: "ਮਾਹਿਰ ਨੂੰ ਪੁੱਛੋ", d3Q1: "ਪੱਤਿਆਂ ਦੇ ਸਿਰੇ ਭੂਰੇ ਕਿਉਂ ਹੋ ਰਹੇ ਹਨ?",
+        d3A1: "ਸ਼ਾਇਦ ਘੱਟ ਨਮੀ ਜਾਂ ਟੂਟੀ ਦੇ ਪਾਣੀ ਤੋਂ ਖਣਿਜ ਜਮ੍ਹਾਂ — ਫਿਲਟਰ ਕੀਤਾ ਪਾਣੀ ਅਤੇ ਕੰਕਰਾਂ ਦੀ ਟ੍ਰੇ ਅਜ਼ਮਾਓ.", d3Q2: "ਸਮਝ ਗਿਆ, ਧੰਨਵਾਦ!",
+        d4Label: "ਖੋਜ ਕਰੋ", d4Title: "ਬੰਗਲੌਰ ਲਈ ਅੱਜ ਦੇ ਸੁਝਾਅ",
+        d4Line1: "🌦️ ਹਲਕੀ ਮਾਨਸੂਨ ਬਾਰਿਸ਼ ਦੀ ਸੰਭਾਵਨਾ — ਬਾਹਰੀ ਪਾਣੀ ਦੇਣਾ ਟਾਲੋ.",
+        d4Line2: "🌱 ਅਗਲੇ ਖੁਸ਼ਕ ਸਮੇਂ ਤੋਂ ਪਹਿਲਾਂ ਪੌਦੇ ਲਗਾਉਣ ਲਈ ਵਧੀਆ ਹਫ਼ਤਾ.",
+        demoNote: "ਐਪ ਦੀਆਂ ਅਸਲ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੇ ਉਦਾਹਰਣੀ ਨਮੂਨੇ — ਲਾਈਵ ਸਕ੍ਰੀਨਸ਼ਾਟ ਨਹੀਂ.",
+        featuresTitle: "ਤੁਹਾਡੇ ਪੌਦਿਆਂ ਲਈ ਲੋੜੀਂਦਾ ਸਭ ਕੁਝ",
+        featuresSub: "ਪਛਾਣ, ਸਿਹਤ, ਦੇਖਭਾਲ ਸਮਾਂ-ਸਾਰਣੀ, ਅਤੇ ਮਾਹਿਰ ਸਲਾਹ ਲਈ ਇੱਕ ਐਪ — AI ਦੁਆਰਾ ਸੰਚਾਲਿਤ.",
+        f1Title: "ਤੁਰੰਤ ਪੌਦਾ ਸਿਹਤ ਸਕੈਨ", f1Desc: "ਇੱਕ ਫੋਟੋ ਖਿੱਚੋ ਅਤੇ ਪੌਦੇ ਦੀ ਪਛਾਣ, ਸਿਹਤ ਸਥਿਤੀ, ਕੀੜੇ/ਬਿਮਾਰੀ ਖੋਜ, ਅਤੇ ਕਦਮ-ਦਰ-ਕਦਮ ਇਲਾਜ ਪ੍ਰਾਪਤ ਕਰੋ — ਆਪਣੀ ਭਾਸ਼ਾ ਵਿੱਚ.",
+        f2Title: "ਸਮਾਰਟ ਦੇਖਭਾਲ ਰੀਮਾਈਂਡਰ", f2Desc: "ਤੁਹਾਡੇ ਪੌਦੇ ਦੀਆਂ ਖਾਸ ਲੋੜਾਂ ਅਨੁਸਾਰ ਵਿਅਕਤੀਗਤ ਪਾਣੀ ਅਤੇ ਧੁੱਪ ਰੀਮਾਈਂਡਰ, ਨਾਲ ਹੀ ਅਸਿਹਤਮੰਦ ਹੋਣ ਤੇ ਫਾਲੋ-ਅੱਪ ਜਾਂਚ.",
+        f3Title: "ਬਿਜਾਈ ਸਥਾਨ ਯੋਜਨਾਕਾਰ", f3Desc: "ਬਾਲਕੋਨੀ, ਵਿਹੜੇ, ਜਾਂ ਖਾਲੀ ਥਾਂ ਦੀ ਫੋਟੋ ਖਿੱਚੋ ਅਤੇ ਪੌਦਿਆਂ ਅਤੇ ਸਜਾਵਟ ਦੀ ਅਨੁਕੂਲ ਖਰੀਦਦਾਰੀ ਸੂਚੀ ਪ੍ਰਾਪਤ ਕਰੋ — ਇਹ ਕਿਵੇਂ ਦਿਖੇਗਾ ਇਸਦੇ AI-ਤਿਆਰ ਪੂਰਵਦਰਸ਼ਨ ਨਾਲ.",
+        f4Title: "ਫਾਰਮ ਐਡਵਾਈਜ਼ਰ", f4Desc: "ਕਿਸੇ ਵੀ ਫਸਲ ਲਈ ਪੂਰੀ ਉਤਪਾਦਕਤਾ ਯੋਜਨਾ ਪ੍ਰਾਪਤ ਕਰੋ: ਸੰਭਵ ਕਿਸਮ ਵਿਕਲਪ, ਖਾਦ ਅਤੇ ਸਿੰਚਾਈ ਸਮਾਂ-ਸਾਰਣੀਆਂ, ਦੂਰੀ ਮਾਰਗਦਰਸ਼ਨ, ਅਤੇ ਤੁਹਾਡੇ ਖੇਤਰ ਦਾ ਜਲਵਾਯੂ ਸੰਦਰਭ.",
+        f5Title: "ਕਿਸੇ ਵੀ ਸਮੇਂ ਪੌਦਾ ਮਾਹਿਰ ਨੂੰ ਪੁੱਛੋ", f5Desc: "ਆਪਣੇ ਕਿਸੇ ਵੀ ਪੌਦੇ ਜਾਂ ਖੇਤੀ ਯੋਜਨਾਵਾਂ ਬਾਰੇ AI ਪੌਦਾ ਮਾਹਿਰ ਨਾਲ ਗੱਲਬਾਤ ਕਰੋ — ਟੈਕਸਟ, ਆਵਾਜ਼, ਜਾਂ ਫੋਟੋ ਰਾਹੀਂ.",
+        f6Title: "ਸਥਾਨਕ ਸੁਝਾਅ, ਤੁਹਾਡੀ ਭਾਸ਼ਾ ਵਿੱਚ", f6Desc: "ਤੁਹਾਡੇ ਸਥਾਨ ਅਨੁਸਾਰ ਰੋਜ਼ਾਨਾ ਖੇਤੀ ਅਤੇ ਬਾਗਬਾਨੀ ਸੁਝਾਅ, ਆਪਣੇ ਆਪ ਤਾਜ਼ਾ ਹੁੰਦੇ ਹਨ. ਸਕੈਨ ਤੋਂ ਬਾਅਦ ਵੀ, ਕਿਸੇ ਵੀ ਸਮੇਂ ਭਾਸ਼ਾ ਬਦਲੋ.",
+        f7Title: "ਕੋਈ ਵੀ ਚੇਤਾਵਨੀ ਸੰਕੇਤ ਨਾ ਖੁੰਝੋ", f7Desc: "ਪਾਣੀ, ਧੁੱਪ, ਸਿਹਤ ਫਾਲੋ-ਅੱਪ, ਅਤੇ ਖੇਤ ਦੇ ਕੀੜੇ ਖਤਰਿਆਂ ਲਈ ਕਿਰਿਆਸ਼ੀਲ ਸੂਚਨਾਵਾਂ — ਸਿੱਧੇ ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਤੇ ਤਹਿ ਕੀਤੀਆਂ.",
+        f8Title: "ਅਸਲੀ ਬਨਾਮ ਨਕਲੀ ਪਛਾਣ", f8Desc: "Plant Doctor ਅਸਲੀ ਪੌਦਿਆਂ ਨੂੰ ਨਕਲੀ ਤੋਂ ਵੱਖਰਾ ਦੱਸਦਾ ਹੈ, ਤਾਂ ਜੋ ਤੁਹਾਨੂੰ ਪਲਾਸਟਿਕ ਦੇ ਫਰਨ ਲਈ ਪਾਣੀ ਦੇਣ ਦੇ ਰੀਮਾਈਂਡਰ ਨਾ ਮਿਲਣ.",
+        pricingTitle: "ਸਧਾਰਨ, ਨਿਰਪੱਖ ਕੀਮਤ", pricingSub: "ਮੁਫ਼ਤ ਸ਼ੁਰੂ ਕਰੋ। ਜਦੋਂ ਵੀ ਲੋੜ ਹੋਵੇ ਅੱਪਗ੍ਰੇਡ ਕਰੋ.",
+        freeTag: "ਮੁਫ਼ਤ", freePrice: "$0", freeNote: "ਹਮੇਸ਼ਾ ਲਈ",
+        freeLi1: "5 ਤੱਕ ਸੁਰੱਖਿਅਤ ਪੌਦਾ ਸਕੈਨ", freeLi2: "ਦੇਖਭਾਲ ਰੀਮਾਈਂਡਰ ਅਤੇ ਸਿਹਤ ਫਾਲੋ-ਅੱਪ", freeLi3: "ਸਥਾਨਕ ਸੁਝਾਅ ਅਤੇ AI ਨਾਲ ਗੱਲਬਾਤ",
+        proTag: "ਪ੍ਰੋ", proPrice: "ਖੇਤਰੀ ਕੀਮਤ", proNote: "ਮਹੀਨਾਵਾਰ ਬਿਲਿੰਗ · ਭਾਰਤ ਵਿੱਚ ₹249/ਮਹੀਨਾ, ਹੋਰ ਕਿਤੇ $10/ਮਹੀਨਾ",
+        proLi1: "ਅਸੀਮਤ ਪੌਦਾ ਸਕੈਨ", proLi2: "ਵੱਡੇ ਖੇਤਰ ਦੀਆਂ ਫਸਲਾਂ ਲਈ ਫਾਰਮ ਐਡਵਾਈਜ਼ਰ", proLi3: "ਨਰਸਰੀਆਂ ਅਤੇ ਫਾਰਮਾਂ ਲਈ ਗਾਹਕ ਪੋਰਟਲ", proLi4: "ਤਰਜੀਹੀ AI ਜਵਾਬ ਗੁਣਵੱਤਾ",
+        contactTitle: "ਸਵਾਲ, ਫੀਡਬੈਕ, ਜਾਂ ਮਦਦ ਚਾਹੀਦੀ ਹੈ?", contactSub: "ਅਸੀਂ ਆਮ ਤੌਰ ਤੇ ਇੱਕ-ਦੋ ਦਿਨਾਂ ਵਿੱਚ ਜਵਾਬ ਦਿੰਦੇ ਹਾਂ.", contactBtn: "ਸਹਾਇਤਾ ਨੂੰ ਈਮੇਲ ਕਰੋ",
+        footerCopyright: "© 2026 Plant Doctor. ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ.", footerPrivacy: "ਗੋਪਨੀਯਤਾ ਨੀਤੀ", footerContact: "ਸੰਪਰਕ ਕਰੋ"
+      },
+      ur: {
+        navStory: "کہانی", navDemo: "ڈیمو", navFeatures: "خصوصیات", navPricing: "قیمت", navPrivacy: "رازداری", navSupport: "معاونت",
+        heroTitle: "AI پودوں کی دیکھ بھال، زرعی منصوبہ بندی، اور باغبانی کے مشورے — ایک ہی ایپ میں۔",
+        heroLead: "ایک تصویر لیں اور فوری صحت کی تشخیص، ذاتی نگہداشت کی یاد دہانیاں، اور ماہرین کے جوابات حاصل کریں — گھریلو پودوں، باغات اور بڑے کھیتوں کے لیے۔",
+        storeAppleSmall: "ڈاؤن لوڈ کریں", storeGoogleSmall: "حاصل کریں",
+        storeNote: "جلد آ رہا ہے — دونوں ایپس منظور ہونے کے بعد لنکس فعال ہو جائیں گے۔",
+        story1Title: "ہر پودا ایک سوال سے شروع ہوتا ہے۔", story1Sub: "یہ کیا ہے؟ کیا یہ صحت مند ہے؟",
+        story2Title: "ایک تصویر لیں۔", story2Sub: "فوری AI تشخیص حاصل کریں۔",
+        story3Title: "اس کے لیے خاص طور پر بنائی گئی نگہداشت کی منصوبہ بندی حاصل کریں۔", story3Sub: "پانی، روشنی، اور علاج — آپ کے پودے کے مطابق۔",
+        story4Title: "اسے پھلتا پھولتا دیکھیں۔", story4Sub: "جب بھی اسے آپ کی ضرورت ہوگی، ہم آپ کو یاد دلائیں گے۔",
+        demoTitle: "اسے کام کرتے دیکھیں", demoSub: "پودے کو اسکین کرنے، فصل کی منصوبہ بندی کرنے، اور AI سے بات چیت کرنے کی ایک مثال۔",
+        d1Label: "پودا اسکین", d1Badge: "صحت مند", d1Line: "~4 دنوں میں پانی دیں · روشن بالواسطہ روشنی",
+        d1TipTitle: "نگہداشت کی تجویز", d1TipLine: "بہتر روشنی جذب کے لیے ہر ماہ پتے صاف کریں۔",
+        d2Label: "فارم ایڈوائزر", d2Badge: "گندم · پنجاب", d2Title: "پیداواری منصوبہ",
+        d2Line: "آپ کے مقام کی بنیاد پر آبپاشی، کھاد اور فاصلہ خودکار طور پر پُر کیا گیا۔",
+        d2C2Line: "110 دنوں میں پک جاتی ہے · زرخیز مٹی میں زیادہ پیداوار", d2C3Line: "100 دنوں میں پک جاتی ہے · خشک سالی برداشت کرنے والی",
+        d3Label: "ماہر سے پوچھیں", d3Q1: "پتوں کے کنارے بھورے کیوں ہو رہے ہیں؟",
+        d3A1: "شاید کم نمی یا نلکے کے پانی سے معدنیات جمع ہونا — فلٹر شدہ پانی اور کنکریوں کی ٹرے آزمائیں۔", d3Q2: "سمجھ گیا، شکریہ!",
+        d4Label: "دریافت کریں", d4Title: "بنگلورو کے لیے آج کی تجاویز",
+        d4Line1: "🌦️ ہلکی مون سون بارش متوقع ہے — باہر پانی دینا مؤخر کریں۔",
+        d4Line2: "🌱 اگلے خشک دور سے پہلے پودے لگانے کا اچھا ہفتہ۔",
+        demoNote: "ایپ کی حقیقی خصوصیات کی مثالی جھلکیاں — لائیو اسکرین شاٹس نہیں۔",
+        featuresTitle: "آپ کے پودوں کو درکار ہر چیز",
+        featuresSub: "شناخت، صحت، نگہداشت کے شیڈول، اور ماہرانہ مشورے کے لیے ایک ایپ — AI سے چلنے والی۔",
+        f1Title: "فوری پودوں کی صحت کے اسکین", f1Desc: "ایک تصویر لیں اور پودے کی شناخت، صحت کی حالت، کیڑے/بیماری کی نشاندہی، اور مرحلہ وار علاج حاصل کریں — اپنی زبان میں۔",
+        f2Title: "سمارٹ نگہداشت کی یاد دہانیاں", f2Desc: "آپ کے پودے کی مخصوص ضروریات کی بنیاد پر ذاتی پانی اور دھوپ کی یاد دہانیاں، ساتھ ہی اگر یہ بیمار ہو تو فالو اپ چیک۔",
+        f3Title: "پودے لگانے کی جگہ کا منصوبہ ساز", f3Desc: "بالکونی، صحن، یا خالی جگہ کی تصویر لیں اور پودوں اور سجاوٹ کی موزوں خریداری کی فہرست حاصل کریں — یہ کیسا نظر آئے گا اس کے AI سے تیار کردہ پیش منظر کے ساتھ۔",
+        f4Title: "فارم ایڈوائزر", f4Desc: "کسی بھی فصل کے لیے مکمل پیداواری منصوبہ حاصل کریں: ممکنہ اقسام کے اختیارات، کھاد اور آبپاشی کے شیڈول، فاصلے کی رہنمائی، اور آپ کے علاقے کا موسمی تناظر۔",
+        f5Title: "کسی بھی وقت پودوں کے ماہر سے پوچھیں", f5Desc: "اپنے کسی بھی پودے یا زرعی منصوبوں کے بارے میں AI پودوں کے ماہر سے بات چیت کریں — متن، آواز، یا تصویر کے ذریعے۔",
+        f6Title: "مقامی تجاویز، آپ کی زبان میں", f6Desc: "آپ کے مقام کے مطابق روزانہ زرعی اور باغبانی کی تجاویز، خودکار طور پر تازہ ہوتی ہیں۔ اسکین کے بعد بھی، کسی بھی وقت زبان تبدیل کریں۔",
+        f7Title: "کوئی انتباہی نشان مت چھوڑیں", f7Desc: "پانی، دھوپ، صحت کے فالو اپ، اور کھیت کے کیڑوں کے خطرات کے لیے فعال اطلاعات — براہ راست آپ کے آلے پر شیڈول کی گئیں۔",
+        f8Title: "حقیقی بمقابلہ مصنوعی شناخت", f8Desc: "Plant Doctor حقیقی پودوں کو مصنوعی پودوں سے الگ بتاتا ہے، تاکہ آپ کو پلاسٹک کے فرن کے لیے پانی دینے کی یاد دہانیاں نہ ملیں۔",
+        pricingTitle: "سادہ، منصفانہ قیمت", pricingSub: "مفت شروع کریں۔ جب بھی ضرورت ہو اپ گریڈ کریں۔",
+        freeTag: "مفت", freePrice: "$0", freeNote: "ہمیشہ کے لیے",
+        freeLi1: "5 تک محفوظ شدہ پودوں کے اسکین", freeLi2: "نگہداشت کی یاد دہانیاں اور صحت کے فالو اپ", freeLi3: "مقامی تجاویز اور AI کے ساتھ بات چیت",
+        proTag: "پرو", proPrice: "علاقائی قیمت", proNote: "ماہانہ بلنگ · بھارت میں ₹249/ماہ، دیگر جگہوں پر $10/ماہ",
+        proLi1: "لامحدود پودوں کے اسکین", proLi2: "بڑے رقبے کی فصلوں کے لیے فارم ایڈوائزر", proLi3: "نرسریوں اور فارموں کے لیے کسٹمر پورٹل", proLi4: "ترجیحی AI جوابی معیار",
+        contactTitle: "سوالات، رائے، یا مدد چاہیے؟", contactSub: "ہم عام طور پر ایک سے دو دن میں جواب دیتے ہیں۔", contactBtn: "معاونت کو ای میل کریں",
+        footerCopyright: "© 2026 Plant Doctor۔ جملہ حقوق محفوظ ہیں۔", footerPrivacy: "رازداری کی پالیسی", footerContact: "رابطہ کریں"
+      },
+      es: {
+        navStory: "Historia", navDemo: "Demo", navFeatures: "Funciones", navPricing: "Precios", navPrivacy: "Privacidad", navSupport: "Soporte",
+        heroTitle: "Cuidado de plantas con IA, planificación agrícola y consejos de jardinería — en una sola app.",
+        heroLead: "Toma una foto y obtén un diagnóstico de salud instantáneo, recordatorios de cuidado personalizados y respuestas de expertos — para plantas de interior, jardines y granjas a gran escala.",
+        storeAppleSmall: "Descargar en", storeGoogleSmall: "DISPONIBLE EN",
+        storeNote: "Próximamente — los enlaces estarán activos una vez que ambas apps sean aprobadas.",
+        story1Title: "Cada planta empieza con una pregunta.", story1Sub: "¿Qué es esto? ¿Está sana?",
+        story2Title: "Toma una foto.", story2Sub: "Obtén un diagnóstico instantáneo con IA.",
+        story3Title: "Obtén un plan de cuidado hecho a su medida.", story3Sub: "Riego, luz y remedios — adaptados a tu planta.",
+        story4Title: "Míralo florecer.", story4Sub: "Te recordaremos exactamente cuándo te necesita.",
+        demoTitle: "Míralo en acción", demoSub: "Un vistazo ilustrativo a escanear una planta, planificar un cultivo y chatear con la IA.",
+        d1Label: "Escaneo de planta", d1Badge: "Sana", d1Line: "Regar en ~4 días · Luz indirecta brillante",
+        d1TipTitle: "Consejo de cuidado", d1TipLine: "Limpia las hojas cada mes para mantener los poros despejados y mejorar la absorción de luz.",
+        d2Label: "Asesor Agrícola", d2Badge: "Trigo · Punjab", d2Title: "Plan de productividad",
+        d2Line: "Riego, fertilizante y espaciado autocompletados según tu ubicación.",
+        d2C2Line: "110 días hasta la madurez · Alto rendimiento en suelo franco", d2C3Line: "100 días hasta la madurez · Tolerante a la sequía",
+        d3Label: "Pregúntale al experto", d3Q1: "¿Por qué las puntas de las hojas se están poniendo marrones?",
+        d3A1: "Probablemente baja humedad o acumulación de minerales del agua del grifo — prueba con agua filtrada y una bandeja de guijarros.", d3Q2: "¡Entendido, gracias!",
+        d4Label: "Explorar", d4Title: "Consejos de hoy para Bengaluru",
+        d4Line1: "🌦️ Se esperan lluvias monzónicas ligeras — evita el riego al aire libre.",
+        d4Line2: "🌱 Buena semana para trasplantar plántulas antes del próximo período seco.",
+        demoNote: "Simulaciones ilustrativas de funciones reales de la app — no son capturas de pantalla reales.",
+        featuresTitle: "Todo lo que tus plantas necesitan",
+        featuresSub: "Una app para identificación, salud, programación de cuidados y asesoramiento experto — impulsada por IA.",
+        f1Title: "Escaneos de salud de plantas instantáneos", f1Desc: "Toma una foto y obtén identificación de la planta, estado de salud, detección de plagas/enfermedades y remedios paso a paso — en tu propio idioma.",
+        f2Title: "Recordatorios de cuidado inteligentes", f2Desc: "Recordatorios personalizados de riego y luz solar según las necesidades específicas de tu planta, además de seguimientos si no estaba bien.",
+        f3Title: "Planificador de espacios de plantación", f3Desc: "Fotografía un balcón, jardín o espacio vacío y obtén una lista de compras personalizada de plantas y decoración — con una vista previa generada por IA de cómo se vería.",
+        f4Title: "Asesor Agrícola", f4Desc: "Obtén un plan de productividad completo para cualquier cultivo: opciones de variedades viables, calendarios de fertilización y riego, guía de espaciado y contexto climático de tu región.",
+        f5Title: "Pregunta a un experto en plantas, cuando quieras", f5Desc: "Chatea con un experto en plantas con IA sobre cualquiera de tus plantas o planes agrícolas — por texto, voz o foto.",
+        f6Title: "Consejos locales, en tu idioma", f6Desc: "Consejos diarios de agricultura y jardinería adaptados a tu ubicación, actualizados automáticamente. Cambia de idioma en cualquier momento, incluso después de un escaneo.",
+        f7Title: "Nunca te pierdas una señal de advertencia", f7Desc: "Notificaciones proactivas de riego, luz solar, seguimientos de salud y riesgos de plagas agrícolas — programadas directamente en tu dispositivo.",
+        f8Title: "Detección real vs. artificial", f8Desc: "Plant Doctor distingue las plantas reales de las artificiales, para que no recibas recordatorios de riego para un helecho de plástico.",
+        pricingTitle: "Precios simples y justos", pricingSub: "Empieza gratis. Actualiza cuando lo necesites.",
+        freeTag: "Gratis", freePrice: "$0", freeNote: "Para siempre",
+        freeLi1: "Hasta 5 escaneos de plantas guardados", freeLi2: "Recordatorios de cuidado y seguimientos de salud", freeLi3: "Consejos locales y chat con la IA",
+        proTag: "Pro", proPrice: "Precios regionales", proNote: "Facturación mensual · ₹249/mes en India, $10/mes en otros lugares",
+        proLi1: "Escaneos de plantas ilimitados", proLi2: "Asesor Agrícola para cultivos de gran superficie", proLi3: "Portal de clientes para viveros y granjas", proLi4: "Calidad de respuesta de IA prioritaria",
+        contactTitle: "¿Preguntas, comentarios o necesitas ayuda?", contactSub: "Normalmente respondemos en uno o dos días.", contactBtn: "Enviar correo a soporte",
+        footerCopyright: "© 2026 Plant Doctor. Todos los derechos reservados.", footerPrivacy: "Política de privacidad", footerContact: "Contacto"
+      },
+      pt: {
+        navStory: "História", navDemo: "Demo", navFeatures: "Recursos", navPricing: "Preços", navPrivacy: "Privacidade", navSupport: "Suporte",
+        heroTitle: "Cuidado de plantas com IA, planejamento agrícola e conselhos de jardinagem — em um só app.",
+        heroLead: "Tire uma foto e obtenha diagnóstico de saúde instantâneo, lembretes de cuidado personalizados e respostas de especialistas — para plantas domésticas, jardins e fazendas de grande porte.",
+        storeAppleSmall: "Baixar na", storeGoogleSmall: "DISPONÍVEL NO",
+        storeNote: "Em breve — os links ficarão ativos assim que os dois apps forem aprovados.",
+        story1Title: "Toda planta começa com uma pergunta.", story1Sub: "O que é isto? Está saudável?",
+        story2Title: "Tire uma foto.", story2Sub: "Obtenha um diagnóstico instantâneo com IA.",
+        story3Title: "Obtenha um plano de cuidados feito sob medida.", story3Sub: "Rega, luz e remédios — adaptados à sua planta.",
+        story4Title: "Veja-a florescer.", story4Sub: "Vamos lembrá-lo exatamente quando ela precisar de você.",
+        demoTitle: "Veja em ação", demoSub: "Uma visão ilustrativa de escanear uma planta, planejar uma cultura e conversar com a IA.",
+        d1Label: "Escaneamento de planta", d1Badge: "Saudável", d1Line: "Regar em ~4 dias · Luz indireta brilhante",
+        d1TipTitle: "Dica de cuidado", d1TipLine: "Limpe as folhas mensalmente para manter os poros desobstruídos e melhorar a absorção de luz.",
+        d2Label: "Consultor Agrícola", d2Badge: "Trigo · Punjab", d2Title: "Plano de produtividade",
+        d2Line: "Irrigação, fertilizante e espaçamento preenchidos automaticamente com base na sua localização.",
+        d2C2Line: "110 dias até a maturidade · Alto rendimento em solo franco", d2C3Line: "100 dias até a maturidade · Tolerante à seca",
+        d3Label: "Pergunte ao especialista", d3Q1: "Por que as pontas das folhas estão ficando marrons?",
+        d3A1: "Provavelmente baixa umidade ou acúmulo de minerais da água da torneira — experimente água filtrada e uma bandeja de seixos.", d3Q2: "Entendi, obrigado!",
+        d4Label: "Explorar", d4Title: "Dicas de hoje para Bengaluru",
+        d4Line1: "🌦️ Chuvas leves de monção esperadas — evite regar ao ar livre.",
+        d4Line2: "🌱 Boa semana para transplantar mudas antes do próximo período seco.",
+        demoNote: "Simulações ilustrativas de recursos reais do app — não são capturas de tela reais.",
+        featuresTitle: "Tudo que suas plantas precisam",
+        featuresSub: "Um app para identificação, saúde, programação de cuidados e conselhos de especialistas — com tecnologia de IA.",
+        f1Title: "Escaneamentos de saúde de plantas instantâneos", f1Desc: "Tire uma foto e obtenha identificação da planta, estado de saúde, detecção de pragas/doenças e remédios passo a passo — no seu próprio idioma.",
+        f2Title: "Lembretes de cuidado inteligentes", f2Desc: "Lembretes personalizados de rega e luz solar com base nas necessidades específicas da sua planta, além de verificações de acompanhamento se ela não estava bem.",
+        f3Title: "Planejador de espaço de plantio", f3Desc: "Fotografe uma varanda, quintal ou espaço vazio e obtenha uma lista de compras personalizada de plantas e decoração — com uma prévia gerada por IA de como ficaria.",
+        f4Title: "Consultor Agrícola", f4Desc: "Obtenha um plano de produtividade completo para qualquer cultura: opções de variedades viáveis, cronogramas de fertilização e irrigação, orientação de espaçamento e contexto climático da sua região.",
+        f5Title: "Pergunte a um especialista em plantas, a qualquer hora", f5Desc: "Converse com um especialista em plantas com IA sobre qualquer uma de suas plantas ou planos agrícolas — por texto, voz ou foto.",
+        f6Title: "Dicas locais, no seu idioma", f6Desc: "Dicas diárias de agricultura e jardinagem adaptadas à sua localização, atualizadas automaticamente. Mude de idioma a qualquer momento, mesmo após um escaneamento.",
+        f7Title: "Nunca perca um sinal de alerta", f7Desc: "Notificações proativas para rega, luz solar, acompanhamentos de saúde e riscos de pragas agrícolas — agendadas diretamente no seu dispositivo.",
+        f8Title: "Detecção real vs. artificial", f8Desc: "Plant Doctor diferencia plantas reais de artificiais, para que você não receba lembretes de rega para uma samambaia de plástico.",
+        pricingTitle: "Preços simples e justos", pricingSub: "Comece grátis. Faça upgrade quando precisar.",
+        freeTag: "Grátis", freePrice: "$0", freeNote: "Para sempre",
+        freeLi1: "Até 5 escaneamentos de plantas salvos", freeLi2: "Lembretes de cuidado e acompanhamentos de saúde", freeLi3: "Dicas locais e chat com a IA",
+        proTag: "Pro", proPrice: "Preços regionais", proNote: "Cobrança mensal · ₹249/mês na Índia, $10/mês em outros lugares",
+        proLi1: "Escaneamentos de plantas ilimitados", proLi2: "Consultor Agrícola para culturas de grande área", proLi3: "Portal do cliente para viveiros e fazendas", proLi4: "Qualidade de resposta de IA prioritária",
+        contactTitle: "Dúvidas, feedback ou precisa de ajuda?", contactSub: "Normalmente respondemos em um a dois dias.", contactBtn: "Enviar e-mail ao suporte",
+        footerCopyright: "© 2026 Plant Doctor. Todos os direitos reservados.", footerPrivacy: "Política de Privacidade", footerContact: "Contato"
+      }
+    };
+
+    var select = document.getElementById('langSelect');
+    if (!select) return;
+
+    var RTL_LANGS = { ur: true };
+
+    function applyLang(lang) {
+      var dict = translations[lang] || translations.en;
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.documentElement.lang = lang;
+      document.documentElement.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+      select.value = lang;
+    }
+
+    var saved = localStorage.getItem('plantdoctor-lang');
+    var initial = (saved && translations[saved]) ? saved : 'en';
+    applyLang(initial);
+
+    select.addEventListener('change', function () {
+      localStorage.setItem('plantdoctor-lang', select.value);
+      applyLang(select.value);
+    });
   })();
 </script>
 

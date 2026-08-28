@@ -387,8 +387,8 @@
   <section class="hero">
     <div class="hero-glow" aria-hidden="true"></div>
     <span class="hero-kicker">🌿 <span data-i18n="heroKicker">AI-powered, in your language</span></span>
-    <h1 data-i18n="heroTitle">AI plant care, farm planning, and garden advice — in one app.</h1>
-    <p class="lead" data-i18n="heroLead">Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.</p>
+    <h1 data-i18n="heroTitle">See your space with plants added — before you buy a single one.</h1>
+    <p class="lead" data-i18n="heroLead">Photograph any balcony, yard, or room and get a photorealistic AI preview of it fully planted — then keep everything in it healthy with instant diagnosis, care reminders, and expert answers.</p>
     <div class="store-buttons">
       <button type="button" class="store-btn" disabled title="Launching soon">
         <svg viewBox="0 0 512 512"><path d="M48 59.7v392.6c0 5.2 5.7 8.4 10.2 5.8l361.2-196.3c4.5-2.5 4.5-9.1 0-11.6L58.2 53.9c-4.5-2.6-10.2.6-10.2 5.8z"/></svg>
@@ -433,13 +433,27 @@
 <section id="demo">
   <div class="wrap">
     <h2 class="section-title" data-i18n="demoTitle">See it in action</h2>
-    <p class="section-sub" data-i18n="demoSub">An illustrative look at scanning a plant, planning a crop, and chatting with the AI.</p>
+    <p class="section-sub" data-i18n="demoSub">An illustrative look at visualizing a space, scanning a plant, planning a crop, and chatting with the AI.</p>
     <div class="demo-stage reveal">
       <div class="phone">
         <div class="phone-screen">
           <div class="phone-notch"></div>
 
           <div class="screen-slide active">
+            <span class="mock-label" data-i18n="d0Label">Visualize your space</span>
+            <div class="mock-photo">🏡</div>
+            <div class="mock-card">
+              <span class="mock-badge" data-i18n="d0Badge">AI-generated preview</span>
+              <div class="mock-title" data-i18n="d0Title">Empty balcony → fully planted</div>
+              <div class="mock-line" data-i18n="d0Line">12 plants placed, photorealistic — before you buy anything</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-title" data-i18n="d0TipTitle">Shopping list ready</div>
+              <div class="mock-line" data-i18n="d0TipLine">Pots, soil, and lighting — sized and priced for this exact space</div>
+            </div>
+          </div>
+
+          <div class="screen-slide">
             <span class="mock-label" data-i18n="d1Label">Plant scan</span>
             <div class="mock-photo">🌿</div>
             <div class="mock-card">
@@ -502,6 +516,11 @@
     <p class="section-sub" data-i18n="featuresSub">One app for identification, health, care scheduling, and expert advice — powered by AI.</p>
     <div class="grid">
       <div class="feature reveal">
+        <div class="icon">🏡</div>
+        <h3 data-i18n="f3Title">See it planted before you buy anything</h3>
+        <p data-i18n="f3Desc">Photograph any balcony, yard, or room and get a photorealistic AI preview of it fully planted, plus a shopping list sized to that exact space. Keep refining it just by describing what to change — more lighting, different pots, taller plants.</p>
+      </div>
+      <div class="feature reveal">
         <div class="icon">📷</div>
         <h3 data-i18n="f1Title">Instant plant health scans</h3>
         <p data-i18n="f1Desc">Snap a photo and get plant identification, health status, and pest/disease detection — plus organic and chemical remedy options, each with why, when, and how to use it, and a link to buy what you need.</p>
@@ -510,11 +529,6 @@
         <div class="icon">💧</div>
         <h3 data-i18n="f2Title">Smart care reminders</h3>
         <p data-i18n="f2Desc">Personalized watering and sunlight reminders that check the forecast and skip themselves on rainy days, plus follow-up check-ins if your plant was unwell.</p>
-      </div>
-      <div class="feature reveal">
-        <div class="icon">🌱</div>
-        <h3 data-i18n="f3Title">Planting space planner</h3>
-        <p data-i18n="f3Desc">Photograph a balcony, yard, or empty space and get a tailored shopping list — plus an AI-generated preview of the finished look that you can keep refining just by describing what to change.</p>
       </div>
       <div class="feature reveal">
         <div class="icon">🚜</div>
@@ -570,6 +584,7 @@
         <h3 id="proPriceAmount">$9.99/mo</h3>
         <p class="price-note" data-i18n="proNote">Billed monthly, priced for your region</p>
         <ul>
+          <li data-i18n="proLi5">AI space &amp; garden visualization</li>
           <li data-i18n="proLi1">Unlimited plant scans</li>
           <li data-i18n="proLi2">Farm Advisor for large-area crops</li>
           <li data-i18n="proLi3">Customer portal for nurseries & farms</li>
@@ -687,15 +702,16 @@
       en: {
         navStory: "Story", navDemo: "Demo", navFeatures: "Features", navPricing: "Pricing", navPrivacy: "Privacy", navSupport: "Support",
         heroKicker: "AI-powered, in your language",
-        heroTitle: "AI plant care, farm planning, and garden advice — in one app.",
-        heroLead: "Snap a photo and get an instant health diagnosis, personalized care reminders, and expert answers — for houseplants, gardens, and full-scale farms.",
+        heroTitle: "See your space with plants added — before you buy a single one.",
+        heroLead: "Photograph any balcony, yard, or room and get a photorealistic AI preview of it fully planted — then keep everything in it healthy with instant diagnosis, care reminders, and expert answers.",
         storeGoogleSmall: "GET IT ON",
         storeNote: "Launching soon on Google Play — link goes live once the app is approved.",
         story1Title: "Every plant starts with a question.", story1Sub: "What is this? Is it healthy?",
         story2Title: "Snap a photo.", story2Sub: "Get an instant AI diagnosis.",
         story3Title: "Get a care plan built just for it.", story3Sub: "Watering, light, and remedies — tailored to your plant.",
         story4Title: "Watch it thrive.", story4Sub: "We'll remind you exactly when it needs you.",
-        demoTitle: "See it in action", demoSub: "An illustrative look at scanning a plant, planning a crop, and chatting with the AI.",
+        demoTitle: "See it in action", demoSub: "An illustrative look at visualizing a space, scanning a plant, planning a crop, and chatting with the AI.",
+        d0Label: "Visualize your space", d0Badge: "AI-generated preview", d0Title: "Empty balcony → fully planted", d0Line: "12 plants placed, photorealistic — before you buy anything", d0TipTitle: "Shopping list ready", d0TipLine: "Pots, soil, and lighting — sized and priced for this exact space",
         d1Label: "Plant scan", d1Badge: "Healthy", d1Line: "Water in ~4 days · Bright indirect light",
         d1TipTitle: "Care tip", d1TipLine: "Wipe leaves monthly to keep pores clear for better light absorption.",
         d2Label: "Farm Advisor", d2Badge: "Wheat · Punjab", d2Title: "Productivity plan",
@@ -711,7 +727,7 @@
         featuresSub: "One app for identification, health, care scheduling, and expert advice — powered by AI.",
         f1Title: "Instant plant health scans", f1Desc: "Snap a photo and get plant identification, health status, and pest/disease detection — plus organic and chemical remedy options, each with why, when, and how to use it, and a link to buy what you need.",
         f2Title: "Smart care reminders", f2Desc: "Personalized watering and sunlight reminders that check the forecast and skip themselves on rainy days, plus follow-up check-ins if your plant was unwell.",
-        f3Title: "Planting space planner", f3Desc: "Photograph a balcony, yard, or empty space and get a tailored shopping list — plus an AI-generated preview of the finished look that you can keep refining just by describing what to change.",
+        f3Title: "See it planted before you buy anything", f3Desc: "Photograph any balcony, yard, or room and get a photorealistic AI preview of it fully planted, plus a shopping list sized to that exact space. Keep refining it just by describing what to change — more lighting, different pots, taller plants.",
         f4Title: "Farm Advisor", f4Desc: "Get a full productivity plan for any crop: feasible variety options, fertilizer and irrigation schedules, spacing guidance, and climate context for your region.",
         f5Title: "Ask a plant expert, anytime", f5Desc: "Chat with an AI plant expert about any of your plants or farm plans — by text, voice, or photo.",
         f6Title: "Local tips, your language", f6Desc: "Daily farming and gardening tips tailored to your location, refreshed automatically. Switch languages any time, even after a scan.",
@@ -722,7 +738,7 @@
         freeTag: "Free", freePrice: "$0", freeNote: "Forever",
         freeLi1: "Up to 5 saved plant scans", freeLi2: "Care reminders & health follow-ups", freeLi3: "Local tips & chat with the AI",
         proTag: "Pro", proPrice: "Regional pricing", proNote: "Billed monthly, priced for your region",
-        proLi1: "Unlimited plant scans", proLi2: "Farm Advisor for large-area crops", proLi3: "Customer portal for nurseries & farms", proLi4: "Priority AI response quality",
+        proLi1: "Unlimited plant scans", proLi2: "Farm Advisor for large-area crops", proLi3: "Customer portal for nurseries & farms", proLi4: "Priority AI response quality", proLi5: "AI space & garden visualization",
         contactTitle: "Questions, feedback, or need help?", contactSub: "We usually reply within a day or two.", contactBtn: "Email Support",
         footerCopyright: "© 2026 Plant Doctor. All rights reserved.", footerPrivacy: "Privacy Policy", footerContact: "Contact"
       },

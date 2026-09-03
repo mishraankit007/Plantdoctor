@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garden Ranking Leaderboard — Plant Doctor</title>
+<meta name="description" content="See how real gardens, terraces, and indoor spaces rank after AI scoring — submitted by Plant Doctor users worldwide.">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+<style>
+  :root {
+    --primary: #2e7d32;
+    --primary-dark: #1b5e20;
+    --primary-light: #66bb6a;
+    --primary-soft: #e6f4ea;
+    --bg: #f7faf7;
+    --surface: #ffffff;
+    --ink: #1a1f1a;
+    --ink-muted: #5a655a;
+    --border: #e0e8e0;
+    --flower: #f2a541;
+    --shadow: 0 8px 24px -8px rgba(27, 94, 32, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary-light: #7fd583;
+      --primary-soft: #17281a;
+      --bg: #10140f;
+      --surface: #181f17;
+      --ink: #eef4ee;
+      --ink-muted: #a3b0a3;
+      --border: #2a352a;
+      --flower: #f2b766;
+      --shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  a { color: var(--primary-dark); }
+  @media (prefers-color-scheme: dark) { a { color: var(--primary-light); } }
+  .header { border-bottom: 1px solid var(--border); background: var(--surface); }
+  .header-inner { max-width: 760px; margin: 0 auto; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; text-decoration: none; color: var(--ink); font-size: 16px; }
+  .brand img { border-radius: 6px; }
+  .header nav a { margin-left: 20px; text-decoration: none; color: var(--ink-muted); font-size: 14px; font-weight: 600; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+  h1 { font-size: 32px; margin: 0 0 8px; }
+  .sub { color: var(--ink-muted); font-size: 16px; margin: 0 0 32px; }
+  .row {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px 18px; margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+  .rank { font-weight: 800; font-size: 18px; width: 32px; text-align: center; color: var(--ink-muted); }
+  .rank.top1 { color: var(--flower); font-size: 22px; }
+  .rank.top2 { color: #9aa5ad; font-size: 20px; }
+  .rank.top3 { color: #c98a4b; font-size: 20px; }
+  .thumb { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; background: var(--border); }
+  .info { flex: 1; min-width: 0; }
+  .name { font-weight: 700; font-size: 15px; margin: 0; }
+  .type { color: var(--ink-muted); font-size: 13px; margin: 2px 0 0; }
+  .score { font-weight: 800; font-size: 20px; color: var(--primary); }
+  .state { text-align: center; color: var(--ink-muted); padding: 60px 20px; }
+  .cta { text-align: center; margin-top: 40px; }
+  .btn {
+    display: inline-block; background: linear-gradient(100deg, var(--primary), var(--primary-light));
+    color: #fff; font-weight: 700; text-decoration: none; padding: 11px 22px; border-radius: 999px; font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="brand" href="./index.html"><img src="./logo-mark.png" width="24" height="24" alt=""> Plant Doctor</a>
+    <nav><a href="./blog/index.html">Blog</a><a href="./index.html#top">Home</a></nav>
+  </div>
+</header>
+
+<main>
+  <h1>Garden Ranking Leaderboard</h1>
+  <p class="sub">Real gardens, terraces, and indoor spaces, scored 0-100 by AI. Submitted from the Plant Doctor app.</p>
+
+  <div id="list"><div class="state">Loading leaderboard…</div></div>
+
+  <div class="cta">
+    <a class="btn" href="https://play.google.com/store/apps/details?id=com.getplantdoctor.app">Submit your space</a>
+  </div>
+</main>
+
+<script>
+  const SUPABASE_URL = 'https://ybazxygtjbebomizfuup.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliYXp4eWd0amJlYm9taXpmdXVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDIxNzUsImV4cCI6MjEwMTE3ODE3NX0.dzJizRPCSn7soKk_q72q-LRCD_vZ5wkbR6vfEIps1iU';
+
+  const SPACE_LABEL = { garden: 'Garden', terrace: 'Terrace / Balcony', indoor: 'Indoor / Office' };
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  async function loadLeaderboard() {
+    const listEl = document.getElementById('list');
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,score,display_name&hidden=eq.false&order=score.desc,created_at.asc&limit=100`,
+        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+      );
+      if (!res.ok) throw new Error('Request failed');
+      const entries = await res.json();
+
+      if (!entries.length) {
+        listEl.innerHTML = '<div class="state">No entries yet — be the first to submit your space from the app!</div>';
+        return;
+      }
+
+      listEl.innerHTML = entries.map((e, i) => {
+        const rank = i + 1;
+        const rankClass = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
+        return `<div class="row">
+          <div class="rank ${rankClass}">${rank}</div>
+          <img class="thumb" src="${escapeHtml(e.photo_url)}" alt="" loading="lazy">
+          <div class="info">
+            <p class="name">${escapeHtml(e.display_name)}</p>
+            <p class="type">${escapeHtml(SPACE_LABEL[e.space_type] || 'Space')}</p>
+          </div>
+          <div class="score">${escapeHtml(e.score)}</div>
+        </div>`;
+      }).join('');
+    } catch (err) {
+      listEl.innerHTML = '<div class="state">Could not load the leaderboard right now — try again shortly.</div>';
+    }
+  }
+
+  loadLeaderboard();
+</script>
+
+</body>
+</html>

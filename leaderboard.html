@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Space Ranking Leaderboard — Plant Doctor</title>
-<meta name="description" content="See how real gardens, terraces, and indoor spaces rank after AI scoring — submitted by Plant Doctor users worldwide.">
+<meta name="description" content="The AI Space Ranking leaderboard: real gardens, terraces, and indoor plant spaces ranked by AI. Browse top-ranked submissions, get inspired, and see where your own space could rank — free with the Plant Doctor app.">
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
 <style>
   :root {
@@ -64,7 +64,6 @@
   .info { flex: 1; min-width: 0; }
   .name { font-weight: 700; font-size: 15px; margin: 0; }
   .type { color: var(--ink-muted); font-size: 13px; margin: 2px 0 0; }
-  .score { font-weight: 800; font-size: 20px; color: var(--primary); }
   .state { text-align: center; color: var(--ink-muted); padding: 60px 20px; }
   .cta { text-align: center; margin-top: 40px; }
   .btn {
@@ -107,7 +106,7 @@
     const listEl = document.getElementById('list');
     try {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,score,display_name,country&hidden=eq.false&order=visualized.desc,score.desc,created_at.desc&limit=100`,
+        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,display_name,country&hidden=eq.false&order=visualized.desc,score.desc,created_at.desc&limit=100`,
         { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       if (!res.ok) throw new Error('Request failed');
@@ -128,7 +127,6 @@
             <p class="name">${escapeHtml(e.display_name)}</p>
             <p class="type">${escapeHtml(SPACE_LABEL[e.space_type] || 'Space')}${e.country ? ' · ' + escapeHtml(e.country) : ''}</p>
           </div>
-          <div class="score">${escapeHtml(e.score)}</div>
         </div>`;
       }).join('');
     } catch (err) {

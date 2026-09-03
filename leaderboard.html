@@ -107,7 +107,7 @@
     const listEl = document.getElementById('list');
     try {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,score,display_name&hidden=eq.false&order=score.desc,created_at.asc&limit=100`,
+        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,score,display_name,country&hidden=eq.false&order=score.desc,created_at.asc&limit=100`,
         { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       if (!res.ok) throw new Error('Request failed');
@@ -126,7 +126,7 @@
           <img class="thumb" src="${escapeHtml(e.photo_url)}" alt="" loading="lazy">
           <div class="info">
             <p class="name">${escapeHtml(e.display_name)}</p>
-            <p class="type">${escapeHtml(SPACE_LABEL[e.space_type] || 'Space')}</p>
+            <p class="type">${escapeHtml(SPACE_LABEL[e.space_type] || 'Space')}${e.country ? ' · ' + escapeHtml(e.country) : ''}</p>
           </div>
           <div class="score">${escapeHtml(e.score)}</div>
         </div>`;

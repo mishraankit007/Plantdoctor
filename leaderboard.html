@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Garden Ranking Leaderboard — Plant Doctor</title>
+<title>Space Ranking Leaderboard — Plant Doctor</title>
 <meta name="description" content="See how real gardens, terraces, and indoor spaces rank after AI scoring — submitted by Plant Doctor users worldwide.">
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
 <style>
@@ -83,7 +83,7 @@
 </header>
 
 <main>
-  <h1>Garden Ranking Leaderboard</h1>
+  <h1>Space Ranking Leaderboard</h1>
   <p class="sub">Real gardens, terraces, and indoor spaces, scored 0-100 by AI. Submitted from the Plant Doctor app.</p>
 
   <div id="list"><div class="state">Loading leaderboard…</div></div>
@@ -107,7 +107,7 @@
     const listEl = document.getElementById('list');
     try {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,score,display_name,country&hidden=eq.false&order=score.desc,created_at.asc&limit=100`,
+        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,score,display_name,country&hidden=eq.false&order=visualized.desc,score.desc,created_at.desc&limit=100`,
         { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       if (!res.ok) throw new Error('Request failed');

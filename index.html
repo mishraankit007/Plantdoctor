@@ -122,6 +122,25 @@
   }
   p.section-sub { text-align: center; color: var(--ink-muted); max-width: 520px; margin: 0 auto 40px; }
 
+  .ranking-list { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+  .ranking-state { text-align: center; color: var(--ink-muted); }
+  .ranking-row {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 14px; padding: 12px 16px;
+  }
+  .ranking-rank { font-weight: 800; font-size: 16px; width: 24px; text-align: center; color: var(--ink-muted); }
+  .ranking-rank.rank-1 { color: var(--flower); font-size: 20px; }
+  .ranking-rank.rank-2 { color: #9aa5ad; font-size: 18px; }
+  .ranking-rank.rank-3 { color: #c98a4b; font-size: 18px; }
+  .ranking-thumb { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; background: var(--border); flex-shrink: 0; }
+  .ranking-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .ranking-name { font-weight: 700; font-size: 14px; color: var(--ink); }
+  .ranking-type { font-size: 12px; color: var(--ink-muted); }
+  .ranking-score { font-weight: 800; font-size: 18px; color: var(--primary); }
+  .ranking-cta { text-align: center; margin-top: 24px; }
+  .ranking-cta a { font-weight: 700; text-decoration: none; }
+
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
   .feature {
     background: var(--surface);
@@ -531,6 +550,19 @@
   </div>
 </section>
 
+<section class="alt" id="ranking-preview">
+  <div class="wrap">
+    <h2 class="section-title" data-i18n="rankingTitle">Real gardens, ranked by AI</h2>
+    <p class="section-sub" data-i18n="rankingSub">Top-scoring spaces submitted by real Plant Doctor users right now.</p>
+    <div id="rankingPreviewList" class="ranking-list">
+      <p class="ranking-state">Loading leaderboard…</p>
+    </div>
+    <div class="ranking-cta">
+      <a href="./leaderboard.html" data-i18n="rankingViewAll">View all rankers →</a>
+    </div>
+  </div>
+</section>
+
 <section id="features">
   <div class="wrap">
     <h2 class="section-title" data-i18n="featuresTitle">Everything your plants need</h2>
@@ -733,6 +765,7 @@
         story3Title: "Get a care plan built just for it.", story3Sub: "Watering, light, and remedies — tailored to your plant.",
         story4Title: "Watch it thrive.", story4Sub: "We'll remind you exactly when it needs you.",
         demoTitle: "See it in action", demoSub: "An illustrative look at visualizing a space, scanning a plant, planning a crop, and chatting with the AI.",
+        rankingTitle: "Real gardens, ranked by AI", rankingSub: "Top-scoring spaces submitted by real Plant Doctor users right now.", rankingViewAll: "View all rankers →",
         d0Label: "Visualize your space", d0Badge: "AI-generated preview", d0Title: "Empty balcony → fully planted", d0Line: "12 plants placed, photorealistic — before you buy anything", d0TipTitle: "Shopping list ready", d0TipLine: "Pots, soil, and lighting — sized and priced for this exact space",
         d1Label: "Plant scan", d1Badge: "Healthy", d1Line: "Water in ~4 days · Bright indirect light",
         d1TipTitle: "Care tip", d1TipLine: "Wipe leaves monthly to keep pores clear for better light absorption.",
@@ -1353,6 +1386,53 @@
       isIndia = Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Kolkata';
     } catch (e) {}
     el.textContent = isIndia ? '₹249/mo' : '$9.99/mo';
+  })();
+</script>
+
+<script>
+  (function () {
+    var listEl = document.getElementById('rankingPreviewList');
+    if (!listEl) return;
+
+    var SUPABASE_URL = 'https://ybazxygtjbebomizfuup.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliYXp4eWd0amJlYm9taXpmdXVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDIxNzUsImV4cCI6MjEwMTE3ODE3NX0.dzJizRPCSn7soKk_q72q-LRCD_vZ5wkbR6vfEIps1iU';
+    var SPACE_LABEL = { garden: 'Garden', terrace: 'Terrace / Balcony', indoor: 'Indoor / Office' };
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    fetch(
+      SUPABASE_URL + '/rest/v1/garden_rankings?select=photo_url,space_type,score,display_name,country&hidden=eq.false&order=score.desc,created_at.asc&limit=5',
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY } }
+    )
+      .then(function (res) {
+        if (!res.ok) throw new Error('Request failed');
+        return res.json();
+      })
+      .then(function (entries) {
+        if (!entries.length) {
+          listEl.innerHTML = '<p class="ranking-state">No entries yet — be the first to submit your space from the app!</p>';
+          return;
+        }
+        listEl.innerHTML = entries.map(function (e, i) {
+          var rank = i + 1;
+          return '<div class="ranking-row">' +
+            '<span class="ranking-rank rank-' + rank + '">' + rank + '</span>' +
+            '<img class="ranking-thumb" src="' + escapeHtml(e.photo_url) + '" alt="" loading="lazy">' +
+            '<span class="ranking-info">' +
+              '<span class="ranking-name">' + escapeHtml(e.display_name) + '</span>' +
+              '<span class="ranking-type">' + escapeHtml(SPACE_LABEL[e.space_type] || 'Space') + (e.country ? ' · ' + escapeHtml(e.country) : '') + '</span>' +
+            '</span>' +
+            '<span class="ranking-score">' + escapeHtml(e.score) + '</span>' +
+          '</div>';
+        }).join('');
+      })
+      .catch(function () {
+        listEl.innerHTML = '<p class="ranking-state">Could not load the leaderboard right now.</p>';
+      });
   })();
 </script>
 

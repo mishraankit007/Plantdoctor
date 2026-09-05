@@ -108,7 +108,7 @@
     const listEl = document.getElementById('list');
     try {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/garden_rankings?select=id,photo_url,space_type,display_name,country&hidden=eq.false&order=visualized.desc,score.desc,created_at.desc&limit=100`,
+        `${SUPABASE_URL}/rest/v1/garden_rankings_leaderboard?select=id,photo_url,space_type,display_name,country&order=visualized.desc,score.desc,created_at.desc&limit=100`,
         { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       if (!res.ok) throw new Error('Request failed');

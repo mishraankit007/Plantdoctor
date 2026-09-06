@@ -167,6 +167,21 @@
   .feature h3 { font-size: 16px; margin: 0 0 8px; }
   .feature p { font-size: 14px; color: var(--ink-muted); margin: 0; }
 
+  .compare { max-width: 720px; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .compare-head { display: grid; grid-template-columns: 1fr 1fr; }
+  .compare-head span { padding: 14px 20px; font-weight: 700; font-size: 12.5px; letter-spacing: 0.03em; text-transform: uppercase; }
+  .compare-head .col-generic { background: var(--bg); color: var(--ink-muted); }
+  .compare-head .col-pd { background: linear-gradient(100deg, var(--primary-dark), var(--primary)); color: #fff; }
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); }
+  .compare-row + .compare-row { border-top: 1px solid var(--border); }
+  .compare-cell { padding: 16px 20px; font-size: 14px; line-height: 1.55; }
+  .compare-cell.generic { color: var(--ink-muted); border-right: 1px solid var(--border); }
+  .compare-cell.pd { color: var(--ink); font-weight: 500; }
+  .compare-cell.pd::before { content: "✓ "; color: var(--primary); font-weight: 800; }
+  @media (max-width: 560px) {
+    .compare-head span, .compare-cell { padding: 12px 14px; font-size: 13px; }
+  }
+
   .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 720px; margin: 0 auto; }
   .plan {
     background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px;
@@ -579,6 +594,11 @@
         <p data-i18n="f3Desc">Photograph any balcony, yard, or room and get a photorealistic AI preview of it fully planted, plus a shopping list sized to that exact space. Keep refining it just by describing what to change — more lighting, different pots, taller plants.</p>
       </div>
       <div class="feature reveal">
+        <div class="icon">⏳</div>
+        <h3 data-i18n="f10Title">Watch it grow, months ahead</h3>
+        <p data-i18n="f10Desc">Once you've visualized your space, generate a saved growth timelapse — what it'll look like in 1, 6, and 12 months. Come back anytime; it's still there.</p>
+      </div>
+      <div class="feature reveal">
         <div class="icon">📷</div>
         <h3 data-i18n="f1Title">Instant plant health scans</h3>
         <p data-i18n="f1Desc">Snap a photo and get plant identification, health status, and pest/disease detection — plus organic and chemical remedy options, each with why, when, and how to use it, and a link to buy what you need.</p>
@@ -622,6 +642,39 @@
   </div>
 </section>
 
+<section id="compare">
+  <div class="wrap">
+    <h2 class="section-title" data-i18n="compareTitle">"Couldn't I just ask an AI chatbot?"</h2>
+    <p class="section-sub" data-i18n="compareSub">You could. Here's what you'd have to remember and rebuild yourself, every single time.</p>
+    <div class="compare">
+      <div class="compare-head">
+        <span class="col-generic" data-i18n="compareColGeneric">A generic AI chat</span>
+        <span class="col-pd" data-i18n="compareColPd">Plant Doctor</span>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell generic" data-i18n="compare1Generic">Forgets your plant the moment you close the tab</div>
+        <div class="compare-cell pd" data-i18n="compare1Pd">Remembers every plant's health history and watering streak</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell generic" data-i18n="compare2Generic">Gives you a wall of text to figure out yourself</div>
+        <div class="compare-cell pd" data-i18n="compare2Pd">Turns it into a shopping list sized to your exact space</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell generic" data-i18n="compare3Generic">Only helps if you remember to ask again next week</div>
+        <div class="compare-cell pd" data-i18n="compare3Pd">Reminds you to water before you even think to ask</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell generic" data-i18n="compare4Generic">One image, gone when you close the chat</div>
+        <div class="compare-cell pd" data-i18n="compare4Pd">A saved growth timelapse — 1, 6, and 12 months ahead</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell generic" data-i18n="compare5Generic">Just you and the AI, alone</div>
+        <div class="compare-cell pd" data-i18n="compare5Pd">See how your space ranks against real gardens worldwide</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="alt" id="pricing">
   <div class="wrap">
     <h2 class="section-title" data-i18n="pricingTitle">Simple, fair pricing</h2>
@@ -643,6 +696,7 @@
         <p class="price-note" data-i18n="proNote">Billed monthly, priced for your region</p>
         <ul>
           <li data-i18n="proLi5">AI space &amp; garden visualization</li>
+          <li data-i18n="proLi6">Saved growth timelapse</li>
           <li data-i18n="proLi1">Unlimited plant scans</li>
           <li data-i18n="proLi2">Farm Advisor for large-area crops</li>
           <li data-i18n="proLi3">Customer portal for nurseries & farms</li>
@@ -795,11 +849,19 @@
         f7Title: "Never miss a warning sign", f7Desc: "Proactive notifications for watering, sunlight, health follow-ups, and farm pest risks — scheduled right on your device.",
         f8Title: "Real vs. artificial detection", f8Desc: "Plant Doctor tells real plants apart from artificial ones, so you don't get watering reminders for a plastic fern.",
         f9Title: "Track your progress", f9Desc: "Watch your plant's health trend over time and build a watering streak — so you always know what's working, and what needs attention.",
+        f10Title: "Watch it grow, months ahead", f10Desc: "Once you've visualized your space, generate a saved growth timelapse — what it'll look like in 1, 6, and 12 months. Come back anytime; it's still there.",
+        compareTitle: "“Couldn't I just ask an AI chatbot?”", compareSub: "You could. Here's what you'd have to remember and rebuild yourself, every single time.",
+        compareColGeneric: "A generic AI chat", compareColPd: "Plant Doctor",
+        compare1Generic: "Forgets your plant the moment you close the tab", compare1Pd: "Remembers every plant's health history and watering streak",
+        compare2Generic: "Gives you a wall of text to figure out yourself", compare2Pd: "Turns it into a shopping list sized to your exact space",
+        compare3Generic: "Only helps if you remember to ask again next week", compare3Pd: "Reminds you to water before you even think to ask",
+        compare4Generic: "One image, gone when you close the chat", compare4Pd: "A saved growth timelapse — 1, 6, and 12 months ahead",
+        compare5Generic: "Just you and the AI, alone", compare5Pd: "See how your space ranks against real gardens worldwide",
         pricingTitle: "Simple, fair pricing", pricingSub: "Start free. Upgrade whenever you need more.",
         freeTag: "Free", freePrice: "$0", freeNote: "Forever",
         freeLi1: "Up to 5 saved plant scans", freeLi2: "Care reminders & health follow-ups", freeLi3: "Local tips & chat with the AI",
         proTag: "Pro", proPrice: "Regional pricing", proNote: "Billed monthly, priced for your region",
-        proLi1: "Unlimited plant scans", proLi2: "Farm Advisor for large-area crops", proLi3: "Customer portal for nurseries & farms", proLi4: "Priority AI response quality", proLi5: "AI space & garden visualization",
+        proLi1: "Unlimited plant scans", proLi2: "Farm Advisor for large-area crops", proLi3: "Customer portal for nurseries & farms", proLi4: "Priority AI response quality", proLi5: "AI space & garden visualization", proLi6: "Saved growth timelapse",
         contactTitle: "Questions, feedback, or need help?", contactSub: "We usually reply within a day or two.", contactBtn: "Email Support",
         footerCopyright: "© 2026 Plant Doctor. All rights reserved.", footerPrivacy: "Privacy Policy", footerContact: "Contact"
       },

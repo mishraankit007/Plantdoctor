@@ -17,7 +17,7 @@ import subprocess
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 SITE_ROOT = Path(__file__).resolve().parent.parent
@@ -25,6 +25,15 @@ BLOG_DIR = SITE_ROOT / "blog"
 POSTED_LOG = BLOG_DIR / ".rss-posted.json"
 TEMPLATE_POST = BLOG_DIR / "why-are-my-monstera-leaves-turning-yellow.html"
 INDEX_FILE = BLOG_DIR / "index.html"
+
+# RunAtLoad on the launchd job means this script fires at every login/boot,
+# not just the scheduled Mon/Thu 9am slots -- that's deliberate, so a run
+# missed because the Mac was fully shut down (not just asleep) still gets
+# caught up at the next startup. This cooldown stops that from causing
+# multiple runs if the Mac reboots several times in the same day; it's
+# comfortably shorter than the 3-4 day posting cadence so it never blocks a
+# genuinely due scheduled run.
+COOLDOWN = timedelta(hours=36)
 
 FEEDS = [
     "https://www.sciencedaily.com/rss/plants_animals/botany.xml",
@@ -145,6 +154,17 @@ def main():
     log = load_posted_log()
     posted = set(log.get("posted_guids", []))
 
+    last_run_raw = log.get("last_run_at")
+    if last_run_raw:
+        try:
+            last_run = datetime.fromisoformat(last_run_raw)
+            elapsed = datetime.now(timezone.utc) - last_run
+            if elapsed < COOLDOWN:
+                print(f"Last run was {elapsed} ago (< {COOLDOWN} cooldown) -- skipping, likely a repeat login/boot today.")
+                return
+        except Exception:
+            pass  # malformed timestamp shouldn't block a real run
+
     chosen = None
     for feed_url in FEEDS:
         try:
@@ -169,12 +189,16 @@ def main():
 
     if not chosen:
         print("No new plant-relevant story found this run. Nothing published.")
+        log["last_run_at"] = datetime.now(timezone.utc).isoformat()
+        save_posted_log(log)
         return
 
     filename, new_post_html = build_post_html(chosen)
     out_path = BLOG_DIR / filename
     if out_path.exists():
         print(f"Post file {filename} already exists, skipping to avoid overwrite.")
+        log["last_run_at"] = datetime.now(timezone.utc).isoformat()
+        save_posted_log(log)
         return
 
     out_path.write_text(new_post_html)
@@ -182,6 +206,7 @@ def main():
 
     posted.add(chosen["guid"])
     log["posted_guids"] = sorted(posted)
+    log["last_run_at"] = datetime.now(timezone.utc).isoformat()
     save_posted_log(log)
 
     git("add", "blog/")
